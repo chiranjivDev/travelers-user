@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
@@ -40,7 +40,7 @@ export default function Home() {
               transition={{
                 duration: Math.random() * 10 + 5,
                 repeat: Infinity,
-                repeatType: "reverse",
+                repeatType: 'reverse',
               }}
             />
           ))}
@@ -58,13 +58,14 @@ export default function Home() {
               Connect, Travel & Deliver
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-              Join our community of travelers and senders. Save money on shipping while helping others earn from their travels.
+              Join our community of travelers and senders. Save money on
+              shipping while helping others earn from their travels.
             </p>
-            
+
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/send-package">
-                <motion.button 
+                <motion.button
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -73,7 +74,7 @@ export default function Home() {
                 </motion.button>
               </Link>
               <Link href="/become-traveler">
-                <motion.button 
+                <motion.button
                   className="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-full text-lg font-semibold transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -139,20 +140,23 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "List Your Journey or Package",
-                description: "Share your travel plans as a traveler or list your package details as a sender.",
-                icon: "✈️"
+                title: 'List Your Journey or Package',
+                description:
+                  'Share your travel plans as a traveler or list your package details as a sender.',
+                icon: '✈️',
               },
               {
-                title: "Connect & Agree",
-                description: "Match with the perfect delivery partner and agree on terms through our secure platform.",
-                icon: "🤝"
+                title: 'Connect & Agree',
+                description:
+                  'Match with the perfect delivery partner and agree on terms through our secure platform.',
+                icon: '🤝',
               },
               {
-                title: "Track & Deliver",
-                description: "Track your package in real-time and complete the delivery with our secure payment system.",
-                icon: "📦"
-              }
+                title: 'Track & Deliver',
+                description:
+                  'Track your package in real-time and complete the delivery with our secure payment system.',
+                icon: '📦',
+              },
             ].map((step, i) => (
               <motion.div
                 key={i}
@@ -179,44 +183,53 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4">Why Choose DeliveryConnect?</h2>
+            <h2 className="text-4xl font-bold mb-4">
+              Why Choose DeliveryConnect?
+            </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Experience the future of package delivery with our innovative platform
+              Experience the future of package delivery with our innovative
+              platform
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Cost-Effective",
-                description: "Save up to 70% on shipping costs compared to traditional services.",
-                icon: "💰"
+                title: 'Cost-Effective',
+                description:
+                  'Save up to 70% on shipping costs compared to traditional services.',
+                icon: '💰',
               },
               {
-                title: "Secure & Safe",
-                description: "Verified users, secure payments, and package insurance for peace of mind.",
-                icon: "🔒"
+                title: 'Secure & Safe',
+                description:
+                  'Verified users, secure payments, and package insurance for peace of mind.',
+                icon: '🔒',
               },
               {
-                title: "Eco-Friendly",
-                description: "Reduce carbon footprint by utilizing existing travel routes.",
-                icon: "🌱"
+                title: 'Eco-Friendly',
+                description:
+                  'Reduce carbon footprint by utilizing existing travel routes.',
+                icon: '🌱',
               },
               {
-                title: "Global Network",
-                description: "Access to travelers worldwide for international deliveries.",
-                icon: "🌍"
+                title: 'Global Network',
+                description:
+                  'Access to travelers worldwide for international deliveries.',
+                icon: '🌍',
               },
               {
-                title: "Real-Time Tracking",
-                description: "Track your package's journey with live updates and notifications.",
-                icon: "📱"
+                title: 'Real-Time Tracking',
+                description:
+                  "Track your package's journey with live updates and notifications.",
+                icon: '📱',
               },
               {
-                title: "24/7 Support",
-                description: "Dedicated customer support team ready to assist you anytime.",
-                icon: "🎯"
-              }
+                title: '24/7 Support',
+                description:
+                  'Dedicated customer support team ready to assist you anytime.',
+                icon: '🎯',
+              },
             ].map((benefit, i) => (
               <motion.div
                 key={i}
@@ -245,11 +258,12 @@ export default function Home() {
           >
             <h2 className="text-4xl font-bold">Ready to Get Started?</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Join thousands of users who are already saving money and earning through our platform
+              Join thousands of users who are already saving money and earning
+              through our platform
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/send-package">
-                <motion.button 
+                <motion.button
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -258,7 +272,7 @@ export default function Home() {
                 </motion.button>
               </Link>
               <Link href="/browse-trips">
-                <motion.button 
+                <motion.button
                   className="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-full text-lg font-semibold"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -271,5 +285,5 @@ export default function Home() {
         </div>
       </section>
     </main>
-  )
+  );
 }

@@ -8,6 +8,11 @@ const packagesSlice = createSlice({
     loading: false,
     error: null,
 
+    // Fetch sender-specific packages
+    senderPackages: [],
+    fetchSenderPackagesLoading: false,
+    fetchSenderPackagesError: null,
+
     // send package
     sendPackageLoading: false,
     sendPackageSuccess: false,
@@ -63,6 +68,25 @@ const packagesSlice = createSlice({
       state.fetchCategoriesLoading = false;
       state.fetchCategoriesError = action.payload;
     },
+
+    // Fetch Sender-specific Packages Actions
+    fetchSenderPackagesRequest(state) {
+      state.fetchSenderPackagesLoading = true;
+      state.fetchSenderPackagesError = null;
+    },
+    fetchSenderPackagesSuccess(state, action) {
+      state.fetchSenderPackagesLoading = false;
+      state.senderPackages = action.payload;
+    },
+    fetchSenderPackagesFailure(state, action) {
+      state.fetchSenderPackagesLoading = false;
+      state.fetchSenderPackagesError = action.payload;
+    },
+
+    // Clear state
+    clearPackagesState(state) {
+      state.sendPackageSuccess = false;
+    },
   },
 });
 
@@ -78,6 +102,12 @@ export const {
   fetchCategoriesRequest,
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
+
+  fetchSenderPackagesRequest,
+  fetchSenderPackagesSuccess,
+  fetchSenderPackagesFailure,
+
+  clearPackagesState,
 } = packagesSlice.actions;
 
 export default packagesSlice.reducer;

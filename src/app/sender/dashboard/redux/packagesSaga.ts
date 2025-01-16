@@ -9,9 +9,14 @@ import {
   fetchCategoriesRequest,
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
+  fetchSenderPackagesRequest,
+  fetchSenderPackagesSuccess,
+  fetchSenderPackagesFailure,
 } from './packagesSlice';
 import { axiosInstance } from '@/services/httpServices';
 import { API_URL } from '@/services/webConstants';
+import { toast } from 'react-toastify';
+
 // import { MOCK_PACKAGES } from '@/data/mockPackages';
 // import { packageCategories } from '@/app/send-package/packageCategories';
 
@@ -48,9 +53,11 @@ export function* sendPackageSaga(action: {
 
     // Construct a test payload as per our API
     const payload = {
-      name: 'cv',
-      price: 5559.99,
-      description: 'This is a basic package that includes a set of features.',
+      name: data?.packageName || '',
+      categoryId: data.category,
+      subcategoryId: data.subcategory,
+      price: Number(data?.price) || 50,
+      description: data?.description || 'place holder description',
       requiresCarefulHandling:
         data.pickupMethod.packageHandling.requiresCarefulHandling || false,
       isFragile: data.pickupMethod.packageHandling.isFragile || false,
@@ -62,12 +69,12 @@ export function* sendPackageSaga(action: {
       ],
       availabilityDates: '2025-01-07T11:03:47.523Z',
       pickupLocation: data.pickupMethod.defaultLocation.city || '',
-      deliveryLocation: data.pickupMethod.defaultLocation.city || '',
+      deliveryLocation: data.deliveryMethod.defaultLocation.city || '',
       deliveryDate:
         data.pickupMethod.timing.deliveryDate.preferredDate || '2025-01-02',
       // dimensions: data.selectedSize || '',
-      dimensions: 2,
-      weight: 2,
+      dimensions: 10,
+      weight: 10,
       insurance: true,
       priority: true,
       tracking: 'tracking',
@@ -77,8 +84,6 @@ export function* sendPackageSaga(action: {
       allowPostalDelivery: true,
       postalDeliveryDetails: 'Postal code 12345',
       restricted: false,
-      categoryId: data.category,
-      subcategoryId: data.subcategory,
     };
 
     console.log('Constructed payload for create package API ===>', payload);
@@ -90,10 +95,12 @@ export function* sendPackageSaga(action: {
     );
 
     yield put(sendPackageSuccess(response.data));
+    toast.success('Package Created successfully!');
   } catch (error) {
     yield put(
       sendPackageFailure(error.response?.data?.message || error.message)
     );
+    toast.error('Package Creation Failed', error);
   }
 }
 
@@ -112,6 +119,27 @@ export function* fetchCategoriesSaga() {
   } catch (error) {
     yield put(
       fetchCategoriesFailure(error.response?.data?.message || error.message)
+    );
+  }
+}
+
+// Fetch Sender-Specific Packages Saga
+export function* fetchSenderPackagesSaga(action) {
+  console.log('inside fetchSenderPackagesSaga');
+  try {
+    yield put(fetchSenderPackagesRequest());
+
+    const { senderId } = action.payload;
+    const response = yield call(
+      axiosInstance.get,
+      `${API_URL.SENDER_PACKAGES}/${senderId}`
+    );
+
+    console.log('fetch sender packages saga response', response);
+    yield put(fetchSenderPackagesSuccess(response.data));
+  } catch (error) {
+    yield put(
+      fetchSenderPackagesFailure(error.response?.data?.message || error.message)
     );
   }
 }

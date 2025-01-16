@@ -37,6 +37,7 @@ export default function Navigation() {
   const mainNavItems = [
     { name: 'Send Package', path: '/send-package' },
     { name: 'Browse Packages', path: '/browse-packages' },
+    { name: 'Orders', path: '/order' },
     { name: 'Browse Trips', path: '/browse-trips' },
     { name: 'Become a Traveler', path: '/become-traveler' },
     { name: 'How It Works', path: '/how-it-works' },
@@ -114,19 +115,33 @@ export default function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
-              {mainNavItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    pathname === item.path
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {/* filter based on the user permissions */}
+              {mainNavItems
+                .filter((item) => {
+                  if (item.name === 'Send Package') {
+                    return user?.permissions === 'sender';
+                  }
+                  if (item.name === 'Become a Traveler') {
+                    return user?.permissions === 'traveler';
+                  }
+                  if (item.name === 'Orders') {
+                    return user?.permissions === 'sender';
+                  }
+                  return true;
+                })
+                .map((item) => (
+                  <Link
+                    key={item.path}
+                    href={item.path}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      pathname === item.path
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
             </div>
 
             {/* User Menu */}

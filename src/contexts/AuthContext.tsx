@@ -10,6 +10,7 @@ import {
   useEffect,
   ReactNode,
 } from 'react';
+import { useRouter } from 'next/navigation';
 
 export type UserRole = 'Sender' | 'Traveler' | 'Admin';
 
@@ -63,6 +64,8 @@ const MOCK_USERS = {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     // Check for stored auth token and validate it
@@ -120,6 +123,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     setUser(null);
+    router.push('/');
     localStorage.removeItem('user');
     toast.success('Logout successful!');
   };

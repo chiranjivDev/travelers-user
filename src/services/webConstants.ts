@@ -6,10 +6,14 @@ export const API_URL = {
   PACKAGES: 'packages',
   ACTIVE_PACKAGES: 'packages/active',
   PACKAGE_CATEGORIES: 'packages/categories-and-subcategories',
+  SENDER_PACKAGES: 'packages/user',
 
   // Traveler trips/packages
   ACTIVE_TRAVELER_PACKAGES: 'traveler_packages', // will change in the future
   TRAVELER_PACKAGES: 'traveler_packages',
+
+  // Order
+  ORDERS: 'orders',
 
   //Admin
   USERS: 'users',

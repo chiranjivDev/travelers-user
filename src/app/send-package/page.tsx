@@ -13,6 +13,8 @@ import {
   PACKAGE_CATEGORIES,
   SEND_PACKAGE,
 } from '../sender/dashboard/redux/packagesAction';
+import { useRouter } from 'next/navigation';
+import { clearPackagesState } from '../sender/dashboard/redux/packagesSlice';
 
 interface AddressDetails {
   streetAddress: string;
@@ -24,6 +26,8 @@ interface AddressDetails {
 }
 
 interface FormData {
+  packageName: string; // package name
+  price: number; // price
   category: string;
   subcategory: string;
   selectedSize?: 'small' | 'medium' | 'large' | 'custom';
@@ -76,20 +80,27 @@ interface FormData {
 
 export default function SendPackage() {
   // use selector for categories
-  const { categories: packageCategories } = useSelector(
+  const { categories: packageCategories, sendPackageSuccess } = useSelector(
     (state) => state.packages
   );
   const dispatch = useDispatch();
 
-  // console.log('categories from send package ', packageCategories);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (sendPackageSuccess) {
+      router.push('/');
+      dispatch(clearPackagesState());
+    }
+  }, [sendPackageSuccess]);
 
   useEffect(() => {
     dispatch({ type: PACKAGE_CATEGORIES });
   }, []);
-  //
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
+    packageName: '', // package name
     category: '',
     subcategory: '',
     selectedSize: undefined,
@@ -259,11 +270,9 @@ export default function SendPackage() {
   const handleNext = () => setStep(step + 1);
   const handlePrev = () => setStep(step - 1);
 
-  // log form data
-  console.log('create package form data ', formData);
-
   // Handle send package form submit
   const handleSubmit = (e: React.FormEvent) => {
+    console.log('current step', step);
     e.preventDefault();
     console.log('Send package Form submitted:', formData);
 
@@ -274,6 +283,10 @@ export default function SendPackage() {
         data: formData,
       },
     });
+  };
+
+  const handleParentStep = () => {
+    setStep((prev) => prev + 1);
   };
 
   const renderStep = () => {
@@ -300,6 +313,48 @@ export default function SendPackage() {
               </div>
 
               <div className="space-y-6">
+                {/* add package name */}
+                <div>
+                  <label
+                    htmlFor="packageName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Package Name
+                  </label>
+                  <input
+                    type="text"
+                    id="packageName"
+                    className="w-full p-3 border rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    value={formData.packageName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, packageName: e.target.value })
+                    }
+                    aria-label="Enter package name"
+                    placeholder="Enter package name"
+                  />
+                </div>
+
+                {/* Add Price */}
+                <div>
+                  <label
+                    htmlFor="price"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Price
+                  </label>
+                  <input
+                    type="number"
+                    id="price"
+                    className="w-full p-3 border rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    value={formData.price}
+                    onChange={(e) =>
+                      setFormData({ ...formData, price: e.target.value })
+                    }
+                    aria-label="Enter price"
+                    placeholder="Enter price"
+                  />
+                </div>
+
                 <div>
                   <label
                     htmlFor="category"
@@ -540,7 +595,6 @@ export default function SendPackage() {
                   Set your package handling preferences and requirements.
                 </p>
               </div>
-
               <div className="space-y-6">
                 <DeliveryMethod
                   type="pickup"
@@ -549,11 +603,11 @@ export default function SendPackage() {
                     setFormData({ ...formData, pickupMethod: method })
                   }
                   className="w-full"
+                  triggerParentStep={handleParentStep} // add this
                 />
               </div>
-
               {/* Step Navigation */}
-              <div className="mt-8 flex justify-between">
+              {/* <div className="mt-8 flex justify-between">
                 <button
                   type="button"
                   onClick={() => handlePickupStepChange(currentPickupStep - 1)}
@@ -568,7 +622,7 @@ export default function SendPackage() {
                 >
                   Continue
                 </button>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         );
@@ -595,17 +649,20 @@ export default function SendPackage() {
 
               <div className="space-y-6">
                 <DeliveryMethod
-                  type="pickup"
-                  value={formData.pickupMethod}
-                  onChange={(method) =>
-                    setFormData({ ...formData, pickupMethod: method })
+                  type="delivery" // modified for testing
+                  value={formData.deliveryMethod} // modified for testing
+                  onChange={
+                    (method) =>
+                      setFormData({ ...formData, deliveryMethod: method }) // modified for testing
                   }
                   className="w-full"
+                  triggerParentStep={handleParentStep} // added for testing
                 />
               </div>
 
               {/* Step Navigation */}
-              <div className="mt-8 flex justify-between">
+              {/* Comment out for now */}
+              {/* <div className="mt-8 flex justify-between">
                 <button
                   type="button"
                   onClick={() => handlePickupStepChange(currentPickupStep - 1)}
@@ -621,13 +678,24 @@ export default function SendPackage() {
                 >
                   Continue
                 </button>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         );
 
       default:
-        return null;
+        // return null;
+        return (
+          <div style={{ color: 'black' }}>
+            Create order form goes here
+            <button
+              onClick={() => console.log('place order clicked')}
+              style={{ border: '1px solid black' }}
+            >
+              Place Order
+            </button>
+          </div>
+        );
     }
   };
 
@@ -711,6 +779,7 @@ export default function SendPackage() {
                     type="submit"
                     className="px-6 py-2.5 bg-green-600 text-white rounded-lg font-medium 
                       hover:bg-green-700 transition-all duration-200 focus:ring-4 focus:ring-green-100"
+                    onClick={() => console.log('form submission')}
                   >
                     Submit Package
                   </button>
