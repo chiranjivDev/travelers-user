@@ -50,7 +50,7 @@ export function* addTripSaga(action) {
 
     // Construct the newPayload dynamically
     const newPayload = {
-      name: 'Package Name', // Placeholder name, can be dynamic
+      name: 'Package Name test', // Placeholder name, can be dynamic
       email: data.communicationPreferences?.email || '',
       phone: data.communicationPreferences?.phone || '+918719087038',
       contactMethods:
@@ -76,13 +76,13 @@ export function* addTripSaga(action) {
         specialHandling: data.pricing?.urgentDelivery
           ? 'Urgent Delivery Required'
           : '',
+        departureDateTime: data.departureDate,
+        arrivalDateTime: data.arrivalDate,
         acceptsShippedPackage: true,
         willPickup: true,
         meetAtAirport: true,
         willDeliver: true,
         speicalInstructions: '',
-        departureDateTime: data.departureDate,
-        arrivalDateTime: data.arrivalDate,
       },
       pricingDetails: {
         baseRate: data.pricing?.baseRate || 0,
@@ -95,6 +95,28 @@ export function* addTripSaga(action) {
           (data.pricing?.perKgRate || 0) * (data.pricing?.weight || 0),
 
         weight: data.pricing.weight || 0,
+      },
+
+      // updated payload
+      arrivalLocation: {
+        latitude: data.arrivalLocation.coordinates.lat,
+        longitude: data.arrivalLocation.coordinates.lng,
+        state: data.arrivalLocation.state,
+        city: data.arrivalLocation.city || '',
+        country: data.arrivalLocation.country || '',
+        street_address: data.arrivalLocation.street,
+        postalcode: data.arrivalLocation.postalCode,
+        type: 'arrival',
+      },
+      departureLocation: {
+        latitude: data?.departureLocation?.coordinates?.lat,
+        longitude: data?.departureLocation?.coordinates?.lng,
+        state: data.departureLocation.state,
+        city: data.departureLocation.city,
+        country: data.departureLocation.country,
+        street_address: data?.departureLocation?.street,
+        postalcode: data?.departureLocation?.postalCode,
+        type: 'departure',
       },
     };
 

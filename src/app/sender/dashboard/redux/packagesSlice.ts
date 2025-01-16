@@ -17,6 +17,7 @@ const packagesSlice = createSlice({
     sendPackageLoading: false,
     sendPackageSuccess: false,
     sendPackageError: null,
+    sendPackageResponse: null,
 
     // Fetch category actions
     fetchCategoriesLoading: false,
@@ -44,10 +45,13 @@ const packagesSlice = createSlice({
       state.sendPackageLoading = true;
       state.sendPackageSuccess = false;
       state.sendPackageError = null;
+      state.sendPackageResponse = null;
     },
-    sendPackageSuccess(state) {
+    sendPackageSuccess(state, action) {
+      console.log('package response', action);
       state.sendPackageLoading = false;
       state.sendPackageSuccess = true;
+      state.sendPackageResponse = action.payload;
     },
     sendPackageFailure(state, action) {
       state.sendPackageLoading = false;

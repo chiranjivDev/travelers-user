@@ -15,6 +15,10 @@ import {
 } from '../sender/dashboard/redux/packagesAction';
 import { useRouter } from 'next/navigation';
 import { clearPackagesState } from '../sender/dashboard/redux/packagesSlice';
+import { TRIPS } from '../traveler/redux/tripsAction';
+import { CREATE_ORDER } from '../sender/dashboard/redux/orderAction';
+import { useAuth } from '@/contexts/AuthContext';
+import { clearOrdersState } from '../sender/dashboard/redux/orderSlice';
 
 interface AddressDetails {
   streetAddress: string;
@@ -80,16 +84,20 @@ interface FormData {
 
 export default function SendPackage() {
   // use selector for categories
-  const { categories: packageCategories, sendPackageSuccess } = useSelector(
-    (state) => state.packages
-  );
+  const [showOrderComponent, setShowOrderComponent] = useState(false);
+  const {
+    categories: packageCategories,
+    sendPackageSuccess,
+    sendPackageResponse,
+  } = useSelector((state) => state.packages);
+
   const dispatch = useDispatch();
 
-  const router = useRouter();
+  console.log('send package response ==> ', sendPackageResponse);
 
   useEffect(() => {
     if (sendPackageSuccess) {
-      router.push('/');
+      setShowOrderComponent(true);
       dispatch(clearPackagesState());
     }
   }, [sendPackageSuccess]);
@@ -684,20 +692,13 @@ export default function SendPackage() {
         );
 
       default:
-        // return null;
-        return (
-          <div style={{ color: 'black' }}>
-            Create order form goes here
-            <button
-              onClick={() => console.log('place order clicked')}
-              style={{ border: '1px solid black' }}
-            >
-              Place Order
-            </button>
-          </div>
-        );
+        return null;
     }
   };
+
+  if (showOrderComponent) {
+    return <SelectTraveler sendPackageResponse={sendPackageResponse} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -745,7 +746,7 @@ export default function SendPackage() {
 
           {/* Form Content */}
           <div className="px-8 py-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Render send package steps conditionally */}
               <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
@@ -779,7 +780,6 @@ export default function SendPackage() {
                     type="submit"
                     className="px-6 py-2.5 bg-green-600 text-white rounded-lg font-medium 
                       hover:bg-green-700 transition-all duration-200 focus:ring-4 focus:ring-green-100"
-                    onClick={() => console.log('form submission')}
                   >
                     Submit Package
                   </button>
@@ -792,3 +792,70 @@ export default function SendPackage() {
     </div>
   );
 }
+
+// compoent for selecting a traveler and placing an order
+const SelectTraveler = ({ sendPackageResponse }) => {
+  const [selectedTrip, setSelectedTrip] = useState('');
+  const { trips } = useSelector((state) => state.trips);
+  const { createOrderSuccess } = useSelector((state) => state.order);
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  // fetch user information
+  const { user } = useAuth();
+
+  useEffect(() => {
+    dispatch({ type: TRIPS });
+  }, [dispatch]);
+
+  // handle create Order
+  const handleCreateOrder = (e) => {
+    e.preventDefault();
+    if (!selectedTrip) {
+      alert('Please select a traveler package.');
+      return;
+    }
+    const payload = {
+      senderId: sendPackageResponse?.sender?.id,
+      traveler_package_id: selectedTrip,
+      sender_package_id: sendPackageResponse?.packageID,
+    };
+    dispatch({ type: CREATE_ORDER, payload });
+  };
+
+  useEffect(() => {
+    if (createOrderSuccess) {
+      router.push('/');
+      dispatch(clearOrdersState());
+    }
+  }, [createOrderSuccess]);
+
+  return (
+    <div className="flex flex-col items-center p-6 bg-gray-100 rounded shadow-lg max-w-md mx-auto">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">
+        Select a Traveler and Place Your Order
+      </h2>
+      {/* Select a trip/traveler package */}
+      <select
+        value={selectedTrip}
+        onChange={(e) => setSelectedTrip(e.target.value)}
+        className="mb-6 p-3 border border-gray-300 rounded-lg w-full bg-white text-gray-700 shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+      >
+        <option value="">Select a Trip</option>
+        {trips?.map((trip) => (
+          <option key={trip.id} value={trip.id}>
+            {trip.name}
+          </option>
+        ))}
+      </select>
+      {/* Place Order Button */}
+      <button
+        onClick={handleCreateOrder}
+        className="py-3 px-6 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+      >
+        Submit and Place Order
+      </button>
+    </div>
+  );
+};

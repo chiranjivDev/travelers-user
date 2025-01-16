@@ -48,6 +48,11 @@ const orderSlice = createSlice({
       state.fetchOrdersSuccess = false;
       state.fetchOrdersError = action.payload;
     },
+
+    // Clear state
+    clearOrdersState(state) {
+      state.createOrderSuccess = false;
+    },
   },
 });
 
@@ -58,6 +63,7 @@ export const {
   fetchOrdersRequest,
   fetchOrdersSuccess,
   fetchOrdersFailure,
+  clearOrdersState,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;
