@@ -32,6 +32,7 @@ interface AddressDetails {
 interface FormData {
   packageName: string; // package name
   price: number; // price
+  description: string; // description
   category: string;
   subcategory: string;
   selectedSize?: 'small' | 'medium' | 'large' | 'custom';
@@ -109,6 +110,8 @@ export default function SendPackage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     packageName: '', // package name
+    price: '', // price
+    description: '', // description
     category: '',
     subcategory: '',
     selectedSize: undefined,
@@ -237,8 +240,10 @@ export default function SendPackage() {
     },
     {
       id: 3,
-      title: 'Review',
-      subtitle: 'Confirm details',
+      // title: 'Review',
+      // subtitle: 'Confirm details',
+      title: 'Package Delivery',
+      subtitle: 'Set Delivery details',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -297,8 +302,26 @@ export default function SendPackage() {
     setStep((prev) => prev + 1);
   };
 
+  // Handle File Upload
+  const handleFileUpload = (e) => {
+    console.log('inside handle file upload');
+    const files = Array.from(e.target.files || []);
+    const newPhotos = files.map((file) => URL.createObjectURL(file));
+    console.log('new photos', newPhotos);
+    setFormData((prev) => ({
+      ...prev,
+      packagePhotos: [...prev.packagePhotos, ...newPhotos],
+    }));
+  };
+
+  const removePhoto = (index) => {
+    const updatedPhotos = formData.packagePhotos.filter((_, i) => i !== index);
+    setFormData((prev) => ({ ...prev, packagePhotos: updatedPhotos }));
+  };
+
   const renderStep = () => {
     switch (step) {
+      // What are you sending
       case 1:
         return (
           <motion.div
@@ -320,9 +343,10 @@ export default function SendPackage() {
                 </p>
               </div>
 
-              <div className="space-y-6">
-                {/* add package name */}
-                <div>
+              {/* Additional Fields as per our DB degin */}
+              <div>
+                {/* Add a package name */}
+                <div className="mb-6">
                   <label
                     htmlFor="packageName"
                     className="block text-sm font-medium text-gray-700 mb-2"
@@ -341,28 +365,32 @@ export default function SendPackage() {
                     placeholder="Enter package name"
                   />
                 </div>
+              </div>
 
-                {/* Add Price */}
-                <div>
+              <div>
+                {/* Add a package description */}
+                <div className="mb-6">
                   <label
-                    htmlFor="price"
+                    htmlFor="description"
                     className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    Price
+                    Package Description
                   </label>
                   <input
-                    type="number"
-                    id="price"
+                    type="text"
+                    id="description"
                     className="w-full p-3 border rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-                    value={formData.price}
+                    value={formData.description}
                     onChange={(e) =>
-                      setFormData({ ...formData, price: e.target.value })
+                      setFormData({ ...formData, description: e.target.value })
                     }
-                    aria-label="Enter price"
-                    placeholder="Enter price"
+                    aria-label="Enter package Description"
+                    placeholder="Enter package Description"
                   />
                 </div>
+              </div>
 
+              <div className="space-y-6">
                 <div>
                   <label
                     htmlFor="category"
@@ -380,12 +408,6 @@ export default function SendPackage() {
                     aria-label="Select package category"
                   >
                     <option value="">Select Category</option>
-                    {/* {packageCategories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))} */}
-
                     {packageCategories.map((category) => (
                       <option
                         key={category.categoryId}
@@ -397,6 +419,7 @@ export default function SendPackage() {
                   </select>
                 </div>
 
+                {/* Subcategory: conditionally visible based on category selection */}
                 {formData.category && (
                   <div>
                     <label
@@ -418,14 +441,6 @@ export default function SendPackage() {
                       aria-label="Select package type"
                     >
                       <option value="">Select Type</option>
-                      {/* {packageCategories
-                        .find((cat) => cat.id === formData.category)
-                        ?.subcategories.map((sub) => (
-                          <option key={sub.id} value={sub.id}>
-                            {sub.name}
-                          </option>
-                        ))} */}
-
                       {packageCategories
                         .find(
                           (category) =>
@@ -443,6 +458,7 @@ export default function SendPackage() {
                   </div>
                 )}
 
+                {/* Package Details : size and custom size */}
                 <PackageDetails
                   value={{ selectedSize: formData.selectedSize }}
                   onChange={(details) => {
@@ -457,9 +473,32 @@ export default function SendPackage() {
                   }}
                 />
 
+                {/* Add a Price */}
+                <div className="mb-6">
+                  <label
+                    htmlFor="price"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Price
+                  </label>
+                  <input
+                    type="number"
+                    id="price"
+                    className="w-full p-3 border rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                    value={formData.price}
+                    onChange={(e) =>
+                      setFormData({ ...formData, price: e.target.value })
+                    }
+                    aria-label="Enter price"
+                    placeholder="Enter price"
+                  />
+                </div>
+
                 {/* Package Photos Section */}
                 <div className="mt-8">
-                  <h3 className="text-lg font-semibold mb-4">Package Photos</h3>
+                  <h3 className="text-lg font-semibold mb-4  text-gray-700">
+                    Package Photos
+                  </h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Add photos of your package to help travelers better
                     understand its appearance and condition. This also helps
@@ -496,12 +535,7 @@ export default function SendPackage() {
                               className="sr-only"
                               accept="image/*"
                               multiple
-                              onChange={(e) => {
-                                const files = Array.from(e.target.files || []);
-                                // Here you would typically upload these files to your server
-                                // and get back URLs to store in formData.packagePhotos
-                                console.log('Files selected:', files);
-                              }}
+                              onChange={handleFileUpload}
                             />
                           </label>
                           <p className="pl-1">or drag and drop</p>
@@ -530,16 +564,17 @@ export default function SendPackage() {
                               <button
                                 type="button"
                                 className="absolute top-2 right-2 p-1.5 rounded-full bg-red-100 text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                                onClick={() => {
-                                  const newPhotos =
-                                    formData.packagePhotos.filter(
-                                      (_, i) => i !== index
-                                    );
-                                  setFormData({
-                                    ...formData,
-                                    packagePhotos: newPhotos,
-                                  });
-                                }}
+                                // onClick={() => {
+                                //   const newPhotos =
+                                //     formData.packagePhotos.filter(
+                                //       (_, i) => i !== index
+                                //     );
+                                //   setFormData({
+                                //     ...formData,
+                                //     packagePhotos: newPhotos,
+                                //   });
+                                // }}
+                                onClick={() => removePhoto(index)}
                               >
                                 <svg
                                   className="w-4 h-4"
@@ -562,6 +597,7 @@ export default function SendPackage() {
                     </div>
                   )}
 
+                  {/* Information about photos */}
                   <div className="mt-4 bg-blue-50 rounded-lg p-4">
                     <h4 className="text-sm font-medium text-blue-900 mb-2">
                       Photo Guidelines
@@ -584,6 +620,7 @@ export default function SendPackage() {
           </motion.div>
         );
 
+      // Pick up details
       case 2:
         return (
           <motion.div
@@ -635,6 +672,7 @@ export default function SendPackage() {
           </motion.div>
         );
 
+      // Confirm details
       case 3:
         return (
           <motion.div
@@ -648,10 +686,12 @@ export default function SendPackage() {
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-black">
-                  Communication Preferences
+                  {/* Communication Preferences */}
+                  Delivery Address
                 </h2>
                 <p className="text-gray-600 mt-2">
-                  Choose how you'd like to coordinate with the traveler.
+                  {/* Choose how you'd like to coordinate with the traveler. */}
+                  Where this packages is to be delivered
                 </p>
               </div>
 
@@ -696,6 +736,7 @@ export default function SendPackage() {
     }
   };
 
+  // Additional step for placing order
   if (showOrderComponent) {
     return <SelectTraveler sendPackageResponse={sendPackageResponse} />;
   }
@@ -706,7 +747,7 @@ export default function SendPackage() {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Progress Steps */}
           <div className="mb-8">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center p-6">
               {steps.map((s) => (
                 <div
                   key={s.id}

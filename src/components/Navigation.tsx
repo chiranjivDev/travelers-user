@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   FiMenu,
@@ -37,7 +37,6 @@ export default function Navigation() {
   const mainNavItems = [
     { name: 'Send Package', path: '/send-package' },
     { name: 'Browse Packages', path: '/browse-packages' },
-    { name: 'Orders', path: '/order' },
     { name: 'Browse Trips', path: '/browse-trips' },
     { name: 'Become a Traveler', path: '/become-traveler' },
     { name: 'How It Works', path: '/how-it-works' },
@@ -86,6 +85,9 @@ export default function Navigation() {
     },
   ];
 
+  // initialize router
+  const router = useRouter();
+
   return (
     <>
       <motion.header
@@ -123,9 +125,6 @@ export default function Navigation() {
                   }
                   if (item.name === 'Become a Traveler') {
                     return user?.permissions === 'traveler';
-                  }
-                  if (item.name === 'Orders') {
-                    return user?.permissions === 'sender';
                   }
                   return true;
                 })
@@ -247,6 +246,21 @@ export default function Navigation() {
                           <FiUserPlus className="w-5 h-5" />
                           <span>Register as Traveler</span>
                         </Link>
+                      )}
+
+                      {/* User Dashboard */}
+                      {user.permissions === 'sender' && (
+                        <div className="border-t border-gray-700 mt-2 pt-2">
+                          <button
+                            onClick={() => {
+                              router.push('/sender/dashboard');
+                            }}
+                            className="flex items-center space-x-3 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-gray-700 w-full"
+                          >
+                            <FiUser className="w-5 h-5" />
+                            <span>Dashboard</span>
+                          </button>
+                        </div>
                       )}
 
                       <div className="border-t border-gray-700 mt-2 pt-2">

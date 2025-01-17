@@ -84,6 +84,8 @@ export function* sendPackageSaga(action: {
       allowPostalDelivery: true,
       postalDeliveryDetails: 'Postal code 12345',
       restricted: false,
+
+      // size: data.selectedSize || ''
     };
 
     console.log('Constructed payload for create package API ===>', payload);

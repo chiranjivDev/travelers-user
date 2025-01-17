@@ -122,7 +122,7 @@ const Tooltip = ({
 
   return (
     <div className="relative inline-flex items-center group">
-      <div className="mr-3">{children}</div>
+      <div className="mr-3 text-gray-900">{children}</div>
       <motion.div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsVisible(false)}
@@ -506,17 +506,18 @@ export default function DeliveryMethod({
   return (
     <div className="w-full max-w-2xl mx-auto px-4 py-6">
       {/* Progress Steps */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-6">
-          {steps.map((step) => (
-            <div
-              key={step.id}
-              className={`flex flex-col items-center w-1/3 ${
-                step.id === currentStep ? 'opacity-100' : 'opacity-60'
-              }`}
-            >
+      {type === 'pickup' && (
+        <div className="mb-8">
+          <div className="flex justify-between items-center mb-6">
+            {steps.map((step) => (
               <div
-                className={`
+                key={step.id}
+                className={`flex flex-col items-center w-1/3 ${
+                  step.id === currentStep ? 'opacity-100' : 'opacity-60'
+                }`}
+              >
+                <div
+                  className={`
                   w-10 h-10 rounded-full flex items-center justify-center mb-2
                   ${
                     step.id <= currentStep
@@ -525,45 +526,48 @@ export default function DeliveryMethod({
                   }
                   ${step.id === currentStep ? 'ring-2 ring-blue-400 ring-offset-2' : ''}
                 `}
-              >
-                {step.icon}
+                >
+                  {step.icon}
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-medium mb-0.5">{step.title}</p>
+                  <p className="text-xs text-gray-500 max-w-[120px] mx-auto">
+                    {step.subtitle}
+                  </p>
+                </div>
               </div>
-              <div className="text-center">
-                <p className="text-sm font-medium mb-0.5">{step.title}</p>
-                <p className="text-xs text-gray-500 max-w-[120px] mx-auto">
-                  {step.subtitle}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="relative h-1 bg-gray-200 rounded">
+            <div
+              className="absolute h-full bg-blue-600 rounded transition-all duration-300 ease-out"
+              style={{
+                width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
+              }}
+            />
+          </div>
         </div>
-        <div className="relative h-1 bg-gray-200 rounded">
-          <div
-            className="absolute h-full bg-blue-600 rounded transition-all duration-300 ease-out"
-            style={{
-              width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
-            }}
-          />
-        </div>
-      </div>
+      )}
 
       {/* Main Content */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
         <div className="p-6">
           {/* Step Header */}
-          <div className="flex items-start space-x-4 mb-6">
-            <div className="p-2 bg-blue-50 rounded-lg shrink-0">
-              {steps[currentStep - 1].icon}
+          {type === 'pickup' && (
+            <div className="flex items-start space-x-4 mb-6">
+              <div className="p-2 bg-blue-50 rounded-lg shrink-0">
+                {steps[currentStep - 1].icon}
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">
+                  {steps[currentStep - 1].title}
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  {steps[currentStep - 1].subtitle}
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900">
-                {steps[currentStep - 1].title}
-              </h2>
-              <p className="text-sm text-gray-600 mt-1">
-                {steps[currentStep - 1].subtitle}
-              </p>
-            </div>
-          </div>
+          )}
 
           {/* Form Fields */}
           <div className="space-y-6">
@@ -637,7 +641,7 @@ export default function DeliveryMethod({
             )}
 
             {/* Step 2: Delivery Setup */}
-            {currentStep === 2 && (
+            {currentStep === 2 && type === 'pickup' && (
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold mb-4">
@@ -709,7 +713,7 @@ export default function DeliveryMethod({
 
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">
                       <Tooltip content="Select your preferred dates for sending and receiving the package">
                         Package Timeline
                       </Tooltip>
@@ -983,13 +987,15 @@ export default function DeliveryMethod({
                   </div>
                 </div>
 
-                <div className="space-y-4 mt-6">
+                {/* Comment out for now */}
+                {/* <div className="space-y-4 mt-6">
                   <div>
                     <h3 className="text-lg font-semibold mb-4">
                       <Tooltip content="Specify delivery preferences and postal options">
                         Delivery Preferences
                       </Tooltip>
                     </h3>
+
                     <div className="space-y-4">
                       <label className="flex items-center space-x-2">
                         <input
@@ -1043,10 +1049,10 @@ export default function DeliveryMethod({
                       )}
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900">
                     <Tooltip content="Select your preferred time slots for the handover. This helps travelers know when you're available.">
                       Preferred Times
                     </Tooltip>
@@ -1265,10 +1271,10 @@ export default function DeliveryMethod({
             )}
 
             {/* Step 3: Communication & Notes */}
-            {currentStep === 3 && (
+            {currentStep === 3 && type === 'pickup' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900">
                     <Tooltip content="Set up how you want to communicate with travelers">
                       Communication Preferences
                     </Tooltip>
@@ -1490,7 +1496,7 @@ export default function DeliveryMethod({
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900">
                     <Tooltip content="Add any additional information that might be helpful for coordinating the delivery.">
                       Additional Notes
                     </Tooltip>
@@ -1512,11 +1518,14 @@ export default function DeliveryMethod({
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-between mt-6 pt-6 border-t border-gray-200">
-        <button
-          type="button"
-          onClick={() => currentStep > 1 && setCurrentStep((prev) => prev - 1)}
-          className={`
+      {type === 'pickup' && (
+        <div className="flex justify-between mt-6 pt-6 border-t border-gray-200">
+          <button
+            type="button"
+            onClick={() =>
+              currentStep > 1 && setCurrentStep((prev) => prev - 1)
+            }
+            className={`
             px-6 py-2 rounded-md flex items-center space-x-2
             ${
               currentStep === 1
@@ -1525,42 +1534,8 @@ export default function DeliveryMethod({
             }
             transition-colors duration-200
           `}
-          disabled={currentStep === 1}
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            disabled={currentStep === 1}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          <span>Previous</span>
-        </button>
-
-        <button
-          // onClick={() =>
-          //   currentStep < totalSteps && setCurrentStep((prev) => prev + 1)
-          // }
-          onClick={handleNextStep}
-          type="button"
-          className={`
-            px-6 py-2 rounded-md flex items-center space-x-2 text-white
-            ${
-              currentStep === totalSteps
-                ? 'bg-green-600 hover:bg-green-700'
-                : 'bg-blue-600 hover:bg-blue-700'
-            }
-            transition-colors duration-200
-          `}
-        >
-          <span>{currentStep === totalSteps ? 'Complete' : 'Continue'}</span>
-          {currentStep !== totalSteps && (
             <svg
               className="w-5 h-5"
               fill="none"
@@ -1571,12 +1546,47 @@ export default function DeliveryMethod({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M9 5l7 7-7 7"
+                d="M15 19l-7-7 7-7"
               />
             </svg>
-          )}
-        </button>
-      </div>
+            <span>Previous</span>
+          </button>
+
+          <button
+            // onClick={() =>
+            //   currentStep < totalSteps && setCurrentStep((prev) => prev + 1)
+            // }
+            onClick={handleNextStep}
+            type="button"
+            className={`
+            px-6 py-2 rounded-md flex items-center space-x-2 text-white
+            ${
+              currentStep === totalSteps
+                ? 'bg-green-600 hover:bg-green-700'
+                : 'bg-blue-600 hover:bg-blue-700'
+            }
+            transition-colors duration-200
+          `}
+          >
+            <span>{currentStep === totalSteps ? 'Complete' : 'Continue'}</span>
+            {currentStep !== totalSteps && (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
