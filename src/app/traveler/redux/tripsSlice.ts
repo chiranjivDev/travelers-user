@@ -81,6 +81,11 @@ const tripsSlice = createSlice({
       state.travelerLoading = false;
       state.travelerError = action.payload;
     },
+
+    // Clear state
+    clearTripsState(state) {
+      state.addTripSuccess = false;
+    },
   },
 });
 
@@ -100,6 +105,8 @@ export const {
   fetchTravelerDetailsRequest,
   fetchTravelerDetailsSuccess,
   fetchTravelerDetailsFailure,
+
+  clearTripsState,
 } = tripsSlice.actions;
 
 export default tripsSlice.reducer;

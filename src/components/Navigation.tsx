@@ -35,10 +35,10 @@ export default function Navigation() {
   }, []);
 
   const mainNavItems = [
-    { name: 'Send Package', path: '/send-package' },
+    { name: 'Send Package', path: '/form' },
     { name: 'Browse Packages', path: '/browse-packages' },
     { name: 'Browse Trips', path: '/browse-trips' },
-    { name: 'Become a Traveler', path: '/become-traveler' },
+    { name: 'Become a Traveler', path: '/traveler-form' },
     { name: 'How It Works', path: '/how-it-works' },
     { name: 'Blog', path: '/blog' },
     { name: 'Safety', path: '/safety' },

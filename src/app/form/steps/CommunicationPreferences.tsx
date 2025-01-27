@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 
-export const Step4 = ({ control, errors }) => {
+export const CommunicationPreferences = ({ control, errors }) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4 text-gray-700">

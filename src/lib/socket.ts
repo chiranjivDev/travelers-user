@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = 'https://delivery-package.onrender.com/';
+const SOCKET_URL = 'http://65.2.152.45/';
 
 const socket = io(SOCKET_URL, {
   autoConnect: false,

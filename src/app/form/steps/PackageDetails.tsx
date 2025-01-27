@@ -236,6 +236,137 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
         )}
       </div>
 
+      {/* Additional Fields */}
+      {/* Handling */}
+      <div className="mb-4 flex items-center space-x-8">
+        {/* Requires Careful Handling */}
+        <div className="flex items-center">
+          <label
+            htmlFor="requiresCarefulHandling"
+            className="text-gray-700 mr-2 cursor-pointer"
+          >
+            Requires Careful Handling
+          </label>
+          <Controller
+            name="requiresCarefulHandling"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                id="requiresCarefulHandling"
+                type="checkbox"
+                className="mr-2 cursor-pointer"
+                checked={field.value || false}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            )}
+          />
+        </div>
+
+        {/* Is Fragile */}
+        <div className="flex items-center">
+          <label
+            htmlFor="isFragile"
+            className="text-gray-700 mr-2 cursor-pointer"
+          >
+            Fragile Item?
+          </label>
+          <Controller
+            name="isFragile"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                id="isFragile"
+                type="checkbox"
+                className="mr-2 cursor-pointer"
+                checked={field.value || false}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            )}
+          />
+        </div>
+      </div>
+
+      {/* Insurance and Priority */}
+      <div className="mb-4 flex items-center space-x-8">
+        {/* Insurance */}
+        <div className="flex items-center">
+          <label
+            htmlFor="insurance"
+            className="text-gray-700 mr-2 cursor-pointer"
+          >
+            Is Insured?
+          </label>
+          <Controller
+            name="insurance"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                id="insurance"
+                type="checkbox"
+                className="mr-2 cursor-pointer"
+                checked={field.value || false}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            )}
+          />
+        </div>
+
+        {/* Priority */}
+        <div className="flex items-center">
+          <label
+            htmlFor="priority"
+            className="text-gray-700 mr-2 cursor-pointer"
+          >
+            Priority
+          </label>
+          <Controller
+            name="priority"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                id="priority"
+                type="checkbox"
+                className="mr-2 cursor-pointer"
+                checked={field.value || false}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            )}
+          />
+        </div>
+      </div>
+
+      {/* Special Instructions */}
+      <div className="mb-4">
+        <label className="block text-gray-700">Special Instructions</label>
+        <Controller
+          name="specialInstructions"
+          control={control}
+          // rules={{
+          //   required: 'Special instructions are required.',
+          //   maxLength: {
+          //     value: 500,
+          //     message: 'Special instructions cannot exceed 500 characters.',
+          //   },
+          // }}
+          render={({ field }) => (
+            <textarea
+              {...field}
+              className="border p-2 w-full text-black"
+              placeholder="Enter any specific instructions"
+            />
+          )}
+        />
+        {/* {errors.specialInstructions && (
+          <p className="text-red-500 text-sm">
+            {errors.specialInstructions.message}
+          </p>
+        )} */}
+      </div>
+
       {/* Package Photos */}
       <PackagePhotos
         setValue={setValue}

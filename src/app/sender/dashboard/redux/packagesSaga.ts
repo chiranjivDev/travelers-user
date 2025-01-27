@@ -39,72 +39,72 @@ export function* fetchPackagesSaga() {
   }
 }
 
-// Saga for sending a package
-export function* sendPackageSaga(action: {
-  type: string;
-  payload: { userId: string; data: any };
-}) {
-  console.log('inside send package saga', action);
-  try {
-    yield put(sendPackageRequest());
+// Saga for sending a package (previous form)
+// export function* sendPackageSaga(action: {
+//   type: string;
+//   payload: { userId: string; data: any };
+// }) {
+//   console.log('inside send package saga', action);
+//   try {
+//     yield put(sendPackageRequest());
 
-    const { data } = action.payload;
-    console.log('inside send package saga payload data ===> ', data);
+//     const { data } = action.payload;
+//     console.log('inside send package saga payload data ===> ', data);
 
-    // Construct a test payload as per our API
-    const payload = {
-      name: data?.packageName || '',
-      categoryId: data.category,
-      subcategoryId: data.subcategory,
-      price: Number(data?.price) || 50,
-      description: data?.description || 'place holder description',
-      requiresCarefulHandling:
-        data.pickupMethod.packageHandling.requiresCarefulHandling || false,
-      isFragile: data.pickupMethod.packageHandling.isFragile || false,
-      specialInstructions:
-        data.pickupMethod.packageHandling.specialInstructions || '',
-      packagePhotos: [
-        'https://example.com/photo1.jpg',
-        'https://example.com/photo2.jpg',
-      ],
-      availabilityDates: '2025-01-07T11:03:47.523Z',
-      pickupLocation: data.pickupMethod.defaultLocation.city || '',
-      deliveryLocation: data.deliveryMethod.defaultLocation.city || '',
-      deliveryDate:
-        data.pickupMethod.timing.deliveryDate.preferredDate || '2025-01-02',
-      // dimensions: data.selectedSize || '',
-      dimensions: 10,
-      weight: 10,
-      insurance: true,
-      priority: true,
-      tracking: 'tracking',
-      communicationPreferences: 'whatsApp',
-      preferredTimes: 'Weekdays after 5 PM',
-      preferredDate: '2025-01-02',
-      allowPostalDelivery: true,
-      postalDeliveryDetails: 'Postal code 12345',
-      restricted: false,
+//     // Construct a test payload as per our API
+//     const payload = {
+//       name: data?.packageName || '',
+//       categoryId: data.category,
+//       subcategoryId: data.subcategory,
+//       price: Number(data?.price) || 50,
+//       description: data?.description || 'place holder description',
+//       requiresCarefulHandling:
+//         data.pickupMethod.packageHandling.requiresCarefulHandling || false,
+//       isFragile: data.pickupMethod.packageHandling.isFragile || false,
+//       specialInstructions:
+//         data.pickupMethod.packageHandling.specialInstructions || '',
+//       packagePhotos: [
+//         'https://example.com/photo1.jpg',
+//         'https://example.com/photo2.jpg',
+//       ],
+//       availabilityDates: '2025-01-07T11:03:47.523Z',
+//       pickupLocation: data.pickupMethod.defaultLocation.city || '',
+//       deliveryLocation: data.deliveryMethod.defaultLocation.city || '',
+//       deliveryDate:
+//         data.pickupMethod.timing.deliveryDate.preferredDate || '2025-01-02',
+//       // dimensions: data.selectedSize || '',
+//       dimensions: 10,
+//       weight: 10,
+//       insurance: true,
+//       priority: true,
+//       tracking: 'tracking',
+//       communicationPreferences: 'whatsApp',
+//       preferredTimes: 'Weekdays after 5 PM',
+//       preferredDate: '2025-01-02',
+//       allowPostalDelivery: true,
+//       postalDeliveryDetails: 'Postal code 12345',
+//       restricted: false,
 
-      // size: data.selectedSize || ''
-    };
+//       // size: data.selectedSize || ''
+//     };
 
-    console.log('Constructed payload for create package API ===>', payload);
+//     console.log('Constructed payload for create package API ===>', payload);
 
-    const response = yield call(
-      axiosInstance.post,
-      `${API_URL.PACKAGES}`,
-      payload
-    );
+//     const response = yield call(
+//       axiosInstance.post,
+//       `${API_URL.PACKAGES}`,
+//       payload
+//     );
 
-    yield put(sendPackageSuccess(response.data));
-    toast.success('Package Created successfully!');
-  } catch (error) {
-    yield put(
-      sendPackageFailure(error.response?.data?.message || error.message)
-    );
-    toast.error('Package Creation Failed', error);
-  }
-}
+//     yield put(sendPackageSuccess(response.data));
+//     toast.success('Package Created successfully!');
+//   } catch (error) {
+//     yield put(
+//       sendPackageFailure(error.response?.data?.message || error.message)
+//     );
+//     toast.error('Package Creation Failed', error);
+//   }
+// }
 
 // Fetch Categories Saga
 export function* fetchCategoriesSaga() {
@@ -143,6 +143,27 @@ export function* fetchSenderPackagesSaga(action) {
     yield put(
       fetchSenderPackagesFailure(error.response?.data?.message || error.message)
     );
+  }
+}
+
+// send package saga for new form
+export function* sendPackageSaga(action) {
+  console.log('inside send package saga', action);
+  try {
+    yield put(sendPackageRequest());
+    console.log('inside send package saga payload data ===> ', action.payload);
+    const response = yield call(
+      axiosInstance.post,
+      `${API_URL.PACKAGES}`,
+      action.payload
+    );
+    yield put(sendPackageSuccess(response.data));
+    toast.success('Package Created successfully!');
+  } catch (error) {
+    yield put(
+      sendPackageFailure(error.response?.data?.message || error.message)
+    );
+    toast.error('Package Creation Failed', error);
   }
 }
 

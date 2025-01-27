@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from '../store/store';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://delivery-package.onrender.com/',
+  baseURL: 'http://65.2.152.45/',
   headers: {},
 });
 

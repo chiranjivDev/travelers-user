@@ -26,6 +26,7 @@ import { LOGIN, REGISTER } from '@/app/signup/redux/authActions';
 import { loginSaga, signupSaga } from '@/app/signup/redux/authSaga';
 import {
   CREATE_TRIP,
+  SEARCH_TRAVELER_PACKAGE,
   TRAVELER_DETAIL,
   TRIP_DETAIL,
   TRIPS,
@@ -35,6 +36,7 @@ import {
   fetchSingleTripSaga,
   fetchTravelerDetailsSaga,
   fetchTripsSaga,
+  searchTravelerPackageSaga,
 } from '@/app/traveler/redux/tripsSaga';
 import { all, takeLatest } from 'redux-saga/effects';
 import {
@@ -85,5 +87,8 @@ export default function* rootSaga() {
     // order
     yield takeLatest(CREATE_ORDER, createOrderSaga),
     yield takeLatest(FETCH_ORDERS, fetchOrdersSaga),
+
+    // search traveler package
+    yield takeLatest(SEARCH_TRAVELER_PACKAGE, searchTravelerPackageSaga),
   ]);
 }

@@ -25,16 +25,13 @@ const VerifyPage = () => {
 
   const verifyToken = async (token: string) => {
     try {
-      const response = await fetch(
-        'https://delivery-package.onrender.com/auth/verify-email',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ token }),
-        }
-      );
+      const response = await fetch('http://65.2.152.45/auth/verify-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
 
       if (!response.ok) {
         throw new Error('Failed to verify email');

@@ -64,7 +64,7 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/send-package">
+              <Link href="/form">
                 <motion.button
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
@@ -73,7 +73,7 @@ export default function Home() {
                   Send a Package
                 </motion.button>
               </Link>
-              <Link href="/become-traveler">
+              <Link href="/traveler-form">
                 <motion.button
                   className="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-full text-lg font-semibold transition-all duration-300"
                   whileHover={{ scale: 1.05 }}

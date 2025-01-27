@@ -1,5 +1,4 @@
 'use client';
-// Created for temprary use only, create order will have a separate UI and the api call will be moved to that file
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { SENDER_PACKAGES } from '../redux/packagesAction';
 import { TRIPS } from '@/app/traveler/redux/tripsAction';
 import { CREATE_ORDER, FETCH_ORDERS } from '../redux/orderAction';
+import GenericModal from './GenericModal';
+import { CreateNewOrder } from './CreateNewOrder';
 
 const CreateOrder = () => {
   const { senderPackages } = useSelector((state) => state.packages);
@@ -15,8 +16,21 @@ const CreateOrder = () => {
     (state) => state.order
   );
 
-  const [selectedSenderPackage, setSelectedSenderPackage] = useState('');
+  const [selectedSenderPackage, setSelectedSenderPackage] = useState(null);
   const [selectedTrip, setSelectedTrip] = useState('');
+
+  console.log('selected sender package: ', selectedSenderPackage);
+  console.log('sender packages', senderPackages);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const dispatch = useDispatch();
   const { user } = useAuth();
@@ -66,99 +80,188 @@ const CreateOrder = () => {
         padding: '20px',
       }}
     >
-      <h2 className="text-lg font-bold mb-4">Order Management</h2>
+      {/* Search Traveler and place order modal */}
+      <div>
+        <GenericModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          title="Place Order"
+        >
+          <CreateNewOrder
+            selectedSenderPackage={selectedSenderPackage}
+            onClose={handleCloseModal}
+          />
+        </GenericModal>
+      </div>
 
-      {/* Select a package */}
-      <select
-        value={selectedSenderPackage}
-        onChange={(e) => setSelectedSenderPackage(e.target.value)}
-        className="mb-4 p-2 border rounded w-64 bg-white text-gray-800"
-      >
-        <option value="">Select a Package</option>
-        {senderPackages?.map((pkg) => (
-          <option key={pkg.id} value={pkg.id}>
-            {pkg.name}
-          </option>
-        ))}
-      </select>
+      {/* Header */}
+      <div className="bg-gray-800 p-6 rounded-xl shadow-md mb-3">
+        <h2 className="text-xl font-semibold text-white mb-6">
+          Order Management
+        </h2>
 
-      {/* Select a trip/traveler package */}
-      <select
-        value={selectedTrip}
-        onChange={(e) => setSelectedTrip(e.target.value)}
-        className="mb-4 p-2 border rounded w-64 bg-white text-gray-800"
-      >
-        <option value="">Select a Trip</option>
-        {trips?.map((trip) => (
-          <option key={trip.id} value={trip.id}>
-            {trip.name}
-          </option>
-        ))}
-      </select>
+        <div className="flex items-end space-x-6">
+          {/* Select a package */}
+          <div className="flex-1">
+            <label
+              htmlFor="sender-package"
+              className="block text-sm font-medium text-gray-300 mb-2"
+            >
+              Select a Package
+            </label>
+            <select
+              id="sender-package"
+              // value={selectedSenderPackage}
+              // onChange={(e) => setSelectedSenderPackage(e.target.value)}
+              value={selectedSenderPackage?.packageID || ''}
+              onChange={(e) => {
+                const selectedPackage = senderPackages.find(
+                  (pkg) => pkg.packageID === e.target.value
+                );
+                setSelectedSenderPackage(selectedPackage);
+              }}
+              className="w-full p-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Select a Package</option>
+              {senderPackages?.map((pkg) => (
+                <option key={pkg.packageID} value={pkg.packageID}>
+                  {pkg.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {/* Place Order Button */}
-      <button
-        onClick={handleCreateOrder}
-        className="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 mb-6"
-      >
-        Place Order
-      </button>
+          {/* Select a trip/traveler package */}
+          {/* <div className="flex-1">
+            <label
+              htmlFor="trip-package"
+              className="block text-sm font-medium text-gray-300 mb-2"
+            >
+              Select a Trip
+            </label>
+            <select
+              id="trip-package"
+              value={selectedTrip}
+              onChange={(e) => setSelectedTrip(e.target.value)}
+              className="w-full p-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Select a Trip</option>
+              {trips?.map((trip) => (
+                <option key={trip.id} value={trip.id}>
+                  {trip.name}
+                </option>
+              ))}
+            </select>
+          </div> */}
 
-      {/* Created Orders */}
-      <h3 className="text-lg font-semibold mb-4">Created Orders</h3>
+          {/* Place Order Button */}
+          <div>
+            <button
+              // onClick={handleCreateOrder}
+              onClick={handleOpenModal}
+              className="py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+            >
+              {/* Place Order */}
+              Find Traveler
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Orders section */}
       {fetchOrdersLoading ? (
         <div className="flex justify-center items-center my-6">
-          <p>Loading orders...</p>
+          <p className="text-gray-300">Loading orders...</p>
         </div>
       ) : orders?.length > 0 ? (
-        <table className="border-collapse border border-gray-300 w-full">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2">Order ID</th>
-              <th className="border border-gray-300 px-4 py-2">
-                Pickup Address
-              </th>
-              <th className="border border-gray-300 px-4 py-2">
-                Delivery Address
-              </th>
-              <th className="border border-gray-300 px-4 py-2">Pickup Date</th>
-              <th className="border border-gray-300 px-4 py-2">
-                Delivery Date
-              </th>
-              <th className="border border-gray-300 px-4 py-2">Status</th>
-              <th className="border border-gray-300 px-4 py-2">Payment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.order_id}>
-                <td className="border border-gray-300 px-4 py-2">
-                  {order.order_id}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {order.pickup_address}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {order.delivery_address}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {new Date(order.pickup_datetime).toLocaleString()}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {new Date(order.delivery_datetime).toLocaleString()}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {order.order_status}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {order.payment_status}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+          <div className="p-6 border-b border-gray-700">
+            <h2 className="text-xl font-semibold text-white">Created Orders</h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-900/50">
+                <tr>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Order ID
+                  </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Pickup Address
+                  </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Delivery Address
+                  </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Pickup Date
+                  </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Delivery Date
+                  </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Status
+                  </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    Payment
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-700">
+                {orders.map((order) => (
+                  <tr
+                    key={order.order_id}
+                    className="hover:bg-gray-700/50 transition-colors"
+                  >
+                    <td className="py-4 px-6">
+                      <div className="text-sm font-medium text-white">
+                        {order.order_id}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm text-gray-300">
+                        {order.pickup_address}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm text-gray-300">
+                        {order.delivery_address}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm text-gray-300">
+                        {new Date(order.pickup_datetime).toLocaleString()}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm text-gray-300">
+                        {new Date(order.delivery_datetime).toLocaleString()}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          order.order_status === 'Delivered'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}
+                      >
+                        {order.order_status}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm text-gray-300">
+                        {order.payment_status}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       ) : (
-        <p>No orders found.</p>
+        <div className="flex justify-center items-center h-64">
+          <p className="text-gray-300">No orders yet.</p>
+        </div>
       )}
     </div>
   );

@@ -114,7 +114,7 @@ const sidebarItems: SidebarItem[] = [
   // Orders
   {
     id: 'orders',
-    label: 'My Order',
+    label: 'My Orders',
     icon: FiPackage,
     path: '/sender/dashboard/orders',
     role: 'all',
