@@ -2,7 +2,8 @@ import axios from 'axios';
 import store from '../store/store';
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://65.2.152.45/',
+  baseURL:
+    'https://dimensions-democrats-involvement-jerusalem.trycloudflare.com/',
   headers: {},
 });
 

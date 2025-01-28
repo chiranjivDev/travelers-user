@@ -99,10 +99,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Temporary Implementation for login
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://65.2.152.45/auth/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'https://dimensions-democrats-involvement-jerusalem.trycloudflare.com/auth/login',
+        {
+          email,
+          password,
+        }
+      );
 
       console.log('response from UI, LOGIN', response);
 
@@ -155,13 +158,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // const role: UserRole = 'Traveler';
     console.log('role ====>', role);
     try {
-      const response = await axios.post('http://65.2.152.45/users', {
-        name: fullName,
-        email,
-        password,
-        permissions: role,
-        phone: phoneNumber,
-      });
+      const response = await axios.post(
+        'https://dimensions-democrats-involvement-jerusalem.trycloudflare.com/users',
+        {
+          name: fullName,
+          email,
+          password,
+          permissions: role,
+          phone: phoneNumber,
+        }
+      );
       console.log('response from UI, SIGNUP', response);
       const { data } = response;
       // Show success toast after successful registration
