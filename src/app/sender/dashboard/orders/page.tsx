@@ -78,6 +78,8 @@ const CreateOrder = () => {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '20px',
+        width: '85%',
+        marginInline: 'auto',
       }}
     >
       {/* Search Traveler and place order modal */}
@@ -95,7 +97,7 @@ const CreateOrder = () => {
       </div>
 
       {/* Header */}
-      <div className="bg-gray-800 p-6 rounded-xl shadow-md mb-3">
+      <div className="bg-gray-800 p-6 rounded-xl shadow-md mb-3 w-full border border-gray-700">
         <h2 className="text-xl font-semibold text-white mb-6">
           Order Management
         </h2>
@@ -135,8 +137,7 @@ const CreateOrder = () => {
           {/* <div className="flex-1">
             <label
               htmlFor="trip-package"
-              className="block text-sm font-medium text-gray-300 mb-2"
-            >
+              className="block text-sm font-medium text-gray-300 mb-2">
               Select a Trip
             </label>
             <select

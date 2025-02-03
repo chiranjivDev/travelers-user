@@ -1,6 +1,7 @@
 import {
   PACKAGE_CATEGORIES,
   PACKAGES,
+  SEARCH_SENDER_PACKAGE,
   SEND_PACKAGE,
   SENDER_PACKAGES,
 } from '@/app/sender/dashboard/redux/packagesAction';
@@ -8,6 +9,7 @@ import {
   fetchCategoriesSaga,
   fetchPackagesSaga,
   fetchSenderPackagesSaga,
+  searchSenderPackageSaga,
   sendPackageSaga,
 } from '@/app/sender/dashboard/redux/packagesSaga';
 import { ADMIN_LOGIN } from '@/app/admin/login/redux/adminLoginAction';
@@ -22,7 +24,11 @@ import {
   fetchUsersSaga,
   updateUserStatusSaga,
 } from '@/app/admin/users/redux/userSaga';
-import { LOGIN, REGISTER } from '@/app/signup/redux/authActions';
+import {
+  LOGIN,
+  REGISTER,
+  USER_LOGGED_IN,
+} from '@/app/signup/redux/authActions';
 import { loginSaga, signupSaga } from '@/app/signup/redux/authSaga';
 import {
   CREATE_TRIP,
@@ -38,7 +44,7 @@ import {
   fetchTripsSaga,
   searchTravelerPackageSaga,
 } from '@/app/traveler/redux/tripsSaga';
-import { all, takeLatest } from 'redux-saga/effects';
+import { all, fork, takeLatest } from 'redux-saga/effects';
 import {
   DELETE_PACKAGE,
   GET_ALL_PACKAGES,
@@ -57,6 +63,25 @@ import {
   createOrderSaga,
   fetchOrdersSaga,
 } from '@/app/sender/dashboard/redux/orderSaga';
+import {
+  DELETE_TRAVELLERS,
+  GET_ALL_TRAVELLERS,
+  UPDATE_TRAVELLERS_STATUS,
+} from '@/app/admin/travelers/redux/travelerAction';
+import {
+  deleteTravelerSaga,
+  fetchTravelerSaga,
+  updateTravelerStatusSaga,
+} from '@/app/admin/travelers/redux/travelerSaga';
+import {
+  fetchChatMessagesSaga,
+  watchOnPings,
+} from '@/app/chat/redux/chatsSaga';
+import { FETCH_CHAT_MESSAGES } from '@/app/chat/redux/chatsAction';
+
+function* startWatchOnPingsSaga() {
+  yield fork(watchOnPings);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -83,12 +108,22 @@ export default function* rootSaga() {
     yield takeLatest(GET_ALL_PACKAGES, PackagesSaga),
     yield takeLatest(UPDATE_PACKAGE_STATUS, updatepackagesStatusSaga),
     yield takeLatest(DELETE_PACKAGE, deletePackageSaga),
+    yield takeLatest(GET_ALL_TRAVELLERS, fetchTravelerSaga),
+    yield takeLatest(UPDATE_TRAVELLERS_STATUS, updateTravelerStatusSaga),
+    yield takeLatest(DELETE_TRAVELLERS, deleteTravelerSaga),
 
     // order
     yield takeLatest(CREATE_ORDER, createOrderSaga),
     yield takeLatest(FETCH_ORDERS, fetchOrdersSaga),
 
-    // search traveler package
+    // search traveler and sender package
     yield takeLatest(SEARCH_TRAVELER_PACKAGE, searchTravelerPackageSaga),
+    yield takeLatest(SEARCH_SENDER_PACKAGE, searchSenderPackageSaga),
+    // Start watchOnPings only when USER_LOGGED_IN action is dispatched
+    // yield fork(watchOnPings),
+    yield takeLatest(USER_LOGGED_IN, startWatchOnPingsSaga),
+
+    // chat messages
+    yield takeLatest(FETCH_CHAT_MESSAGES, fetchChatMessagesSaga),
   ]);
 }

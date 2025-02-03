@@ -231,13 +231,13 @@ export default function PackageCard({
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <Avatar
-              src={pkg.sender.avatar}
+              src={pkg.sender?.avatar}
               alt={pkg.sender.name}
               size={40}
               className="rounded-full"
             />
             <div>
-              <h3 className="font-medium">{pkg.sender.name}</h3>
+              <h3 className="font-medium">{pkg?.name}</h3>
               <div className="flex items-center text-sm text-gray-400">
                 <FiStar className="w-4 h-4 text-yellow-500 mr-1" />
                 <span>{pkg.sender.rating}</span>
@@ -258,7 +258,7 @@ export default function PackageCard({
               <FiMapPin className="w-4 h-4 mr-1" />
               From
             </div>
-            <div className="font-medium">{pkg.pickupLocation}</div>
+            <div className="font-medium">{pkg?.origin?.city}</div>
           </div>
           <div className="flex items-center text-gray-500 px-4">
             <FiArrowRight className="w-5 h-5" />
@@ -268,7 +268,7 @@ export default function PackageCard({
               <FiMapPin className="w-4 h-4 mr-1" />
               To
             </div>
-            <div className="font-medium">{pkg.deliveryLocation}</div>
+            <div className="font-medium">{pkg?.destination?.city}</div>
           </div>
         </div>
 
@@ -289,7 +289,8 @@ export default function PackageCard({
               Package Details
             </div>
             <div className="font-medium">
-              {pkg.weight}kg · {pkg.dimensions}
+              {pkg.weight}kg · {pkg.dimension.length} x {pkg.dimension.width} x{' '}
+              {pkg.dimension.height}
             </div>
           </div>
         </div>

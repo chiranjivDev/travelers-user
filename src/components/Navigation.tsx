@@ -43,7 +43,8 @@ export default function Navigation() {
     { name: 'Blog', path: '/blog' },
     { name: 'Safety', path: '/safety' },
     { name: 'Support', path: '/support' },
-    { name: 'Chat', path: '/simple-chat' },
+    { name: 'Chat', path: '/chat' },
+    // { name: 'Chat', path: '/simple-chat' },
   ];
 
   const userNavItems = [

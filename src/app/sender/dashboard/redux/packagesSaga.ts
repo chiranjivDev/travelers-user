@@ -167,6 +167,40 @@ export function* sendPackageSaga(action) {
   }
 }
 
+// Search Sender Packages Saga
+export function* searchSenderPackageSaga(action) {
+  const { searchKeyword, startDate, endDate } = action.payload;
+  console.log(
+    'Searching for sender packages with keyword/dates:',
+    searchKeyword,
+    startDate,
+    endDate
+  );
+  try {
+    yield put(fetchPackagesRequest());
+
+    const params = {
+      ...(searchKeyword && { keyword: searchKeyword }),
+      ...(startDate && { startDate }),
+      ...(endDate && { endDate }),
+    };
+
+    const response = yield call(
+      axiosInstance.get,
+      `${API_URL.PACKAGES}/search`,
+      {
+        params,
+      }
+    );
+    console.log('Search sender packages saga response', response);
+    yield put(fetchPackagesSuccess(response.data));
+  } catch (error) {
+    yield put(
+      fetchPackagesFailure(error.response?.data?.message || error.message)
+    );
+  }
+}
+
 // Mock package categories
 const packageCategories = [
   {

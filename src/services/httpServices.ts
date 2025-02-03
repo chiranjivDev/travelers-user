@@ -2,10 +2,11 @@ import axios from 'axios';
 import store from '../store/store';
 
 export const axiosInstance = axios.create({
-  baseURL:
-    'https://dimensions-democrats-involvement-jerusalem.trycloudflare.com/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {},
+
 });
+console.log("base url",process.env.BASE_URL );
 
 // Add request interceptor to include auth token
 axiosInstance.interceptors.request.use(

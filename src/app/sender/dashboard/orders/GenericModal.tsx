@@ -44,7 +44,7 @@ export default function GenericModal({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-2">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium text-gray-900"
@@ -59,7 +59,7 @@ export default function GenericModal({
                   </button>
                 </div>
 
-                <div className="mb-6">{children}</div>
+                <div className="mb-0">{children}</div>
 
                 {footerContent && (
                   <div className="mt-4 border-t border-gray-200 pt-4">

@@ -15,6 +15,9 @@ export const API_URL = {
   // Order
   ORDERS: 'orders',
 
+  // Chats
+  CHAT_MESSAGES: 'chat/messages',
+
   //Admin
   USERS: 'users',
   AUTH: 'auth/login',

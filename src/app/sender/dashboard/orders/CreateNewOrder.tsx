@@ -97,7 +97,7 @@ export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
 
       {/* Vertical Scroll List of Traveler Packages mock api reponse */}
       <div
-        className={`${trips.length === 0 ? '' : 'h-96'} overflow-y-auto space-y-4 mt-6 mb-6`}
+        className={`${trips.length === 0 ? '' : 'h-96'} overflow-y-auto custom-scrollbar space-y-4 mt-6 mb-6`}
       >
         {trips.length === 0 ? (
           <div className="text-center text-gray-600">
@@ -107,7 +107,7 @@ export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
           trips.map((trip) => (
             <div
               key={trip.id}
-              className={`flex items-start p-4 bg-white rounded-lg shadow-md hover:shadow-lg cursor-pointer ${
+              className={`flex items-start p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm cursor-pointer ${
                 selectedTrip === trip.id
                   ? 'bg-blue-100 border-2 border-green-500'
                   : ''
@@ -125,14 +125,14 @@ export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
                 <h3 className="text-lg font-semibold text-gray-600">
                   {trip.name}
                 </h3>
-                <p className="text-sm text-gray-500">{trip.email}</p>
-                <p className="text-sm text-gray-500">{trip.phone}</p>
-                <p className="text-sm text-gray-500">
-                  Arrival: {trip.tripDetails.arrivalLocation} on{' '}
+                <p className="text-sm text-gray-500 mb-1">📩 {trip.email}</p>
+                <p className="text-sm text-gray-500 mb-1">📞 {trip.phone}</p>
+                <p className="text-sm text-gray-500 mb-1">
+                🛬 Arrival: {trip.tripDetails.arrivalLocation} on{' '}
                   {trip.tripDetails.arrivalDateTime}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Departure: {trip.tripDetails.departureLocation} on{' '}
+                🛫 Departure: {trip.tripDetails.departureLocation} on{' '}
                   {trip.tripDetails.departureDateTime}
                 </p>
               </div>

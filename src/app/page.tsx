@@ -3,8 +3,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Home() {
+  const { user } = useAuth();
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -63,7 +65,7 @@ export default function Home() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/form">
                 <motion.button
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition-all duration-300"
@@ -82,6 +84,42 @@ export default function Home() {
                   Become a Traveler
                 </motion.button>
               </Link>
+            </div> */}
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {user ? (
+                user.permissions === 'sender' ? (
+                  <Link href="/form">
+                    <motion.button
+                      className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition-all duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Send a Package
+                    </motion.button>
+                  </Link>
+                ) : user.permissions === 'traveler' ? (
+                  <Link href="/traveler-form">
+                    <motion.button
+                      className="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-full text-lg font-semibold transition-all duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Become a Traveler
+                    </motion.button>
+                  </Link>
+                ) : null
+              ) : (
+                <Link href="/login">
+                  <motion.button
+                    className="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-full text-lg font-semibold transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Login
+                  </motion.button>
+                </Link>
+              )}
             </div>
 
             {/* Trust Indicators */}

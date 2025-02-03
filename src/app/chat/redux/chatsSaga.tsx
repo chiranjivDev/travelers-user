@@ -1,0 +1,195 @@
+// import { take, call, put } from 'redux-saga/effects';
+// import { eventChannel } from 'redux-saga';
+// import socketConnection from '@/lib/socket';
+// import {
+//   fetchChatListSuccess,
+//   fetchChatMessagesFailure,
+//   fetchChatMessagesRequest,
+//   fetchChatMessagesSuccess,
+//   newMessageHandler,
+// } from './chatsSlice';
+// import { axiosInstance } from '@/services/httpServices';
+// import { API_URL } from '@/services/webConstants';
+
+// function createSocketChannel(socket) {
+//   return eventChannel((emit) => {
+//     const roomsHandler = (event) => {
+//       console.log('rooms handler', event);
+//       emit(event);
+//     };
+
+//     const errorHandler = (errorEvent) => {
+//       emit(new Error(errorEvent.reason));
+//     };
+
+//     const privateMessageHandler = (messageEvent) => {
+//       console.log('private message handler', messageEvent);
+//       emit(messageEvent);
+//     };
+
+//     socket.on('my_rooms', roomsHandler);
+//     socket.on('private_message', privateMessageHandler);
+//     socket.on('error', errorHandler);
+
+//     const unsubscribe = () => {
+//       socket.off('my_rooms', roomsHandler);
+//     };
+
+//     return unsubscribe;
+//   });
+// }
+
+// export function* watchOnPings() {
+//   try {
+//     console.log('Inside watchOnPings saga');
+
+//     const socket = yield call(socketConnection);
+
+//     if (!socket) {
+//       console.error('Socket connection failed');
+//       return;
+//     }
+
+//     console.log('Socket connection established:', socket);
+
+//     // Create a socket channel
+//     const socketChannel = yield call(createSocketChannel, socket);
+//     socket.emit('get_my_rooms');
+
+//     console.log('socket channel', socketChannel);
+
+//     // Listen for messages from the socket channel
+//     while (true) {
+//       try {
+//         const payload = yield take(socketChannel);
+//         console.log('Message received:', payload);
+//         // yield put(fetchChatListSuccess(payload));
+//         yield put(newMessageHandler(payload));
+//       } catch (err) {
+//         console.error('Error in socketChannel:', err);
+//         socketChannel.close();
+//         break;
+//       }
+//     }
+//   } catch (error) {
+//     console.error('Error in watchOnPings saga:', error);
+//   }
+// }
+
+// updated channel with event type
+import { take, call, put } from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
+import socketConnection from '@/lib/socket';
+import {
+  fetchChatListSuccess,
+  fetchChatMessagesFailure,
+  fetchChatMessagesRequest,
+  fetchChatMessagesSuccess,
+  newMessageHandler,
+  updateRoomsList,
+} from './chatsSlice';
+import { axiosInstance } from '@/services/httpServices';
+import { API_URL } from '@/services/webConstants';
+
+function createSocketChannel(socket) {
+  return eventChannel((emit) => {
+    const roomsHandler = (event) => {
+      console.log('Received rooms:', event);
+      emit({ type: 'ROOMS_LIST', payload: event });
+    };
+
+    const privateMessageHandler = (messageEvent) => {
+      console.log('Private message received:', messageEvent);
+      emit({ type: 'PRIVATE_MESSAGE', payload: messageEvent });
+    };
+
+    const errorHandler = (errorEvent) => {
+      console.error('Socket error:', errorEvent);
+      emit({ type: 'ERROR', payload: new Error(errorEvent.reason) });
+    };
+
+    // Listeners for specific events
+    socket.on('my_rooms', roomsHandler);
+    socket.on('private_message', privateMessageHandler);
+    socket.on('error', errorHandler);
+
+    // Cleanup function
+    const unsubscribe = () => {
+      socket.off('my_rooms', roomsHandler);
+      socket.off('private_message', privateMessageHandler);
+      socket.off('error', errorHandler);
+    };
+
+    return unsubscribe;
+  });
+}
+
+export function* watchOnPings() {
+  try {
+    console.log('Inside watchOnPings saga');
+
+    const socket = yield call(socketConnection);
+    if (!socket) {
+      console.error('Socket connection failed');
+      return;
+    }
+
+    console.log('Socket connection established:', socket);
+
+    // Create a socket channel
+    const socketChannel = yield call(createSocketChannel, socket);
+    socket.emit('get_my_rooms');
+
+    console.log('Listening for socket events...');
+
+    while (true) {
+      try {
+        const { type, payload } = yield take(socketChannel);
+        console.log(`Event received: ${type}`, payload);
+
+        switch (type) {
+          case 'ROOMS_LIST':
+            yield put(fetchChatListSuccess(payload));
+            break;
+          case 'PRIVATE_MESSAGE':
+            yield put(newMessageHandler(payload));
+            break;
+          case 'ERROR':
+            console.error('Socket error:', payload);
+            break;
+          default:
+            console.warn('Unknown event type:', type);
+        }
+      } catch (err) {
+        console.error('Error in socketChannel:', err);
+        socketChannel.close();
+        break;
+      }
+    }
+  } catch (error) {
+    console.error('Error in watchOnPings saga:', error);
+  }
+}
+
+// messages saga
+// Fetch Sender-Specific Packages Saga
+export function* fetchChatMessagesSaga(action) {
+  console.log('inside fetchChatMessagesSaga');
+  try {
+    yield put(fetchChatMessagesRequest());
+
+    const { roomId } = action.payload;
+    console.log('room id from saga', roomId);
+    const response = yield call(
+      axiosInstance.get,
+      `${API_URL.CHAT_MESSAGES}/${roomId}`
+    );
+
+    console.log('fetch sender packages saga response', response);
+    yield put(fetchChatMessagesSuccess(response.data));
+  } catch (error) {
+    yield put(
+      fetchChatMessagesFailure(error.response?.data?.message || error.message)
+    );
+  }
+}
