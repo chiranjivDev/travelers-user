@@ -2,10 +2,11 @@
 
 import { SEARCH_TRAVELER_PACKAGE } from '@/app/traveler/redux/tripsAction';
 import { useDebounce } from '@/hooks/useDebounce';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CREATE_ORDER } from '../redux/orderAction';
 import { clearOrdersState } from '../redux/orderSlice';
+import { useRouter } from 'next/navigation';
 
 export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
   const { trips } = useSelector((state) => state.trips);
@@ -16,9 +17,11 @@ export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
   const [selectedTrip, setSelectedTrip] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
+  const router = useRouter();
 
   console.log('selected sender package: ', selectedSenderPackage);
   console.log('trips', trips);
+  console.log('selected trip', selectedTrip);
 
   useEffect(() => {
     dispatch({
@@ -78,6 +81,24 @@ export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
     }
   }, [createOrderSuccess]);
 
+  // Handle Navigate to Chat
+  const handleChatClick = useCallback(
+    (travelerId: string) => {
+      console.log('traveler id:', travelerId);
+      router.push(`/chat?user=${travelerId}`);
+    },
+    [router]
+  );
+
+  // navigate to simple chats
+  // const handleChatClick = useCallback(
+  //   (travelerId: string) => {
+  //     console.log('traveler id:', travelerId);
+  //     router.push(`/simple-chat`);
+  //   },
+  //   [router]
+  // );
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
@@ -128,14 +149,24 @@ export const CreateNewOrder = ({ selectedSenderPackage, onClose }: any) => {
                 <p className="text-sm text-gray-500 mb-1">📩 {trip.email}</p>
                 <p className="text-sm text-gray-500 mb-1">📞 {trip.phone}</p>
                 <p className="text-sm text-gray-500 mb-1">
-                🛬 Arrival: {trip.tripDetails.arrivalLocation} on{' '}
+                  🛬 Arrival: {trip.tripDetails.arrivalLocation} on{' '}
                   {trip.tripDetails.arrivalDateTime}
                 </p>
                 <p className="text-sm text-gray-500">
-                🛫 Departure: {trip.tripDetails.departureLocation} on{' '}
+                  🛫 Departure: {trip.tripDetails.departureLocation} on{' '}
                   {trip.tripDetails.departureDateTime}
                 </p>
               </div>
+              {/* Chat Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevents selecting the trip when clicking chat
+                  handleChatClick(trip.traveler.id);
+                }}
+                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transition-all"
+              >
+                💬
+              </button>
             </div>
           ))
         )}
