@@ -10,6 +10,7 @@ const chatsSlice = createSlice({
     sendingMessage: false,
     error: null,
     sendMessageSuccess: false,
+    file_url: null,
   },
   reducers: {
     // Fetch Chat List Actions
@@ -44,6 +45,16 @@ const chatsSlice = createSlice({
     fetchChatMessagesFailure(state, action) {
       state.loadingChatMessages = false;
       state.error = action.payload;
+    },
+
+    // Upload file
+    setFileUrl(state, action) {
+      console.log('upload file url slice', action.payload);
+      state.file_url = action.payload;
+    },
+
+    clearFileUrl(state) {
+      state.file_url = null;
     },
 
     // Send Message Actions
@@ -90,6 +101,8 @@ export const {
   clearChatState,
 
   newMessageHandler,
+  setFileUrl,
+  clearFileUrl,
 } = chatsSlice.actions;
 
 export default chatsSlice.reducer;

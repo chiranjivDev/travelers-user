@@ -17,6 +17,8 @@ export const API_URL = {
 
   // Chats
   CHAT_MESSAGES: 'chat/messages',
+  FILE_UPLOAD: 'chat/upload',
+  CHANGE_OFFER_STATUS: 'CHANGE_OFFER_STATUS',
 
   //Admin
   USERS: 'users',

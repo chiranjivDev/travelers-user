@@ -20,25 +20,152 @@ import {
   FiTruck,
   FiInfo,
   FiDollarSign,
+  FiFileText,
 } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSocket } from '@/lib/socket';
 import { useAuth } from '@/contexts/AuthContext';
+import { UPLOAD_FILE } from '@/app/chat/redux/chatsAction';
+import { clearFileUrl } from '@/app/chat/redux/chatsSlice';
 
+const dummyMessages = [
+  {
+    id: '1',
+    senderId: '52a1be4b-8cbd-461a-9dc8-c8927a1c16e5',
+    senderName: 'Alice',
+    message: 'Hey, how are you?',
+    timestamp: '2025-02-03T08:41:13.526Z',
+    status: 'read',
+    isOffer: false,
+  },
+  {
+    id: '2',
+    senderId: '7f7f6f13-963d-4eac-9a0f-36fae5c31c0c',
+    senderName: 'Bob',
+    message: 'This is an offer for you!',
+    timestamp: '2025-02-03T08:45:00.526Z',
+    status: 'delivered',
+    isOffer: true,
+    offerStatus: 'pending',
+  },
+  {
+    id: '3',
+    senderId: '52a1be4b-8cbd-461a-9dc8-c8927a1c16e5',
+    senderName: 'Alice',
+    message: 'Check this file.',
+    timestamp: '2025-02-03T08:50:00.526Z',
+    status: 'sent',
+    fileUrl: '/uploads/sample.pdf',
+    isOffer: false,
+  },
+  {
+    id: '4',
+    senderId: '7f7f6f13-963d-4eac-9a0f-36fae5c31c0c',
+    senderName: 'Bob',
+    message: 'Here’s an image!',
+    timestamp: '2025-02-03T08:55:00.526Z',
+    status: 'sent',
+    fileUrl: '/uploads/image.jpg',
+    isOffer: false,
+  },
+];
+
+// Message Bubble Component
 function MessageBubble({
   message,
   isOwn,
+  isSender,
 }: {
   message: Message;
   isOwn: boolean;
+  isSender: boolean;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [offerStatus, setOfferStatus] = useState<string | null>(
+    message?.offerStatus || null
+  );
+  const isPDF = message.fileUrl?.endsWith('.pdf');
+  const fileUrl = `${process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '')}${message.fileUrl}`;
+
+  // Function to handle Accept/Decline actions
+  const handleStatusChange = async (status: string) => {
+    console.log('handle status change', status);
+    try {
+      const messageId = message.id;
+      // Make API call to change the status (either accepted or declined)
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}chat/${messageId}/offer-status`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            offerStatus: status,
+          }),
+        }
+      );
+      console.log('response', response);
+
+      if (response.ok) {
+        setOfferStatus(status);
+      } else {
+        console.error('Failed to update offer status');
+      }
+    } catch (error) {
+      console.error('Error changing status:', error);
+    }
+  };
+
+  // Function to handle Place Order action
+  const handlePlaceOrderClick = async () => {
+    console.log('Handle place order');
+    setIsModalOpen(true);
+  };
+
+  // Close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`flex ${isOwn ? 'justify-end' : 'justify-start'} mb-4`}
     >
-      <div className={`max-w-[70%] ${isOwn ? 'order-2' : 'order-1'}`}>
+      <div
+        className={`max-w-[70%] ${isOwn ? 'order-2' : 'order-1'}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* File Handling: If the message contains a file */}
+        {message.fileUrl && (
+          <div className="max-w-xs rounded-lg bg-gray-800 p-2">
+            {isPDF ? (
+              // PDF Preview as a link
+              <a
+                href={fileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 p-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+              >
+                <FiFileText className="w-5 h-5 text-white" />
+                <span>View PDF</span>
+              </a>
+            ) : (
+              // Display Image Preview
+              <img
+                src={fileUrl}
+                alt="Message content"
+                className="max-w-full max-h-60 object-cover rounded-lg"
+              />
+            )}
+          </div>
+        )}
+
+        {/* Message Bubble */}
         <div
           className={`rounded-2xl px-4 py-2 ${
             isOwn ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-200'
@@ -47,6 +174,63 @@ function MessageBubble({
           {/* {message.content} */}
           {message.message}
         </div>
+
+        {/* Offer Buttons (Appear Below the Message on Hover) */}
+        {message?.isOffer && !isOwn && offerStatus === 'pending' && (
+          <motion.div
+            className="mt-2 flex space-x-3 justify-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+          >
+            {/* Accept Button */}
+            <button
+              className="px-2 py-2 rounded-xl bg-gradient-to-r text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-green-500/50"
+              onClick={() => handleStatusChange('approved')}
+            >
+              ✅ Accept
+            </button>
+
+            {/* Decline Button */}
+            <button
+              className="px-5 py-2 rounded-xl bg-gradient-to-r text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-red-500/50"
+              onClick={() => handleStatusChange('declined')}
+            >
+              ❌ Decline
+            </button>
+          </motion.div>
+        )}
+
+        {/* Status Display After Accept/Decline */}
+        {offerStatus === 'approved' && (
+          <div className="px-2 py-2 rounded-xl bg-gradient-to-r text-white font-semibold flex justify-center">
+            {!isOwn ? '✅ You accepted the offer' : '✅ Offer accepted'}
+          </div>
+        )}
+        {offerStatus === 'declined' && (
+          <div className="mt-2 text-red-400">
+            {!isOwn ? '❌ You declined the offer' : '❌ Offer declined'}
+          </div>
+        )}
+
+        {/* Place Order Button After Accept/Decline */}
+        {offerStatus === 'approved' && isSender && (
+          <motion.div
+            className="mt-2 flex justify-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+          >
+            <button
+              className="px-5 py-2 rounded-xl bg-gradient-to-r text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-blue-500/50"
+              onClick={handlePlaceOrderClick}
+            >
+              🛒 Place Order
+            </button>
+          </motion.div>
+        )}
+
+        {/* Timestamp & Status */}
         <div
           className={`flex items-center mt-1 text-xs text-gray-400 ${
             isOwn ? 'justify-end' : 'justify-start'
@@ -71,15 +255,65 @@ function MessageBubble({
             </span>
           )}
         </div>
+
+        {/* Modal for Order Confirmation */}
+        {isModalOpen && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg text-center max-w-sm w-full"
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -50, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 120 }}
+            >
+              <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+                Place Order
+              </h2>
+              <p className="text-gray-600 mb-5">
+                Are you sure you want to place the order?
+              </p>
+
+              <div className="flex justify-center gap-4">
+                <motion.button
+                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => console.log('handle place order')}
+                >
+                  Place Order
+                </motion.button>
+
+                <motion.button
+                  className="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-full font-medium transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={closeModal}
+                >
+                  Cancel
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
 }
 
+// Main Chat Window Component
 export default function ChatWindow() {
   // redux
-  const { chatMessages: messages } = useSelector((state) => state.chats);
+  const { chatMessages: messages, file_url } = useSelector(
+    (state) => state.chats
+  );
+  const fullFileUrl = `${process.env.NEXT_PUBLIC_API_URL}${file_url}`;
   console.log('CHAT MESSAGES', messages);
+  console.log('FILE URL from ui', fullFileUrl);
   // redux
 
   const {
@@ -97,12 +331,9 @@ export default function ChatWindow() {
   // new
   const [showPackageDetails, setShowPackageDetails] = useState(false);
   const [showNegotiation, setShowNegotiation] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  // const otherUser = activeConversation
-  //   ? users.find(user =>
-  //       activeConversation.participants.includes(user.id) && user.id !== '1'
-  //     )
-  //   : null
+  const dispatch = useDispatch();
 
   // Fetch user
   const { user } = useAuth();
@@ -135,22 +366,21 @@ export default function ChatWindow() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      // handleSend();
+      handleSendMessage();
     }
   };
 
+  // Handle Image upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Simulate file upload
+      dispatch({ type: UPLOAD_FILE, payload: file }); // Dispatch action with file
       const reader = new FileReader();
       reader.onload = () => {
-        sendMessage(
-          file.name,
-          file.type.startsWith('image/') ? 'image' : 'file'
-        );
+        setImagePreview(reader.result as string); // Set the image preview
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Convert the file to base64 for preview
     }
   };
 
@@ -170,7 +400,7 @@ export default function ChatWindow() {
   const handleSendMessage = () => {
     console.log('handle send message');
 
-    if (newMessage.trim()) {
+    if (newMessage.trim() || imagePreview) {
       const socket = getSocket();
       console.log('socket from send message', socket);
       console.log('user id from send message', otherUser.id);
@@ -180,7 +410,9 @@ export default function ChatWindow() {
           'private_message',
           JSON.stringify({
             receiverId: otherUser.id,
-            message: newMessage,
+            message: newMessage || 'Sent a file',
+            // fileUrl: file_url || '',
+            fileUrl: imagePreview ? file_url : '',
           })
         );
         console.log(
@@ -191,6 +423,10 @@ export default function ChatWindow() {
         );
       }
       setNewMessage('');
+      setImagePreview(null);
+
+      // Clear redux state
+      dispatch(clearFileUrl());
     }
   };
 
@@ -265,6 +501,7 @@ export default function ChatWindow() {
             message={message}
             // isOwn={message.senderId === '1'}
             isOwn={message.senderId === user?.userId}
+            isSender={user?.permissions === 'sender'}
           />
         ))}
         {isTyping && (
@@ -302,6 +539,24 @@ export default function ChatWindow() {
             onChange={handleFileUpload}
             accept="image/*,.pdf,.doc,.docx"
           />
+
+          {/* Image preview */}
+          {imagePreview && (
+            <div className="relative mb-4">
+              <img
+                src={imagePreview}
+                alt="Image preview"
+                className="max-w-xs max-h-48 object-cover rounded-lg"
+              />
+              <button
+                onClick={() => setImagePreview(null)} // Remove image preview if the user wants to select a new image
+                className="absolute top-0 right-0 text-white bg-gray-500 p-1 rounded-full"
+              >
+                &times;
+              </button>
+            </div>
+          )}
+
           <div className="flex-1">
             <textarea
               value={newMessage}
@@ -327,7 +582,7 @@ export default function ChatWindow() {
   );
 }
 
-// Package Info Component:
+// Package Info Component
 export function PackageInformation({ onClose }) {
   const handleClose = useCallback(
     (e: React.MouseEvent | KeyboardEvent) => {
@@ -472,7 +727,7 @@ export function PackageInformation({ onClose }) {
   );
 }
 
-// Make offer
+// Make offer Component
 export function MakeOfferComponent({ onClose, otherUser }) {
   const [price, setPrice] = useState('100'); // Hardcoded price
   const [date, setDate] = useState('2025-03-01'); // Hardcoded date
@@ -561,6 +816,8 @@ export function MakeOfferComponent({ onClose, otherUser }) {
           JSON.stringify({
             receiverId: otherUser.id, // Logging the receiver's user ID
             message, // Sending the message (price in this case)
+            // additional fields
+            isOffer: true,
           })
         );
         console.log(

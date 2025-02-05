@@ -86,7 +86,7 @@ import {
   fetchChatMessagesRequest,
   fetchChatMessagesSuccess,
   newMessageHandler,
-  updateRoomsList,
+  setFileUrl,
 } from './chatsSlice';
 import { axiosInstance } from '@/services/httpServices';
 import { API_URL } from '@/services/webConstants';
@@ -191,5 +191,50 @@ export function* fetchChatMessagesSaga(action) {
     yield put(
       fetchChatMessagesFailure(error.response?.data?.message || error.message)
     );
+  }
+}
+
+// Saga for uploading a file and fetching its URL
+export function* uploadFileSaga(action) {
+  console.log('Inside uploadFileSaga');
+  try {
+    // const response = yield call(axiosInstance.get, `${API_URL.FILE_UPLOAD}`);
+    // console.log('uploadFileSaga response', response);
+    // yield put(setFileUrl(response.data)); // Updated action name
+
+    const formData = new FormData();
+    formData.append('file', action.payload);
+
+    const response = yield call(
+      axiosInstance.post,
+      API_URL.FILE_UPLOAD,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    console.log('uploadFileSaga response', response);
+    // Construct full URL dynamically
+    const fullFileUrl = `http://localhost:3001${response.data.fileUrl}`;
+    yield put(setFileUrl(response.data.fileUrl));
+  } catch (error) {
+    console.error('Error in uploadFileSaga:', error);
+  }
+}
+
+// Saga for changing offer status
+export function* changeOfferStatusSaga(action) {
+  console.log('Inside changeOfferStatusSaga', action);
+  try {
+    const response = yield call(
+      axiosInstance.post,
+      API_URL.CHANGE_OFFER_STATUS,
+      action.payload
+    );
+    console.log('changeOfferStatusSaga response', response);
+  } catch (error) {
+    console.error('Error in changeOfferStatusSaga:', error);
   }
 }

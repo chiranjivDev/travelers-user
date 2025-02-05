@@ -74,10 +74,16 @@ import {
   updateTravelerStatusSaga,
 } from '@/app/admin/travelers/redux/travelerSaga';
 import {
+  changeOfferStatusSaga,
   fetchChatMessagesSaga,
+  uploadFileSaga,
   watchOnPings,
 } from '@/app/chat/redux/chatsSaga';
-import { FETCH_CHAT_MESSAGES } from '@/app/chat/redux/chatsAction';
+import {
+  CHANGE_OFFER_STATUS,
+  FETCH_CHAT_MESSAGES,
+  UPLOAD_FILE,
+} from '@/app/chat/redux/chatsAction';
 
 function* startWatchOnPingsSaga() {
   yield fork(watchOnPings);
@@ -125,5 +131,7 @@ export default function* rootSaga() {
 
     // chat messages
     yield takeLatest(FETCH_CHAT_MESSAGES, fetchChatMessagesSaga),
+    yield takeLatest(UPLOAD_FILE, uploadFileSaga),
+    yield takeLatest(CHANGE_OFFER_STATUS, changeOfferStatusSaga),
   ]);
 }
