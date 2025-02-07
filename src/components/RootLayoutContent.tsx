@@ -65,6 +65,9 @@ export default function RootLayoutContent({
   const pathname = usePathname();
   const isAdminRoute = pathname.startsWith('/admin');
 
+  // hide footer for chat page
+  const isChatPage = pathname.startsWith('/chat');
+
   // Manage loading state for persisted store
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -86,7 +89,7 @@ export default function RootLayoutContent({
                 <div className="flex flex-col min-h-screen">
                   {!isAdminRoute && <Navigation />}
                   <main className="flex-grow">{children}</main>
-                  {!isAdminRoute && <Footer />}
+                  {!isAdminRoute && !isChatPage && <Footer />}
                 </div>
                 <ToastContainer />
               </SavedTripsProvider>

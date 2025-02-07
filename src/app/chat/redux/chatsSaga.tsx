@@ -87,6 +87,7 @@ import {
   fetchChatMessagesSuccess,
   newMessageHandler,
   setFileUrl,
+  updateOfferStatus,
 } from './chatsSlice';
 import { axiosInstance } from '@/services/httpServices';
 import { API_URL } from '@/services/webConstants';
@@ -108,15 +109,22 @@ function createSocketChannel(socket) {
       emit({ type: 'ERROR', payload: new Error(errorEvent.reason) });
     };
 
+    const offerStatusUpdatedHandler = (updatedOffer) => {
+      console.log('Offer status updated:', updatedOffer);
+      emit({ type: 'OFFER_STATUS_UPDATED', payload: updatedOffer });
+    };
+
     // Listeners for specific events
     socket.on('my_rooms', roomsHandler);
     socket.on('private_message', privateMessageHandler);
+    socket.on('offerStatusUpdated', offerStatusUpdatedHandler);
     socket.on('error', errorHandler);
 
     // Cleanup function
     const unsubscribe = () => {
       socket.off('my_rooms', roomsHandler);
       socket.off('private_message', privateMessageHandler);
+      socket.off('offerStatusUpdated', offerStatusUpdatedHandler);
       socket.off('error', errorHandler);
     };
 
@@ -153,6 +161,9 @@ export function* watchOnPings() {
             break;
           case 'PRIVATE_MESSAGE':
             yield put(newMessageHandler(payload));
+            break;
+          case 'OFFER_STATUS_UPDATED':
+            yield put(updateOfferStatus(payload));
             break;
           case 'ERROR':
             console.error('Socket error:', payload);

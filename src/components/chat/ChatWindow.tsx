@@ -28,94 +28,32 @@ import { useAuth } from '@/contexts/AuthContext';
 import { UPLOAD_FILE } from '@/app/chat/redux/chatsAction';
 import { clearFileUrl } from '@/app/chat/redux/chatsSlice';
 
-const dummyMessages = [
-  {
-    id: '1',
-    senderId: '52a1be4b-8cbd-461a-9dc8-c8927a1c16e5',
-    senderName: 'Alice',
-    message: 'Hey, how are you?',
-    timestamp: '2025-02-03T08:41:13.526Z',
-    status: 'read',
-    isOffer: false,
-  },
-  {
-    id: '2',
-    senderId: '7f7f6f13-963d-4eac-9a0f-36fae5c31c0c',
-    senderName: 'Bob',
-    message: 'This is an offer for you!',
-    timestamp: '2025-02-03T08:45:00.526Z',
-    status: 'delivered',
-    isOffer: true,
-    offerStatus: 'pending',
-  },
-  {
-    id: '3',
-    senderId: '52a1be4b-8cbd-461a-9dc8-c8927a1c16e5',
-    senderName: 'Alice',
-    message: 'Check this file.',
-    timestamp: '2025-02-03T08:50:00.526Z',
-    status: 'sent',
-    fileUrl: '/uploads/sample.pdf',
-    isOffer: false,
-  },
-  {
-    id: '4',
-    senderId: '7f7f6f13-963d-4eac-9a0f-36fae5c31c0c',
-    senderName: 'Bob',
-    message: 'Here’s an image!',
-    timestamp: '2025-02-03T08:55:00.526Z',
-    status: 'sent',
-    fileUrl: '/uploads/image.jpg',
-    isOffer: false,
-  },
-];
-
 // Message Bubble Component
 function MessageBubble({
   message,
   isOwn,
   isSender,
+  roomId,
 }: {
   message: Message;
   isOwn: boolean;
   isSender: boolean;
+  roomId: string;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [offerStatus, setOfferStatus] = useState<string | null>(
-    message?.offerStatus || null
-  );
   const isPDF = message.fileUrl?.endsWith('.pdf');
   const fileUrl = `${process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '')}${message.fileUrl}`;
 
-  // Function to handle Accept/Decline actions
-  const handleStatusChange = async (status: string) => {
-    console.log('handle status change', status);
-    try {
-      const messageId = message.id;
-      // Make API call to change the status (either accepted or declined)
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}chat/${messageId}/offer-status`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            offerStatus: status,
-          }),
-        }
-      );
-      console.log('response', response);
-
-      if (response.ok) {
-        setOfferStatus(status);
-      } else {
-        console.error('Failed to update offer status');
-      }
-    } catch (error) {
-      console.error('Error changing status:', error);
-    }
+  // Trigger update status event
+  const handleUpdateOfferStatus = (status: string) => {
+    const socket = getSocket();
+    const payload = {
+      messageId: message.id,
+      roomId: roomId,
+      offerStatus: status,
+    };
+    console.log('Emitting update_offer_status event with:', payload);
+    socket.emit('update_offer_status', payload);
   };
 
   // Function to handle Place Order action
@@ -135,11 +73,7 @@ function MessageBubble({
       animate={{ opacity: 1, y: 0 }}
       className={`flex ${isOwn ? 'justify-end' : 'justify-start'} mb-4`}
     >
-      <div
-        className={`max-w-[70%] ${isOwn ? 'order-2' : 'order-1'}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <div className={`max-w-[70%] ${isOwn ? 'order-2' : 'order-1'}`}>
         {/* File Handling: If the message contains a file */}
         {message.fileUrl && (
           <div className="max-w-xs rounded-lg bg-gray-800 p-2">
@@ -176,7 +110,7 @@ function MessageBubble({
         </div>
 
         {/* Offer Buttons (Appear Below the Message on Hover) */}
-        {message?.isOffer && !isOwn && offerStatus === 'pending' && (
+        {message?.isOffer && !isOwn && message?.offerStatus === 'pending' && (
           <motion.div
             className="mt-2 flex space-x-3 justify-center"
             initial={{ opacity: 0, y: 10 }}
@@ -186,7 +120,7 @@ function MessageBubble({
             {/* Accept Button */}
             <button
               className="px-2 py-2 rounded-xl bg-gradient-to-r text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-green-500/50"
-              onClick={() => handleStatusChange('approved')}
+              onClick={() => handleUpdateOfferStatus('approved')}
             >
               ✅ Accept
             </button>
@@ -194,7 +128,7 @@ function MessageBubble({
             {/* Decline Button */}
             <button
               className="px-5 py-2 rounded-xl bg-gradient-to-r text-white font-semibold shadow-lg hover:scale-105 transition-all duration-300 hover:shadow-red-500/50"
-              onClick={() => handleStatusChange('declined')}
+              onClick={() => handleUpdateOfferStatus('declined')}
             >
               ❌ Decline
             </button>
@@ -202,19 +136,19 @@ function MessageBubble({
         )}
 
         {/* Status Display After Accept/Decline */}
-        {offerStatus === 'approved' && (
+        {message?.offerStatus === 'approved' && (
           <div className="px-2 py-2 rounded-xl bg-gradient-to-r text-white font-semibold flex justify-center">
             {!isOwn ? '✅ You accepted the offer' : '✅ Offer accepted'}
           </div>
         )}
-        {offerStatus === 'declined' && (
+        {message?.offerStatus === 'declined' && (
           <div className="mt-2 text-red-400">
             {!isOwn ? '❌ You declined the offer' : '❌ Offer declined'}
           </div>
         )}
 
         {/* Place Order Button After Accept/Decline */}
-        {offerStatus === 'approved' && isSender && (
+        {message?.offerStatus === 'approved' && isSender && (
           <motion.div
             className="mt-2 flex justify-center"
             initial={{ opacity: 0, y: 10 }}
@@ -325,7 +259,6 @@ export default function ChatWindow() {
     setIsTyping,
   } = useChat();
   const [newMessage, setNewMessage] = useState('');
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   // new
@@ -356,12 +289,12 @@ export default function ChatWindow() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = () => {
-    if (newMessage.trim()) {
-      sendMessage(newMessage);
-      setNewMessage('');
-    }
-  };
+  // const handleSend = () => {
+  //   if (newMessage.trim()) {
+  //     sendMessage(newMessage);
+  //     setNewMessage('');
+  //   }
+  // };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -502,6 +435,7 @@ export default function ChatWindow() {
             // isOwn={message.senderId === '1'}
             isOwn={message.senderId === user?.userId}
             isSender={user?.permissions === 'sender'}
+            roomId={activeConversation?.id}
           />
         ))}
         {isTyping && (

@@ -41,6 +41,24 @@ const chatsSlice = createSlice({
       console.log('inside new message handler', action);
       state.chatMessages = [...state.chatMessages, action.payload];
     },
+    updateOfferStatus(state, action) {
+      console.log('inside update offer status of the message', action);
+      const { id: messageId, offerStatus } = action.payload;
+      console.log(
+        'inside update offer status of the message',
+        messageId,
+        offerStatus
+      );
+
+      // Find the message with the given messageId and update its offerStatus
+      const messageIndex = state.chatMessages.findIndex(
+        (message) => message.id === messageId
+      );
+
+      if (messageIndex !== -1) {
+        state.chatMessages[messageIndex].offerStatus = offerStatus;
+      }
+    },
 
     fetchChatMessagesFailure(state, action) {
       state.loadingChatMessages = false;
@@ -101,6 +119,7 @@ export const {
   clearChatState,
 
   newMessageHandler,
+  updateOfferStatus,
   setFileUrl,
   clearFileUrl,
 } = chatsSlice.actions;
