@@ -355,7 +355,8 @@ export default function PackageCard({
         {/* Action Buttons */}
         <div className="flex space-x-3 mt-6">
           <button
-            onClick={handleChat}
+            // onClick={handleChat}
+            onClick={() => onChatClick(pkg?.sender?.id)}
             className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
           >
             <FiMessageSquare className="w-5 h-5 mr-2" />

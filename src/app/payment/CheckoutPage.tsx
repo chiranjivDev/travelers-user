@@ -5,6 +5,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const CheckoutPage = ({ amount }) => {
@@ -14,22 +15,27 @@ export const CheckoutPage = ({ amount }) => {
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     // TODO: Make API call to create a payment intent and set client secret
     const fetchClientSecret = async () => {
       try {
-        const response = await fetch('/payment/create-intent', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            amount, // Pass the amount
-            senderId: 'user_123', // Replace with actual sender ID
-            travelerId: 'user_456', // Replace with actual traveler ID
-          }),
-        });
+        const response = await fetch(
+          // 'http://localhost:3001/payment/create-intent',
+          `${process.env.NEXT_PUBLIC_API_URL}/payment/create-intent`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amount, // Pass the amount
+              senderId: 'user_123', // Replace with actual sender ID
+              travelerId: 'user_456', // Replace with actual traveler ID
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Failed to create payment intent');
@@ -58,6 +64,7 @@ export const CheckoutPage = ({ amount }) => {
       return;
     }
 
+    // for automatic capture
     const { error } = await stripe.confirmPayment({
       elements,
       clientSecret,
@@ -66,11 +73,25 @@ export const CheckoutPage = ({ amount }) => {
       },
     });
 
+    // ✅ Use confirmCardPayment instead of confirmPayment (since we're doing manual capture)
+    // const { paymentIntent, error } = await stripe.confirmCardPayment(
+    //   clientSecret,
+    //   {
+    //     payment_method: {
+    //       card: elements.getElement(PaymentElement),
+    //     },
+    //   }
+    // );
+
     if (error) {
       setError(error.message);
       setLoading(false);
       return;
     } else {
+      // Redirect to the payment authorized page with paymentIntentId
+      // router.push(
+      //   `/payment-authorized?amount=${amount}&paymentIntentId=${paymentIntent.id}`
+      // );
     }
     setLoading(false);
   };

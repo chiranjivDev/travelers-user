@@ -1,37 +1,6 @@
-// 'use client';
-
-// import { useEffect } from 'react';
-// import { useSearchParams } from 'next/navigation';
-// import ChatLayout from '@/components/chat/ChatLayout';
-// import { getSocket } from '@/lib/socket';
-
-// export default function ChatPage() {
-//   const searchParams = useSearchParams();
-//   const userId = searchParams.get('user');
-
-//   useEffect(() => {
-//     const socket = getSocket();
-//     console.log('Socket from chats', socket);
-
-//     if (socket && userId) {
-//       socket.emit(
-//         'private_message',
-//         JSON.stringify({
-//           receiverId: userId,
-//           message: 'Hii',
-//         })
-//       );
-
-//       console.log('Sent private message to:', userId);
-//     }
-//   }, [userId]);
-
-//   return <ChatLayout />;
-// }
-
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ChatLayout from '@/components/chat/ChatLayout';
 import { getSocket } from '@/lib/socket';
@@ -42,6 +11,16 @@ export default function ChatPage() {
   const userId = searchParams.get('user');
   const [showModal, setShowModal] = useState(true);
 
+  console.log('user id from chats', userId);
+
+  useEffect(() => {
+    const socket = getSocket();
+    if (socket) {
+      console.log('Emitting get_my_rooms event');
+      socket.emit('get_my_rooms');
+    }
+  }, []);
+
   const handleStartConversation = () => {
     const socket = getSocket();
     if (socket && userId) {
@@ -50,6 +29,8 @@ export default function ChatPage() {
         JSON.stringify({
           receiverId: userId,
           message: 'Hi',
+          // senderPkgId: '',
+          // travelerPkgId: '',
         })
       );
       console.log('Sent private message to:', userId);

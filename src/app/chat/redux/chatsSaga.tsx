@@ -1,82 +1,3 @@
-// import { take, call, put } from 'redux-saga/effects';
-// import { eventChannel } from 'redux-saga';
-// import socketConnection from '@/lib/socket';
-// import {
-//   fetchChatListSuccess,
-//   fetchChatMessagesFailure,
-//   fetchChatMessagesRequest,
-//   fetchChatMessagesSuccess,
-//   newMessageHandler,
-// } from './chatsSlice';
-// import { axiosInstance } from '@/services/httpServices';
-// import { API_URL } from '@/services/webConstants';
-
-// function createSocketChannel(socket) {
-//   return eventChannel((emit) => {
-//     const roomsHandler = (event) => {
-//       console.log('rooms handler', event);
-//       emit(event);
-//     };
-
-//     const errorHandler = (errorEvent) => {
-//       emit(new Error(errorEvent.reason));
-//     };
-
-//     const privateMessageHandler = (messageEvent) => {
-//       console.log('private message handler', messageEvent);
-//       emit(messageEvent);
-//     };
-
-//     socket.on('my_rooms', roomsHandler);
-//     socket.on('private_message', privateMessageHandler);
-//     socket.on('error', errorHandler);
-
-//     const unsubscribe = () => {
-//       socket.off('my_rooms', roomsHandler);
-//     };
-
-//     return unsubscribe;
-//   });
-// }
-
-// export function* watchOnPings() {
-//   try {
-//     console.log('Inside watchOnPings saga');
-
-//     const socket = yield call(socketConnection);
-
-//     if (!socket) {
-//       console.error('Socket connection failed');
-//       return;
-//     }
-
-//     console.log('Socket connection established:', socket);
-
-//     // Create a socket channel
-//     const socketChannel = yield call(createSocketChannel, socket);
-//     socket.emit('get_my_rooms');
-
-//     console.log('socket channel', socketChannel);
-
-//     // Listen for messages from the socket channel
-//     while (true) {
-//       try {
-//         const payload = yield take(socketChannel);
-//         console.log('Message received:', payload);
-//         // yield put(fetchChatListSuccess(payload));
-//         yield put(newMessageHandler(payload));
-//       } catch (err) {
-//         console.error('Error in socketChannel:', err);
-//         socketChannel.close();
-//         break;
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Error in watchOnPings saga:', error);
-//   }
-// }
-
-// updated channel with event type
 import { take, call, put } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import socketConnection from '@/lib/socket';
@@ -157,6 +78,7 @@ export function* watchOnPings() {
 
         switch (type) {
           case 'ROOMS_LIST':
+            console.log('payload from watchOnPings', payload);
             yield put(fetchChatListSuccess(payload));
             break;
           case 'PRIVATE_MESSAGE':

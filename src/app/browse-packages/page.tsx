@@ -395,6 +395,14 @@ export default function BrowsePackagesPage() {
     (pkg) => pkg.sender?.id
   );
 
+  // navigate to chat
+  const handleChatClick = useCallback(
+    (senderId: string) => {
+      router.push(`/chat?user=${senderId}`);
+    },
+    [router]
+  );
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
       {/* Hero Section */}
@@ -786,6 +794,7 @@ export default function BrowsePackagesPage() {
                 key={pkg.id}
                 package={pkg}
                 onViewDetails={() => setSelectedPackage(pkg)}
+                onChatClick={handleChatClick}
               />
             ) : (
               <PackageListItem

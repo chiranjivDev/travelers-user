@@ -127,6 +127,9 @@ export default function Navigation() {
                   if (item.name === 'Become a Traveler') {
                     return user?.permissions === 'traveler';
                   }
+                  if (item.name === 'Chat') {
+                    return user; // Only show "Chat" if the user is logged in
+                  }
                   return true;
                 })
                 .map((item) => (
