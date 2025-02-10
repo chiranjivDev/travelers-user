@@ -23,7 +23,7 @@ export const CheckoutPage = ({ amount }) => {
       try {
         const response = await fetch(
           // 'http://localhost:3001/payment/create-intent',
-          `${process.env.NEXT_PUBLIC_API_URL}/payment/create-intent`,
+          `${process.env.NEXT_PUBLIC_API_URL}payment/create-intent`,
           {
             method: 'POST',
             headers: {
@@ -69,7 +69,8 @@ export const CheckoutPage = ({ amount }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://localhost:3000/payment-success?amount=${amount}`,
+        // return_url: `http://localhost:3000/payment-success?amount=${amount}`,
+        return_url: `${process.env.NEXT_PUBLIC_API_URL}payment-success?amount=${amount}`,
       },
     });
 
