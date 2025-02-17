@@ -23,6 +23,9 @@ const packagesSlice = createSlice({
     fetchCategoriesLoading: false,
     fetchCategoriesSuccess: false,
     fetchCategoriesError: null,
+
+    // single package
+    package: null,
   },
   reducers: {
     // Fetch Packages Actions
@@ -36,6 +39,20 @@ const packagesSlice = createSlice({
       state.packages = action.payload;
     },
     fetchPackagesFailure(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Fetch Package By ID Actions
+    fetchPackageByIdRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchPackageByIdSuccess(state, action) {
+      state.loading = false;
+      state.package = action.payload;
+    },
+    fetchPackageByIdFailure(state, action) {
       state.loading = false;
       state.error = action.payload;
     },
@@ -112,6 +129,10 @@ export const {
   fetchSenderPackagesFailure,
 
   clearPackagesState,
+
+  fetchPackageByIdRequest,
+  fetchPackageByIdSuccess,
+  fetchPackageByIdFailure,
 } = packagesSlice.actions;
 
 export default packagesSlice.reducer;

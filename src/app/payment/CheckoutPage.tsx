@@ -8,7 +8,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export const CheckoutPage = ({ amount }) => {
+export const CheckoutPage = ({ amount, orderId }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -22,17 +22,20 @@ export const CheckoutPage = ({ amount }) => {
     const fetchClientSecret = async () => {
       try {
         const response = await fetch(
-          // 'http://localhost:3001/payment/create-intent',
-          `${process.env.NEXT_PUBLIC_API_URL}payment/create-intent`,
+          `${process.env.NEXT_PUBLIC_API_URL}transactions/create-intent`,
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              amount, // Pass the amount
-              senderId: 'user_123', // Replace with actual sender ID
-              travelerId: 'user_456', // Replace with actual traveler ID
+              // amount, // Pass the amount
+              // senderId: 'user_123', // Replace with actual sender ID
+              // travelerId: 'user_456', // Replace with actual traveler ID
+
+              amount: amount,
+              currency: 'usd',
+              orderId: orderId,
             }),
           }
         );
@@ -70,7 +73,7 @@ export const CheckoutPage = ({ amount }) => {
       clientSecret,
       confirmParams: {
         // return_url: `http://localhost:3000/payment-success?amount=${amount}`,
-        return_url: `${process.env.NEXT_PUBLIC_API_URL}payment-success?amount=${amount}`,
+        return_url: `${process.env.NEXT_PUBLIC_CLIENT_URL}payment-success?amount=${amount}`,
       },
     });
 

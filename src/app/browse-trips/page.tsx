@@ -51,8 +51,9 @@ export default function BrowseTrips() {
   // const debouncedSearch = useDebounce(searchQuery, 300);
 
   const handleChatClick = useCallback(
-    (travelerId: string) => {
-      router.push(`/chat?user=${travelerId}`);
+    (travelerId: string, travelerPkgId: string) => {
+      // router.push(`/chat?user=${travelerId}`);
+      router.push(`/chat?user=${travelerId}&travelerPkgId=${travelerPkgId}`);
     },
     [router]
   );

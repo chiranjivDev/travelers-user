@@ -136,6 +136,13 @@ const socketConnection = () => {
 };
 
 // Function to get the existing socket instance
-export const getSocket = () => socketInstance;
+// export const getSocket = () => socketInstance;
+
+export const getSocket = () => {
+  if (!socketInstance) {
+    socketConnection(); // Reinitialize if the socket was lost
+  }
+  return socketInstance;
+};
 
 export default socketConnection;

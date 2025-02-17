@@ -111,11 +111,12 @@ export function* fetchChatMessagesSaga(action) {
   try {
     yield put(fetchChatMessagesRequest());
 
-    const { roomId } = action.payload;
+    const { roomId, senderPackageId, travelerPackageId } = action.payload;
     console.log('room id from saga', roomId);
     const response = yield call(
       axiosInstance.get,
-      `${API_URL.CHAT_MESSAGES}/${roomId}`
+      `${API_URL.CHAT_MESSAGES}/${roomId}`,
+      { params: { senderPackageId, travelerPackageId } }
     );
 
     console.log('fetch sender packages saga response', response);

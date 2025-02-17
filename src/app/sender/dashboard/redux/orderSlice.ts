@@ -52,6 +52,7 @@ const orderSlice = createSlice({
     // Clear state
     clearOrdersState(state) {
       state.createOrderSuccess = false;
+      state.order = null;
     },
   },
 });

@@ -1,17 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ChatLayout from '@/components/chat/ChatLayout';
 import { getSocket } from '@/lib/socket';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearOrdersState } from '../sender/dashboard/redux/orderSlice';
 
 export default function ChatPage() {
+  const { createOrderSuccess, order } = useSelector((state) => state.order);
   const searchParams = useSearchParams();
   const userId = searchParams.get('user');
+  const travelerPkgIdFromQuery = searchParams.get('travelerPkgId'); // Traveler's package ID if sender initiates
+  const senderPkgIdFromQuery = searchParams.get('senderPkgId'); // Sender's package ID if traveler initiates
+
   const [showModal, setShowModal] = useState(true);
 
   console.log('user id from chats', userId);
+  console.log('sender package id from chats', senderPkgIdFromQuery);
+  console.log('traveler package id from chats', travelerPkgIdFromQuery);
 
   useEffect(() => {
     const socket = getSocket();
@@ -29,14 +37,28 @@ export default function ChatPage() {
         JSON.stringify({
           receiverId: userId,
           message: 'Hi',
-          // senderPkgId: '',
-          // travelerPkgId: '',
+          senderPkgId: senderPkgIdFromQuery,
+          travelerPkgId: travelerPkgIdFromQuery,
         })
       );
       console.log('Sent private message to:', userId);
       setShowModal(false); // Close modal after sending the message
     }
   };
+
+  // on place order navigate to home screen
+  const dispatch = useDispatch();
+  const router = useRouter();
+  useEffect(() => {
+    if (createOrderSuccess) {
+      console.log('order', order);
+      // Navigate to payment screen with query parameters
+      router.push(
+        `/payment?amount=${order?.sender_package?.price}&orderId=${order?.order_id}`
+      );
+      dispatch(clearOrdersState());
+    }
+  }, [createOrderSuccess]);
 
   return (
     <>

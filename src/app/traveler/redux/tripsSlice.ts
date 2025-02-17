@@ -21,6 +21,11 @@ const tripsSlice = createSlice({
     traveler: null,
     travelerLoading: false,
     travelerError: null,
+
+    // Fetch traveler-specific packages
+    travelerPackages: [],
+    fetchTravelerPackagesLoading: false,
+    fetchTravelerPackagesError: null,
   },
   reducers: {
     // Fetch Trips Actions
@@ -36,6 +41,20 @@ const tripsSlice = createSlice({
     fetchTripsFailure(state, action) {
       state.loading = false;
       state.error = action.payload;
+    },
+
+    // Fetch Traveler-specific Packages Actions
+    fetchTravelerPackagesRequest(state) {
+      state.fetchTravelerPackagesLoading = true;
+      state.fetchTravelerPackagesError = null;
+    },
+    fetchTravelerPackagesSuccess(state, action) {
+      state.fetchTravelerPackagesLoading = false;
+      state.travelerPackages = action.payload;
+    },
+    fetchTravelerPackagesFailure(state, action) {
+      state.fetchTravelerPackagesLoading = false;
+      state.fetchTravelerPackagesError = action.payload;
     },
 
     // Actions for adding a trip
@@ -105,6 +124,10 @@ export const {
   fetchTravelerDetailsRequest,
   fetchTravelerDetailsSuccess,
   fetchTravelerDetailsFailure,
+
+  fetchTravelerPackagesRequest,
+  fetchTravelerPackagesSuccess,
+  fetchTravelerPackagesFailure,
 
   clearTripsState,
 } = tripsSlice.actions;

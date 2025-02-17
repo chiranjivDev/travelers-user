@@ -1,4 +1,5 @@
 import {
+  FETCH_PACKAGE_BY_ID,
   PACKAGE_CATEGORIES,
   PACKAGES,
   SEARCH_SENDER_PACKAGE,
@@ -7,6 +8,7 @@ import {
 } from '@/app/sender/dashboard/redux/packagesAction';
 import {
   fetchCategoriesSaga,
+  fetchPackageByIdSaga,
   fetchPackagesSaga,
   fetchSenderPackagesSaga,
   searchSenderPackageSaga,
@@ -34,6 +36,7 @@ import {
   CREATE_TRIP,
   SEARCH_TRAVELER_PACKAGE,
   TRAVELER_DETAIL,
+  TRAVELER_PACKAGES,
   TRIP_DETAIL,
   TRIPS,
 } from '@/app/traveler/redux/tripsAction';
@@ -41,6 +44,7 @@ import {
   addTripSaga,
   fetchSingleTripSaga,
   fetchTravelerDetailsSaga,
+  fetchTravelerPackagesSaga,
   fetchTripsSaga,
   searchTravelerPackageSaga,
 } from '@/app/traveler/redux/tripsSaga';
@@ -99,12 +103,14 @@ export default function* rootSaga() {
     yield takeLatest(SEND_PACKAGE, sendPackageSaga), // send a package i,e the send package flow
     yield takeLatest(PACKAGE_CATEGORIES, fetchCategoriesSaga), // package categories
     yield takeLatest(SENDER_PACKAGES, fetchSenderPackagesSaga), // fetch sender packages
+    yield takeLatest(FETCH_PACKAGE_BY_ID, fetchPackageByIdSaga), // fetch sender package by id
 
     // traveler packages
     yield takeLatest(TRIPS, fetchTripsSaga),
     yield takeLatest(CREATE_TRIP, addTripSaga),
     yield takeLatest(TRIP_DETAIL, fetchSingleTripSaga),
     yield takeLatest(TRAVELER_DETAIL, fetchTravelerDetailsSaga), // traveler details
+    yield takeLatest(TRAVELER_PACKAGES, fetchTravelerPackagesSaga), // traveler specific packages
 
     // admin
     yield takeLatest(GET_ALL_USERS, fetchUsersSaga),

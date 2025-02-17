@@ -12,6 +12,9 @@ import {
   fetchTravelerDetailsRequest,
   fetchTravelerDetailsSuccess,
   fetchTravelerDetailsFailure,
+  fetchTravelerPackagesRequest,
+  fetchTravelerPackagesSuccess,
+  fetchTravelerPackagesFailure,
 } from './tripsSlice';
 import { axiosInstance } from '@/services/httpServices';
 import { API_URL } from '@/services/webConstants';
@@ -139,22 +142,22 @@ export function* fetchTripsSaga() {
 // Fetch Single Trip/Package Saga
 export function* fetchSingleTripSaga(action) {
   console.log('Fetching single package with ID:', action.payload);
-  // try {
-  //   yield put(fetchSinglePackageRequest());
-  //   const response = yield call(
-  //     axiosInstance.get,
-  //     `${API_URL.ACTIVE_TRAVELER_PACKAGES}/${action.payload}`
-  //   );
-  //   console.log('Single package fetch response:', response);
-  //   yield put(fetchSinglePackageSuccess(response.data));
-  // } catch (error) {
-  //   yield put(
-  //     fetchSinglePackageFailure(error.response?.data?.message || error.message)
-  //   );
-  //   toast.error(
-  //     `Failed to fetch package: ${error.response?.data?.message || error.message}`
-  //   );
-  // }
+  try {
+    yield put(fetchSinglePackageRequest());
+    const response = yield call(
+      axiosInstance.get,
+      `${API_URL.ACTIVE_TRAVELER_PACKAGES}/${action.payload}`
+    );
+    console.log('Single package fetch response:', response);
+    yield put(fetchSinglePackageSuccess(response.data));
+  } catch (error) {
+    yield put(
+      fetchSinglePackageFailure(error.response?.data?.message || error.message)
+    );
+    toast.error(
+      `Failed to fetch package: ${error.response?.data?.message || error.message}`
+    );
+  }
 }
 
 // Fetch Traveler Details Saga
@@ -254,6 +257,29 @@ export function* addTripSaga(action) {
   } catch (error) {
     yield put(addTripFailure(error.response?.data?.message || error.message));
     toast.error(error.response?.data?.message || error.message);
+  }
+}
+
+// fetch trips for a specific traveler
+export function* fetchTravelerPackagesSaga(action) {
+  console.log('inside fetchTravelerPackagesSaga');
+  try {
+    yield put(fetchTravelerPackagesRequest());
+
+    const { travelerId } = action.payload;
+    const response = yield call(
+      axiosInstance.get,
+      `${API_URL.TRAVELER_PACKAGES}/traveler/${travelerId}`
+    );
+
+    console.log('fetch traveler packages saga response', response);
+    yield put(fetchTravelerPackagesSuccess(response.data));
+  } catch (error) {
+    yield put(
+      fetchTravelerPackagesFailure(
+        error.response?.data?.message || error.message
+      )
+    );
   }
 }
 

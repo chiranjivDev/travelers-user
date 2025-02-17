@@ -396,9 +396,16 @@ export default function BrowsePackagesPage() {
   );
 
   // navigate to chat
+  // const handleChatClick = useCallback(
+  //   (senderId: string) => {
+  //     router.push(`/chat?user=${senderId}`);
+  //   },
+  //   [router]
+  // );
+
   const handleChatClick = useCallback(
-    (senderId: string) => {
-      router.push(`/chat?user=${senderId}`);
+    (senderId: string, senderPkgId: string) => {
+      router.push(`/chat?user=${senderId}&senderPkgId=${senderPkgId}`);
     },
     [router]
   );

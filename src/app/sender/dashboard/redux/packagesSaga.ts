@@ -12,6 +12,9 @@ import {
   fetchSenderPackagesRequest,
   fetchSenderPackagesSuccess,
   fetchSenderPackagesFailure,
+  fetchPackageByIdSuccess,
+  fetchPackageByIdFailure,
+  fetchPackageByIdRequest,
 } from './packagesSlice';
 import { axiosInstance } from '@/services/httpServices';
 import { API_URL } from '@/services/webConstants';
@@ -197,6 +200,24 @@ export function* searchSenderPackageSaga(action) {
   } catch (error) {
     yield put(
       fetchPackagesFailure(error.response?.data?.message || error.message)
+    );
+  }
+}
+
+export function* fetchPackageByIdSaga(action) {
+  console.log('Fetching package by ID action: ', action.payload);
+  yield put(fetchPackageByIdRequest());
+  try {
+    const response = yield call(
+      axiosInstance.get,
+      `${API_URL.PACKAGES}/${action.payload}`
+    );
+    console.log('Package by ID response:', response);
+
+    yield put(fetchPackageByIdSuccess(response.data));
+  } catch (error) {
+    yield put(
+      fetchPackageByIdFailure(error.response?.data?.message || error.message)
     );
   }
 }

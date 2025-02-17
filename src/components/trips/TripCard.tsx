@@ -449,7 +449,7 @@ const TripCard = memo(function TripCard({ trip, onChatClick }: TripCardProps) {
             View Details
           </Link>
           <button
-            onClick={() => onChatClick(trip.traveler.id)}
+            onClick={() => onChatClick(trip.traveler.id, trip.id)}
             className="flex-1 bg-gray-700 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
           >
             Chat Now
