@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "title": "ارتباط، سفر و ارسال",
+    "description": "به جامعه مسافران و فرستندگان ما بپیوندید. در هزینه‌های حمل و نقل صرفه‌جویی کنید و به دیگران کمک کنید تا از سفرهای خود درآمد کسب کنند.",
+    "buttons": {
+      "sendPackage": "ارسال بسته",
+      "becomeTraveler": "مسافر شوید",
+      "login": "ورود"
+    },
+    "trustIndicators": {
+      "activeUsers": { "count": "۱۰K+", "label": "کاربران فعال" },
+      "deliveries": { "count": "۱۵K+", "label": "تحویل‌ها" },
+      "countries": { "count": "۵۰+", "label": "کشورها" }
+    }
+  }
+}

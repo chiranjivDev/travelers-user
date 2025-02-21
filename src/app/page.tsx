@@ -4,9 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const { user } = useAuth();
+  const t = useTranslations('HomePage');
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -57,35 +60,13 @@ export default function Home() {
             className="space-y-8"
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              Connect, Travel & Deliver
+              {t('title')}
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-              Join our community of travelers and senders. Save money on
-              shipping while helping others earn from their travels.
+              {t('description')}
             </p>
 
             {/* CTA Buttons */}
-            {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/form">
-                <motion.button
-                  className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-semibold transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Send a Package
-                </motion.button>
-              </Link>
-              <Link href="/traveler-form">
-                <motion.button
-                  className="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-full text-lg font-semibold transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Become a Traveler
-                </motion.button>
-              </Link>
-            </div> */}
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {user ? (
                 user.permissions === 'sender' ? (
@@ -95,7 +76,7 @@ export default function Home() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      Send a Package
+                      {t('buttons.sendPackage')}
                     </motion.button>
                   </Link>
                 ) : user.permissions === 'traveler' ? (
@@ -105,7 +86,7 @@ export default function Home() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      Become a Traveler
+                      {t('buttons.becomeTraveler')}
                     </motion.button>
                   </Link>
                 ) : null
@@ -116,7 +97,7 @@ export default function Home() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Login
+                    {t('buttons.login')}
                   </motion.button>
                 </Link>
               )}
@@ -125,16 +106,34 @@ export default function Home() {
             {/* Trust Indicators */}
             <div className="pt-12 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
-                <h3 className="text-3xl font-bold text-blue-400">10K+</h3>
-                <p className="text-gray-400">Active Users</p>
+                <h3 className="text-3xl font-bold text-blue-400">
+                  {' '}
+                  {t('trustIndicators.activeUsers.count')}
+                </h3>
+                <p className="text-gray-400">
+                  {' '}
+                  {t('trustIndicators.activeUsers.label')}
+                </p>
               </div>
               <div className="text-center">
-                <h3 className="text-3xl font-bold text-purple-400">15K+</h3>
-                <p className="text-gray-400">Deliveries</p>
+                <h3 className="text-3xl font-bold text-purple-400">
+                  {' '}
+                  {t('trustIndicators.deliveries.count')}
+                </h3>
+                <p className="text-gray-400">
+                  {' '}
+                  {t('trustIndicators.deliveries.label')}
+                </p>
               </div>
               <div className="text-center">
-                <h3 className="text-3xl font-bold text-blue-400">50+</h3>
-                <p className="text-gray-400">Countries</p>
+                <h3 className="text-3xl font-bold text-blue-400">
+                  {' '}
+                  {t('trustIndicators.countries.count')}
+                </h3>
+                <p className="text-gray-400">
+                  {' '}
+                  {t('trustIndicators.countries.label')}
+                </p>
               </div>
             </div>
           </motion.div>

@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "title": "Connect, Travel & Deliver",
+    "description": "Join our community of travelers and senders. Save money on shipping while helping others earn from their travels.",
+    "buttons": {
+      "sendPackage": "Send a Package",
+      "becomeTraveler": "Become a Traveler",
+      "login": "Login"
+    },
+    "trustIndicators": {
+      "activeUsers": { "count": "10K+", "label": "Active Users" },
+      "deliveries": { "count": "15K+", "label": "Deliveries" },
+      "countries": { "count": "50+", "label": "Countries" }
+    }
+  }
+}

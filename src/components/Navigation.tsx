@@ -26,6 +26,29 @@ export default function Navigation() {
   const pathname = usePathname();
   const { user, logout, switchRole } = useAuth();
 
+  // locale
+  const [locale, setLocale] = useState('');
+  // initialize router
+  const router = useRouter();
+
+  useEffect(() => {
+    const localeCookie = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('NEXT_LOCALE='))
+      ?.split('=')[1];
+
+    if (localeCookie) {
+      setLocale(localeCookie);
+    } else {
+      const browserLocale = navigator.language.slice(0, 2);
+      setLocale(browserLocale);
+      document.cookie = `NEXT_LOCALE=${browserLocale};`;
+      router.refresh();
+    }
+  }, [router]);
+
+  // locale
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -86,8 +109,13 @@ export default function Navigation() {
     },
   ];
 
-  // initialize router
-  const router = useRouter();
+  const changeLocale = (newLocale: string) => {
+    if (newLocale !== locale) {
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`;
+      setLocale(newLocale);
+      router.refresh();
+    }
+  };
 
   return (
     <>
@@ -332,6 +360,39 @@ export default function Navigation() {
                   </Link>
                 </>
               )}
+
+              {/* Change language */}
+              <div>
+                <button
+                  onClick={() => changeLocale('en')}
+                  style={{
+                    backgroundColor: locale === 'en' ? '#007bff' : '#ddd',
+                    color: locale === 'en' ? 'white' : 'black',
+                    padding: '8px 16px',
+                    margin: '5px',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  EN
+                </button>
+
+                <button
+                  onClick={() => changeLocale('fa')}
+                  style={{
+                    backgroundColor: locale === 'fa' ? '#007bff' : '#ddd',
+                    color: locale === 'fa' ? 'white' : 'black',
+                    padding: '8px 16px',
+                    margin: '5px',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  FR
+                </button>
+              </div>
             </div>
 
             {/* Mobile Menu Button */}
