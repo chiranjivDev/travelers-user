@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { USER_LOGGED_IN } from '@/app/signup/redux/authActions';
+import { persistor } from '@/store/store';
 
 export type UserRole = 'Sender' | 'Traveler' | 'Admin';
 
@@ -130,6 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     router.push('/');
     localStorage.removeItem('user');
+    persistor.purge();
     toast.success('Logout successful!');
   };
 

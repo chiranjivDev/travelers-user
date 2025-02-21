@@ -1,12 +1,13 @@
 'use client';
 
 import {
+  CardElement,
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const CheckoutPage = ({ amount, orderId }) => {
   const stripe = useStripe();
@@ -16,8 +17,11 @@ export const CheckoutPage = ({ amount, orderId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const hasFetched = useRef(false);
 
   useEffect(() => {
+    if (!amount || !orderId || clientSecret || hasFetched.current) return;
+    hasFetched.current = true;
     // TODO: Make API call to create a payment intent and set client secret
     const fetchClientSecret = async () => {
       try {
@@ -29,10 +33,6 @@ export const CheckoutPage = ({ amount, orderId }) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              // amount, // Pass the amount
-              // senderId: 'user_123', // Replace with actual sender ID
-              // travelerId: 'user_456', // Replace with actual traveler ID
-
               amount: amount,
               currency: 'usd',
               orderId: orderId,
@@ -51,7 +51,7 @@ export const CheckoutPage = ({ amount, orderId }) => {
       }
     };
     fetchClientSecret();
-  }, [amount]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,24 +68,26 @@ export const CheckoutPage = ({ amount, orderId }) => {
     }
 
     // for automatic capture
-    const { error } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        // return_url: `http://localhost:3000/payment-success?amount=${amount}`,
-        return_url: `${process.env.NEXT_PUBLIC_CLIENT_URL}payment-success?amount=${amount}`,
-      },
-    });
+    // const { error } = await stripe.confirmPayment({
+    //   elements,
+    //   clientSecret,
+    //   confirmParams: {
+    //     // return_url: `http://localhost:3000/payment-success?amount=${amount}`,
+    //     return_url: `${process.env.NEXT_PUBLIC_CLIENT_URL}payment-success?amount=${amount}`,
+    //   },
+    // });
 
     // ✅ Use confirmCardPayment instead of confirmPayment (since we're doing manual capture)
-    // const { paymentIntent, error } = await stripe.confirmCardPayment(
-    //   clientSecret,
-    //   {
-    //     payment_method: {
-    //       card: elements.getElement(PaymentElement),
-    //     },
-    //   }
-    // );
+    const { paymentIntent, error } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: elements.getElement(CardElement)!,
+        },
+      }
+    );
+
+    console.log('payment intent from ui', paymentIntent);
 
     if (error) {
       setError(error.message);
@@ -93,9 +95,9 @@ export const CheckoutPage = ({ amount, orderId }) => {
       return;
     } else {
       // Redirect to the payment authorized page with paymentIntentId
-      // router.push(
-      //   `/payment-authorized?amount=${amount}&paymentIntentId=${paymentIntent.id}`
-      // );
+      router.push(
+        `/payment-authorized?amount=${amount}&paymentIntentId=${paymentIntent.id}`
+      );
     }
     setLoading(false);
   };
@@ -108,7 +110,7 @@ export const CheckoutPage = ({ amount, orderId }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       {clientSecret && (
         <>
-          <PaymentElement />
+          <CardElement />
           <button
             type="submit"
             disabled={!stripe || loading}

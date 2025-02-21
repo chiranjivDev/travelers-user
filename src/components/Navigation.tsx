@@ -188,6 +188,24 @@ export default function Navigation() {
                         </p>
                       </div>
 
+                      {/* Stripe Account Section */}
+                      {user.permissions === 'traveler' && (
+                        <div className="px-4 py-3 border-b border-gray-700">
+                          <p className="text-sm font-medium text-white">
+                            Payment Setup
+                          </p>
+                          {/* <p className="text-sm text-gray-400">
+                            Secure your transactions with Stripe.
+                          </p> */}
+                          <button
+                            className="mt-2 text-sm text-blue-500 hover:underline"
+                            onClick={() => router.push('/connect-stripe')}
+                          >
+                            Connect Stripe Account
+                          </button>
+                        </div>
+                      )}
+
                       {/* Role Switching Section */}
                       {user?.roles?.length > 1 && (
                         <div className="px-4 py-2 border-b border-gray-700">
@@ -241,7 +259,7 @@ export default function Navigation() {
                         ))}
 
                       {/* Register as Another Role */}
-                      {!user.roles?.includes('traveler') && (
+                      {/* {!user.roles?.includes('traveler') && (
                         <Link
                           href="/register/traveler"
                           className="flex items-center space-x-3 px-4 py-2.5 text-sm text-purple-400 hover:text-purple-300 hover:bg-gray-700 border-t border-gray-700"
@@ -250,10 +268,10 @@ export default function Navigation() {
                           <FiUserPlus className="w-5 h-5" />
                           <span>Register as Traveler</span>
                         </Link>
-                      )}
+                      )} */}
 
                       {/* User Dashboard */}
-                      {user.permissions === 'sender' && (
+                      {/* {user.permissions === 'sender' && (
                         <div className="border-t border-gray-700 mt-2 pt-2">
                           <button
                             onClick={() => {
@@ -265,7 +283,23 @@ export default function Navigation() {
                             <span>Dashboard</span>
                           </button>
                         </div>
-                      )}
+                      )} */}
+
+                      <div className="border-t border-gray-700 mt-2 pt-2">
+                        <button
+                          onClick={() => {
+                            const dashboardPath =
+                              user.permissions === 'sender'
+                                ? '/sender/dashboard'
+                                : '/traveler/dashboard';
+                            router.push(dashboardPath);
+                          }}
+                          className="flex items-center space-x-3 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-gray-700 w-full"
+                        >
+                          <FiUser className="w-5 h-5" />
+                          <span>Dashboard</span>
+                        </button>
+                      </div>
 
                       <div className="border-t border-gray-700 mt-2 pt-2">
                         <button

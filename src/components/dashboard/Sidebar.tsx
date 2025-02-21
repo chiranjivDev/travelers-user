@@ -117,7 +117,16 @@ const sidebarItems: SidebarItem[] = [
     label: 'My Orders',
     icon: FiPackage,
     path: '/sender/dashboard/orders',
-    role: 'all',
+    role: 'sender',
+  },
+
+  // Orders
+  {
+    id: 'orders',
+    label: 'My Orders',
+    icon: FiPackage,
+    path: '/traveler/dashboard/orders',
+    role: 'traveler',
   },
 ];
 
@@ -126,7 +135,7 @@ export default function Sidebar() {
   const { user } = useAuth();
 
   const filteredItems = sidebarItems.filter(
-    (item) => item.role === 'all' || item.role === user?.activeRole
+    (item) => item.role === 'all' || item.role === user?.permissions
   );
 
   return (
@@ -148,13 +157,14 @@ export default function Sidebar() {
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
                 <span className="text-lg font-medium">
-                  {user?.name?.charAt(0) || 'NA'}
+                  {user?.email?.charAt(0) || 'NA'}
                 </span>
               </div>
               <div>
                 <div className="font-medium">{user?.name}</div>
                 <div className="text-sm text-gray-400 capitalize">
-                  {user?.activeRole}
+                  {/* {user?.activeRole} */}
+                  {user?.permissions}
                 </div>
               </div>
             </div>
