@@ -3,6 +3,9 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    _next_intl_trailing_slash: '', // Set an empty string if unused, or remove
+  },
   reactStrictMode: true,
   images: {
     domains: [
@@ -21,7 +24,7 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true,
     optimizeImages: true,
   },
 
