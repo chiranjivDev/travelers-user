@@ -10,6 +10,13 @@ export default function Home() {
   const { user } = useAuth();
   const t = useTranslations('HomePage');
 
+  // Use `getTranslation` to properly access the object
+  const getHowItWorks = useTranslations('HomePage.howItWorks');
+  const steps = getHowItWorks.raw('steps', { returnObjects: true }) || [];
+
+  const benefitsSection = useTranslations('HomePage.benefitsSection');
+  const benefits = benefitsSection.raw('benefits');
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -168,33 +175,14 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4">How It Works</h2>
+            <h2 className="text-4xl font-bold mb-4">{t('howItWorks.title')}</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              A simple and secure way to connect package senders with travelers
+              {t('howItWorks.description')}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'List Your Journey or Package',
-                description:
-                  'Share your travel plans as a traveler or list your package details as a sender.',
-                icon: '✈️',
-              },
-              {
-                title: 'Connect & Agree',
-                description:
-                  'Match with the perfect delivery partner and agree on terms through our secure platform.',
-                icon: '🤝',
-              },
-              {
-                title: 'Track & Deliver',
-                description:
-                  'Track your package in real-time and complete the delivery with our secure payment system.',
-                icon: '📦',
-              },
-            ].map((step, i) => (
+            {steps?.map((step, i) => (
               <motion.div
                 key={i}
                 className="p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/80 transition-all duration-300"
@@ -221,53 +209,15 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Why Choose DeliveryConnect?
+              {t('benefitsSection.title')}
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Experience the future of package delivery with our innovative
-              platform
+              {t('benefitsSection.description')}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Cost-Effective',
-                description:
-                  'Save up to 70% on shipping costs compared to traditional services.',
-                icon: '💰',
-              },
-              {
-                title: 'Secure & Safe',
-                description:
-                  'Verified users, secure payments, and package insurance for peace of mind.',
-                icon: '🔒',
-              },
-              {
-                title: 'Eco-Friendly',
-                description:
-                  'Reduce carbon footprint by utilizing existing travel routes.',
-                icon: '🌱',
-              },
-              {
-                title: 'Global Network',
-                description:
-                  'Access to travelers worldwide for international deliveries.',
-                icon: '🌍',
-              },
-              {
-                title: 'Real-Time Tracking',
-                description:
-                  "Track your package's journey with live updates and notifications.",
-                icon: '📱',
-              },
-              {
-                title: '24/7 Support',
-                description:
-                  'Dedicated customer support team ready to assist you anytime.',
-                icon: '🎯',
-              },
-            ].map((benefit, i) => (
+            {benefits.map((benefit, i) => (
               <motion.div
                 key={i}
                 className="p-6 rounded-2xl bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/80 transition-all duration-300"
@@ -293,10 +243,9 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            <h2 className="text-4xl font-bold">Ready to Get Started?</h2>
+            <h2 className="text-4xl font-bold"> {t('ctaSection.title')}</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Join thousands of users who are already saving money and earning
-              through our platform
+              {t('ctaSection.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/send-package">
@@ -305,7 +254,7 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Send Your First Package
+                  {t('ctaSection.buttons.sendPackage')}
                 </motion.button>
               </Link>
               <Link href="/browse-trips">
@@ -314,7 +263,7 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Browse Available Trips
+                  {t('ctaSection.buttons.browseTrips')}
                 </motion.button>
               </Link>
             </div>

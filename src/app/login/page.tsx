@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { LOGIN } from '../signup/redux/authActions';
+import { useTranslations } from 'next-intl';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,6 +14,9 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
   const { login } = useAuth();
+
+  // language selection
+  const t = useTranslations('LoginPage');
 
   // state management with redux
   // const dispatch = useDispatch();
@@ -34,15 +38,15 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-            Sign in to your account
+            {t('title')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-400">
-            Or{' '}
+            {t('subtitle')}{' '}
             <Link
               href="/signup"
               className="font-medium text-blue-500 hover:text-blue-400"
             >
-              create a new account
+              {t('signupLink')}
             </Link>
           </p>
         </div>
@@ -92,7 +96,7 @@ export default function LoginPage() {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              Sign in
+              {t('signInButton')}
             </button>
           </div>
         </form>

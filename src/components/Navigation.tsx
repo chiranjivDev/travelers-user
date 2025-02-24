@@ -362,36 +362,16 @@ export default function Navigation() {
               )}
 
               {/* Change language */}
-              <div>
-                <button
-                  onClick={() => changeLocale('en')}
-                  style={{
-                    backgroundColor: locale === 'en' ? '#007bff' : '#ddd',
-                    color: locale === 'en' ? 'white' : 'black',
-                    padding: '8px 16px',
-                    margin: '5px',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
+              <div className="relative inline-block">
+                <select
+                  className="appearance-none bg-black text-white py-2 px-4 pr-8 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer hover:bg-gray-900"
+                  value={locale}
+                  onChange={(e) => changeLocale(e.target.value)}
                 >
-                  EN
-                </button>
-
-                <button
-                  onClick={() => changeLocale('fa')}
-                  style={{
-                    backgroundColor: locale === 'fa' ? '#007bff' : '#ddd',
-                    color: locale === 'fa' ? 'white' : 'black',
-                    padding: '8px 16px',
-                    margin: '5px',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  FR
-                </button>
+                  <option value="en">🇺🇸 English</option>
+                  <option value="fa">🇮🇷 فارسی</option>
+                  {/* Add more languages here */}
+                </select>
               </div>
             </div>
 

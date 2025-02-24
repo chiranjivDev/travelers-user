@@ -11,6 +11,84 @@
       "activeUsers": { "count": "10K+", "label": "Active Users" },
       "deliveries": { "count": "15K+", "label": "Deliveries" },
       "countries": { "count": "50+", "label": "Countries" }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "description": "A simple and secure way to connect package senders with travelers",
+      "steps": [
+        {
+          "title": "List Your Journey or Package",
+          "description": "Share your travel plans as a traveler or list your package details as a sender.",
+          "icon": "✈️"
+        },
+        {
+          "title": "Connect & Agree",
+          "description": "Match with the perfect delivery partner and agree on terms through our secure platform.",
+          "icon": "🤝"
+        },
+        {
+          "title": "Track & Deliver",
+          "description": "Track your package in real-time and complete the delivery with our secure payment system.",
+          "icon": "📦"
+        }
+      ]
+    },
+    "ctaSection": {
+      "title": "Ready to Get Started?",
+      "description": "Join thousands of users who are already saving money and earning through our platform.",
+      "buttons": {
+        "sendPackage": "Send Your First Package",
+        "browseTrips": "Browse Available Trips"
+      }
+    },
+    "benefitsSection": {
+      "title": "Why Choose DeliveryConnect?",
+      "description": "Experience the future of package delivery with our innovative platform.",
+      "benefits": [
+        {
+          "title": "Cost-Effective",
+          "description": "Save up to 70% on shipping costs compared to traditional services.",
+          "icon": "💰"
+        },
+        {
+          "title": "Secure & Safe",
+          "description": "Verified users, secure payments, and package insurance for peace of mind.",
+          "icon": "🔒"
+        },
+        {
+          "title": "Eco-Friendly",
+          "description": "Reduce carbon footprint by utilizing existing travel routes.",
+          "icon": "🌱"
+        },
+        {
+          "title": "Global Network",
+          "description": "Access to travelers worldwide for international deliveries.",
+          "icon": "🌍"
+        },
+        {
+          "title": "Real-Time Tracking",
+          "description": "Track your package's journey with live updates and notifications.",
+          "icon": "📱"
+        },
+        {
+          "title": "24/7 Support",
+          "description": "Dedicated customer support team ready to assist you anytime.",
+          "icon": "🎯"
+        }
+      ]
     }
+  },
+
+  "LoginPage": {
+    "title": "Sign in to your account",
+    "subtitle": "Or",
+    "signupLink": "Create a new account",
+    "signInButton": "Sign in"
+  },
+  "SignupPage": {
+    "title": "Create your account",
+    "subtitle": "Or",
+    "loginLink": "Sign in to your account",
+    "signupButton": "Create Account"
   }
 }

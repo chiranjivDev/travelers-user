@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function SignUpPage() {
   const [email, setEmail] = useState('');
@@ -14,6 +15,9 @@ export default function SignUpPage() {
   const [error, setError] = useState('');
   const router = useRouter();
   const { register } = useAuth();
+
+  // language selection
+  const t = useTranslations('SignupPage');
 
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -42,15 +46,15 @@ export default function SignUpPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-            Create your account
+            {t('title')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-400">
-            Or{' '}
+            {t('subtitle')}{' '}
             <Link
               href="/login"
               className="font-medium text-blue-500 hover:text-blue-400"
             >
-              sign in to your account
+              {t('loginLink')}
             </Link>
           </p>
         </div>
@@ -150,7 +154,7 @@ export default function SignUpPage() {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              Create Account
+              {t('signupButton')}
             </button>
           </div>
         </form>
