@@ -4,27 +4,30 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const OnboardingSuccess = () => {
-  const searchParams = useSearchParams();
-  const [status, setStatus] = useState('');
+  // const searchParams = useSearchParams();
+  // const [status, setStatus] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    const statusQuery = searchParams.get('status');
-    setStatus(statusQuery);
-  }, [searchParams]);
+  // useEffect(() => {
+  //   const statusQuery = searchParams.get('status');
+  //   setStatus(statusQuery);
+  // }, [searchParams]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold text-white text-center">
-          {status === 'success'
+          {/* {status === 'success'
             ? 'Stripe Account Connected!'
-            : 'Onboarding Failed'}
+            : 'Onboarding Failed'} */}
+          Stripe Account Connected!
         </h2>
         <p className="text-sm text-gray-400 text-center mt-1">
-          {status === 'success'
+          {/* {status === 'success'
             ? 'Your Stripe account has been successfully connected. You can now start receiving payments.'
-            : 'There was an issue with your onboarding. Please try again later.'}
+            : 'There was an issue with your onboarding. Please try again later.'} */}
+          Your Stripe account has been successfully connected. You can now start
+          receiving payments.
         </p>
 
         <div className="mt-6">

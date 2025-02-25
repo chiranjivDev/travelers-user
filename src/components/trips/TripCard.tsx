@@ -48,7 +48,7 @@ interface DestinationFlexibility {
 
 interface TripCardProps {
   trip: TripDetails;
-  onChatClick: (travelerId: string) => void;
+  onChatClick?: (travelerId: string) => void;
 }
 
 const TripCard = memo(function TripCard({ trip, onChatClick }: TripCardProps) {
@@ -448,12 +448,14 @@ const TripCard = memo(function TripCard({ trip, onChatClick }: TripCardProps) {
           >
             View Details
           </Link>
-          <button
-            onClick={() => onChatClick(trip.traveler.id, trip.id)}
-            className="flex-1 bg-gray-700 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
-          >
-            Chat Now
-          </button>
+          {onChatClick && (
+            <button
+              onClick={() => onChatClick(trip.traveler.id, trip.id)}
+              className="flex-1 bg-gray-700 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
+            >
+              Chat Now
+            </button>
+          )}
         </div>
       </div>
     </motion.div>
