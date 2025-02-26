@@ -90,5 +90,126 @@
     "subtitle": "یا",
     "loginLink": "ورود به حساب کاربری",
     "signupButton": "ایجاد حساب کاربری"
+  },
+  "SenderForm": {
+    "progressHeaders": {
+      "packageDetails": "جزئیات بسته",
+      "packageDetailsSubtitle": "درباره بسته‌ای که ارسال می‌کنید به ما بگویید",
+      "packagePickup": "دریافت بسته",
+      "packagePickupSubtitle": "جزئیات دریافت بسته را تنظیم کنید",
+      "deliveryDetails": "جزئیات تحویل",
+      "deliveryDetailsSubtitle": "جزئیات تحویل بسته خود را تنظیم کنید",
+      "communicationPreference": "ترجیح ارتباطی",
+      "communicationPreferenceSubtitle": "نحوه ارتباط مورد نظر خود را به ما بگویید",
+      "reviewAndSubmit": "بررسی و ارسال",
+      "reviewAndSubmitSubtitle": "تمام جزئیات را تأیید کرده و ارسال کنید",
+      "travelerPackage": "بسته مسافر",
+      "travelerPackageSubtitle": "بسته مسافری مناسب خود را انتخاب کرده و سفارش دهید"
+    },
+    "buttons": {
+      "back": "بازگشت",
+      "next": "بعدی",
+      "loading": "در حال بارگذاری...",
+      "createPackage": "ایجاد بسته"
+    },
+    "steps": {
+      "step1": {
+        "title": "مرحله ۱: جزئیات بسته",
+        "fields": {
+          "name": "نام",
+          "category": "دسته‌بندی",
+          "subcategory": "زیر دسته‌بندی",
+          "description": "توضیحات",
+          "price": "قیمت",
+          "dimensions": "ابعاد",
+          "length": "طول",
+          "width": "عرض",
+          "height": "ارتفاع",
+          "weight": "وزن",
+          "specialInstructions": "دستورالعمل‌های ویژه",
+          "requiresCarefulHandling": "نیاز به جابجایی با دقت دارد",
+          "fragileItem": "آیا این یک مورد شکننده است؟",
+          "isInsured": "آیا بیمه شده است؟",
+          "priority": "اولویت"
+        },
+        "packagePhotos": {
+          "title": "عکس‌های بسته",
+          "description": "عکس‌هایی از بسته خود اضافه کنید تا مسافران بتوانند ظاهر و وضعیت آن را بهتر درک کنند. این همچنین به تأیید بسته در هنگام تحویل و دریافت کمک می‌کند.",
+          "photoGuidelines": {
+            "title": "راهنمای عکس‌ها",
+            "tips": [
+              "عکس‌های واضح و با نور مناسب از زوایای مختلف بگیرید",
+              "برچسب‌های شکستنی/حمل و نقل را در صورت وجود نشان دهید",
+              "وضعیت بسته‌بندی را به وضوح نشان دهید",
+              "از درج اطلاعات شخصی یا حساس در عکس‌ها خودداری کنید"
+            ]
+          }
+        }
+      },
+      "step2": {
+        "title": "مرحله ۲: جزئیات دریافت بسته",
+        "fields": {
+          "originStreet": "خیابان مبدأ",
+          "originPostal": "کد پستی مبدأ",
+          "originCity": "شهر مبدأ",
+          "pickupDate": "تاریخ دریافت",
+          "dateFormat": "روز-ماه-سال",
+          "preferredTime": "زمان ترجیحی"
+        }
+      },
+      "step3": {
+        "title": "مرحله ۳: آدرس تحویل",
+        "fields": {
+          "deliveryStreet": "خیابان",
+          "deliveryPostal": "کد پستی",
+          "deliveryCity": "شهر",
+          "deliveryDate": "تاریخ تحویل",
+          "preferredDeliveryTime": "زمان تحویل ترجیحی"
+        }
+      },
+      "step4": {
+        "title": "مرحله ۴: ترجیح ارتباطی",
+        "fields": {
+          "phoneNumber": "شماره تلفن",
+          "communicationPreference": "ترجیح ارتباطی",
+          "options": {
+            "whatsapp": "واتساپ",
+            "email": "ایمیل",
+            "phone": "تلفن"
+          }
+        }
+      },
+      "step5": {
+        "title": "مرحله ۵: بررسی و ارسال",
+        "generalInformation": "اطلاعات عمومی",
+        "name": "نام",
+        "price": "قیمت",
+        "description": "توضیحات",
+        "dimensions": "ابعاد",
+        "length": "طول",
+        "width": "عرض",
+        "height": "ارتفاع",
+        "origin": "مبدا",
+        "street": "خیابان",
+        "postal": "کد پستی",
+        "city": "شهر",
+        "destination": "مقصد",
+        "additionalInformation": "اطلاعات اضافی",
+        "pickupDate": "تاریخ دریافت",
+        "preferredTime": "زمان ترجیحی",
+        "deliveryDate": "تاریخ تحویل",
+        "preferredDeliveryTime": "زمان تحویل ترجیحی",
+        "phone": "تلفن",
+        "communication": "ارتباطات",
+        "requiresCarefulHandling": "نیاز به حمل و نقل با دقت دارد",
+        "isFragile": "شکستنی است",
+        "insurance": "بیمه",
+        "priority": "اولویت",
+        "specialInstructions": "دستورالعمل‌های ویژه",
+        "yes": "بله",
+        "no": "خیر",
+        "na": "ناموجود"
+      }
+    }
   }
 }

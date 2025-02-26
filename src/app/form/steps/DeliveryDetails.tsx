@@ -1,15 +1,22 @@
+import { useTranslations } from 'next-intl';
 import { Controller } from 'react-hook-form';
 
 export const DeliveryDetails = ({ control, errors }) => {
+  const t = useTranslations('SenderForm.steps.step3'); // Language translation
+
   return (
     <div>
       <h2 className="text-xl font-bold mb-4 text-gray-700">
-        Step 3: Delivery Address
+        {/* Step 3: Delivery Address */}
+        {t('title')}
       </h2>
 
       {/* Delivery Street Field */}
       <div className="mb-4">
-        <label className="block text-gray-700">Street</label>
+        <label className="block text-gray-700">
+          {/* Street */}
+          {t('fields.deliveryStreet')}
+        </label>
         <Controller
           name="destination.street"
           control={control}
@@ -27,7 +34,10 @@ export const DeliveryDetails = ({ control, errors }) => {
 
       {/* Delivery Postal Field */}
       <div className="mb-4">
-        <label className="block text-gray-700">Postal</label>
+        <label className="block text-gray-700">
+          {/* Postal */}
+          {t('fields.deliveryPostal')}
+        </label>
         <Controller
           name="destination.postal"
           control={control}
@@ -45,7 +55,10 @@ export const DeliveryDetails = ({ control, errors }) => {
 
       {/* Delivery City Field */}
       <div className="mb-4">
-        <label className="block text-gray-700">City</label>
+        <label className="block text-gray-700">
+          {/* City */}
+          {t('fields.deliveryCity')}
+        </label>
         <Controller
           name="destination.city"
           control={control}
@@ -98,7 +111,10 @@ export const DeliveryDetails = ({ control, errors }) => {
       </div> */}
 
       <div className="mb-4">
-        <label className="block text-gray-700">Delivery Date</label>
+        <label className="block text-gray-700">
+          {/* Delivery Date */}
+          {t('fields.deliveryDate')}
+        </label>
         <Controller
           name="deliveryDate"
           control={control}
@@ -117,7 +133,10 @@ export const DeliveryDetails = ({ control, errors }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Preferred Delivery Time</label>
+        <label className="block text-gray-700">
+          {/* Preferred Delivery Time */}
+          {t('fields.preferredDeliveryTime')}
+        </label>
         <Controller
           name="preferredDeliveryTime"
           control={control}

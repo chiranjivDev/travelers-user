@@ -3,9 +3,12 @@ import PackagePhotos from './packagePhotos';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { PACKAGE_CATEGORIES } from '@/app/sender/dashboard/redux/packagesAction';
+import { useTranslations } from 'next-intl';
 
 export const PackageDetails = ({ control, errors, getValues, setValue }) => {
   const { categories } = useSelector((state) => state.packages);
+
+  const t = useTranslations('SenderForm.steps.step1'); // language translations
 
   // fetch categories
   const dispatch = useDispatch();
@@ -35,11 +38,14 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4 text-gray-700">
-        Step 1: Package Details
+        {/* Step 1: Package Details */}
+        {t('title')}
       </h2>
       {/* Name */}
       <div className="mb-4">
-        <label className="block text-gray-700">Name</label>
+        <label className="block text-gray-700">
+          {/* Name */} {t('fields.name')}
+        </label>
         <Controller
           name="name"
           control={control}
@@ -55,7 +61,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
       {/* Category */}
       <div className="mb-4">
-        <label className="block text-gray-700">Category</label>
+        <label className="block text-gray-700">
+          {/* Category */}
+          {t('fields.category')}
+        </label>
         <Controller
           name="category"
           control={control}
@@ -79,7 +88,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
       {/* Subcategory */}
       {selectedCategory && (
         <div className="mb-4">
-          <label className="block text-gray-700">Subcategory</label>
+          <label className="block text-gray-700">
+            {/* Subcategory */}
+            {t('fields.subcategory')}
+          </label>
           <Controller
             name="subcategory"
             control={control}
@@ -106,7 +118,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
       {/* Description */}
       <div className="mb-4">
-        <label className="block text-gray-700">Description</label>
+        <label className="block text-gray-700">
+          {/* Description */}
+          {t('fields.description')}
+        </label>
         <Controller
           name="description"
           control={control}
@@ -122,7 +137,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
       {/* Price */}
       <div className="mb-4">
-        <label className="block text-gray-700">Price</label>
+        <label className="block text-gray-700">
+          {/* Price */}
+          {t('fields.price')}
+        </label>
         <Controller
           name="price"
           control={control}
@@ -142,11 +160,17 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
       {/* Dimension Fields */}
       <div className="mb-4">
-        <label className="block text-gray-700">Dimensions</label>
+        <label className="block text-gray-700">
+          {/* Dimensions */}
+          {t('fields.dimensions')}
+        </label>
         <div className="flex space-x-4">
           {/* Length Field */}
           <div className="w-full">
-            <label className="block text-gray-700">Length</label>
+            <label className="block text-gray-700">
+              {/* Length */}
+              {t('fields.length')}
+            </label>
             <Controller
               name="dimension.length"
               control={control}
@@ -169,7 +193,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
           {/* Width Field */}
           <div className="w-full">
-            <label className="block text-gray-700">Width</label>
+            <label className="block text-gray-700">
+              {/* Width */}
+              {t('fields.width')}
+            </label>
             <Controller
               name="dimension.width"
               control={control}
@@ -192,7 +219,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
           {/* Height Field */}
           <div className="w-full">
-            <label className="block text-gray-700">Height</label>
+            <label className="block text-gray-700">
+              {/* Height */}
+              {t('fields.height')}
+            </label>
             <Controller
               name="dimension.height"
               control={control}
@@ -217,7 +247,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
       {/* Weight */}
       <div className="mb-4">
-        <label className="block text-gray-700">Weight</label>
+        <label className="block text-gray-700">
+          {/* Weight */}
+          {t('fields.weight')}
+        </label>
         <Controller
           name="weight"
           control={control}
@@ -245,7 +278,8 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
             htmlFor="requiresCarefulHandling"
             className="text-gray-700 mr-2 cursor-pointer"
           >
-            Requires Careful Handling
+            {/* Requires Careful Handling */}
+            {t('fields.requiresCarefulHandling')}
           </label>
           <Controller
             name="requiresCarefulHandling"
@@ -269,7 +303,8 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
             htmlFor="isFragile"
             className="text-gray-700 mr-2 cursor-pointer"
           >
-            Fragile Item?
+            {/* Fragile Item? */}
+            {t('fields.fragileItem')}
           </label>
           <Controller
             name="isFragile"
@@ -296,7 +331,8 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
             htmlFor="insurance"
             className="text-gray-700 mr-2 cursor-pointer"
           >
-            Is Insured?
+            {/* Is Insured? */}
+            {t('fields.isInsured')}
           </label>
           <Controller
             name="insurance"
@@ -320,7 +356,8 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
             htmlFor="priority"
             className="text-gray-700 mr-2 cursor-pointer"
           >
-            Priority
+            {/* Priority */}
+            {t('fields.priority')}
           </label>
           <Controller
             name="priority"
@@ -341,7 +378,10 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
 
       {/* Special Instructions */}
       <div className="mb-4">
-        <label className="block text-gray-700">Special Instructions</label>
+        <label className="block text-gray-700">
+          {/* Special Instructions */}
+          {t('fields.specialInstructions')}
+        </label>
         <Controller
           name="specialInstructions"
           control={control}

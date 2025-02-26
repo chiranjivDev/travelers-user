@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { senderMultistep } from './steps';
+// import { senderMultistep } from './steps';
 import { PackageDetails } from './steps/PackageDetails';
 import { PickupDetails } from './steps/PickupDetails';
 import { DeliveryDetails } from './steps/DeliveryDetails';
@@ -12,12 +12,16 @@ import { PlaceOrder } from './steps/PlaceOrder';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearPackagesState } from '../sender/dashboard/redux/packagesSlice';
 import { SEND_PACKAGE } from '../sender/dashboard/redux/packagesAction';
+import { useTranslations } from 'next-intl';
+import ProgressHeaders from './steps/ProgressSteps';
 
 const PackageCreationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const { sendPackageSuccess, sendPackageLoading } = useSelector(
     (state) => state.packages
   );
+
+  const t = useTranslations('SenderForm'); // language translation
 
   const {
     control,
@@ -220,33 +224,8 @@ const PackageCreationForm = () => {
             <div className="flex flex-col items-center p-6">
               {/* Steps container */}
               <div className="flex justify-between items-start w-full">
-                {senderMultistep.map((s) => (
-                  <div
-                    key={s.id}
-                    className={`flex flex-col items-center w-1/5 ${s.id === currentStep ? 'opacity-100' : 'opacity-60'} `}
-                  >
-                    {/* Icon */}
-                    <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center mb-2
-            ${s.id <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}
-            ${s.id === currentStep ? 'ring-2 ring-blue-400 ring-offset-2' : ''}`}
-                    >
-                      {s.icon}
-                    </div>
-
-                    {/* Step title and subtitle */}
-                    <div className="text-center">
-                      <p
-                        className={`text-sm font-medium mb-1 ${s.id === currentStep ? 'text-blue-600' : 'text-gray-600'}`}
-                      >
-                        {s.title}
-                      </p>
-                      <p className="text-xs text-gray-500 max-w-[120px] mx-auto">
-                        {s.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                {/* progress bar */}
+                <ProgressHeaders currentStep={currentStep} />
               </div>
             </div>
 
@@ -286,7 +265,7 @@ const PackageCreationForm = () => {
                     onClick={prevStep}
                     className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400 focus:outline-none"
                   >
-                    Back
+                    {t('buttons.back')}
                   </button>
                 )}
                 <button
@@ -300,10 +279,10 @@ const PackageCreationForm = () => {
                   disabled={sendPackageLoading}
                 >
                   {sendPackageLoading
-                    ? 'Loading...'
+                    ? t('buttons.loading')
                     : currentStep === 5
-                      ? 'Create Package'
-                      : 'Next'}
+                      ? t('buttons.createPackage')
+                      : t('buttons.next')}
                 </button>
               </div>
             )}
@@ -315,3 +294,34 @@ const PackageCreationForm = () => {
 };
 
 export default PackageCreationForm;
+
+// Progress Indicator : will remove later
+//  {
+//    senderMultistep.map((s) => (
+//      <div
+//        key={s.id}
+//        className={`flex flex-col items-center w-1/5 ${s.id === currentStep ? 'opacity-100' : 'opacity-60'} `}
+//      >
+//        {/* Icon */}
+//        <div
+//          className={`w-12 h-12 rounded-full flex items-center justify-center mb-2
+//           ${s.id <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}
+//           ${s.id === currentStep ? 'ring-2 ring-blue-400 ring-offset-2' : ''}`}
+//        >
+//          {s.icon}
+//        </div>
+
+//        {/* Step title and subtitle */}
+//        <div className="text-center">
+//          <p
+//            className={`text-sm font-medium mb-1 ${s.id === currentStep ? 'text-blue-600' : 'text-gray-600'}`}
+//          >
+//            {s.title}
+//          </p>
+//          <p className="text-xs text-gray-500 max-w-[120px] mx-auto">
+//            {s.subtitle}
+//          </p>
+//        </div>
+//      </div>
+//    ));
+//  }

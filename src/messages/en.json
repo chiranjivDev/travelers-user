@@ -90,5 +90,126 @@
     "subtitle": "Or",
     "loginLink": "Sign in to your account",
     "signupButton": "Create Account"
+  },
+
+  "SenderForm": {
+    "progressHeaders": {
+      "packageDetails": "Package Details",
+      "packageDetailsSubtitle": "Tell us about the package you're sending",
+      "packagePickup": "Package Pickup",
+      "packagePickupSubtitle": "Set the pickup details for the package",
+      "deliveryDetails": "Delivery Details",
+      "deliveryDetailsSubtitle": "Set the delivery details for your package",
+      "communicationPreference": "Communication Preference",
+      "communicationPreferenceSubtitle": "Tell us how you prefer to be contacted",
+      "reviewAndSubmit": "Review and Submit",
+      "reviewAndSubmitSubtitle": "Confirm all details and submit",
+      "travelerPackage": "Traveler Package",
+      "travelerPackageSubtitle": "Select your traveler package and place the order"
+    },
+    "buttons": {
+      "back": "Back",
+      "next": "Next",
+      "loading": "Loading...",
+      "createPackage": "Create Package"
+    },
+    "steps": {
+      "step1": {
+        "title": "Step 1: Package Details",
+        "fields": {
+          "name": "Name",
+          "category": "Category",
+          "subcategory": "Subcategory",
+          "description": "Description",
+          "price": "Price",
+          "dimensions": "Dimensions",
+          "length": "Length",
+          "width": "Width",
+          "height": "Height",
+          "weight": "Weight",
+          "specialInstructions": "Special Instructions",
+          "requiresCarefulHandling": "Requires Careful Handling",
+          "fragileItem": "Fragile Item?",
+          "isInsured": "Is Insured?",
+          "priority": "Priority"
+        },
+        "packagePhotos": {
+          "title": "Package Photos",
+          "description": "Add photos of your package to help travelers better understand its appearance and condition. This also helps with package verification during pickup and delivery.",
+          "photoGuidelines": {
+            "title": "Photo Guidelines",
+            "tips": [
+              "Take clear, well-lit photos from multiple angles",
+              "Include any fragile/handling labels if present",
+              "Show the packaging condition clearly",
+              "Avoid including personal or sensitive information in photos"
+            ]
+          }
+        }
+      },
+      "step2": {
+        "title": "Step 2: Package Pickup Details",
+        "fields": {
+          "originStreet": "Origin Street",
+          "originPostal": "Origin Postal Code",
+          "originCity": "Origin City",
+          "pickupDate": "Pickup Date",
+          "preferredTime": "Preferred Time"
+        }
+      },
+      "step3": {
+        "title": "Step 3: Delivery Address",
+        "fields": {
+          "deliveryStreet": "Street",
+          "deliveryPostal": "Postal Code",
+          "deliveryCity": "City",
+          "deliveryDate": "Delivery Date",
+          "preferredDeliveryTime": "Preferred Delivery Time"
+        }
+      },
+      "step4": {
+        "title": "Step 4: Communication Preference",
+        "fields": {
+          "phoneNumber": "Phone Number",
+          "communicationPreference": "Communication Preference",
+          "options": {
+            "whatsapp": "WhatsApp",
+            "email": "Email",
+            "phone": "Phone"
+          }
+        }
+      },
+      "step5": {
+        "title": "Step 5: Review & Submit",
+        "generalInformation": "General Information",
+        "name": "Name",
+        "price": "Price",
+        "description": "Description",
+        "dimensions": "Dimensions",
+        "length": "Length",
+        "width": "Width",
+        "height": "Height",
+        "origin": "Origin",
+        "street": "Street",
+        "postal": "Postal",
+        "city": "City",
+        "destination": "Destination",
+        "additionalInformation": "Additional Information",
+        "pickupDate": "Pickup Date",
+        "preferredTime": "Preferred Time",
+        "deliveryDate": "Delivery Date",
+        "preferredDeliveryTime": "Preferred Delivery Time",
+        "phone": "Phone",
+        "communication": "Communication",
+        "requiresCarefulHandling": "Requires Careful Handling",
+        "isFragile": "Is Fragile",
+        "insurance": "Insurance",
+        "priority": "Priority",
+        "specialInstructions": "Special Instructions",
+        "yes": "Yes",
+        "no": "No",
+        "na": "N/A"
+      }
+    }
   }
 }
