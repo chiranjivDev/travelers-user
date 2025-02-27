@@ -3,8 +3,11 @@
 import React from 'react';
 import { FiInfo } from 'react-icons/fi';
 import { Tooltip } from '@/components/ui/Tooltip';
+import { useTranslations } from 'next-intl';
 
 const Communication = ({ register, errors }) => {
+  const t = useTranslations('travellerForm.steps.step3'); // language translation
+
   return (
     <div className="space-y-6 relative">
       {/* Cosmic background elements - Reduced blur and simplified gradients */}
@@ -29,7 +32,8 @@ const Communication = ({ register, errors }) => {
             🌟
           </span>
           <h3 className="text-xl font-bold bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-            Communication Preferences
+            {/* Communication Preferences */}
+            {t('title')}
           </h3>
           <Tooltip content="Choose how senders can contact you">
             <div className="p-1 rounded-full hover:bg-white/5 transition-colors duration-150">

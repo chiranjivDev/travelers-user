@@ -13,10 +13,14 @@ import { CREATE_TRIP } from '../traveler/redux/tripsAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { clearTripsState } from '../traveler/redux/tripsSlice';
+import { ProgressHeader } from './steps/ProgressHeader';
+import { useTranslations } from 'next-intl';
 
 const TravelerForm = () => {
   const { addTripSuccess } = useSelector((state) => state.trips);
   const [step, setStep] = useState(1);
+  const t = useTranslations('travellerForm'); // language translation
+
   // Initialize React Hook Form
   const {
     register,
@@ -249,7 +253,7 @@ const TravelerForm = () => {
         {/* Progress Steps */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-            {steps.map((stepItem, index) => (
+            {/* {steps.map((stepItem, index) => (
               <div
                 key={index}
                 className={`flex items-center ${
@@ -291,7 +295,9 @@ const TravelerForm = () => {
                   </div>
                 )}
               </div>
-            ))}
+            ))} */}
+
+            <ProgressHeader step={step} />
           </div>
         </div>
 
@@ -345,7 +351,7 @@ const TravelerForm = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {getButtonText(step)}
+                {getButtonText(step, t)}
               </motion.button>
             </div>
           </form>
@@ -354,4 +360,5 @@ const TravelerForm = () => {
     </div>
   );
 };
+
 export default TravelerForm;

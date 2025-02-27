@@ -211,5 +211,138 @@
         "na": "ناموجود"
       }
     }
+  },
+
+  "travellerForm": {
+    "progressHeaders": {
+      "travelRoute": "مسیر سفر شما چیست؟",
+      "transportDetails": "جزئیات حمل و نقل",
+      "communication": "ارتباط",
+      "pricing": "قیمت‌گذاری",
+      "reviewOffer": "بررسی پیشنهاد شما"
+    },
+    "buttons": {
+      "continueToTransport": "ادامه به جزئیات حمل و نقل",
+      "continueToCommunication": "ادامه به ارتباطات",
+      "continueToPricing": "ادامه به قیمت‌گذاری",
+      "continueToReview": "ادامه به بررسی",
+      "submitOffer": "ارسال پیشنهاد",
+      "continue": "ادامه"
+    },
+    "steps": {
+      "step1": {
+        "title": "جزئیات سفر",
+        "fields": {
+          "departure": "محل خروج",
+          "arrival": "محل ورود",
+          "street": "خیابان",
+          "city": "شهر",
+          "state": "استان",
+          "country": "کشور",
+          "postalCode": "کد پستی",
+          "travelSchedule": {
+            "title": "برنامه سفر",
+            "departure": "حرکت",
+            "arrival": "رسیدن"
+          },
+          "packageReception": {
+            "title": "جزئیات دریافت بسته",
+            "receptionMethod": {
+              "title": "روش دریافت",
+              "departurePoint": {
+                "name": "در محل عزیمت",
+                "description": "ملاقات در فرودگاه/ایستگاه در روز سفر"
+              },
+              "advanceHome": {
+                "name": "تحویل زودهنگام در منزل",
+                "description": "دریافت بسته در آدرس شما قبل از تاریخ سفر"
+              },
+              "meetingPoint": {
+                "name": "نقطه ملاقات مناسب",
+                "description": "هماهنگی برای یک مکان ملاقات مشترک"
+              }
+            },
+            "advanceNoticeRequired": "نیاز به اطلاع قبلی",
+            "oneDayNotice": "اطلاع ۱ روزه",
+            "twoDaysNotice": "اطلاع ۲ روزه",
+            "threeDaysNotice": "اطلاع ۳ روزه",
+            "flexibleNotice": "انعطاف‌پذیر (هماهنگی با فرستنده)",
+            "availableReceptionTimes": "زمان‌های موجود برای دریافت",
+            "weekdays": "روزهای هفته",
+            "weekends": "آخر هفته",
+            "morning": "صبح (۶ صبح - ۱۲ ظهر)",
+            "afternoon": "بعدازظهر (۱۲ ظهر - ۶ عصر)",
+            "evening": "شب (۶ عصر - ۱۰ شب)"
+          }
+        }
+      },
+      "step2": {
+        "title": "ترجیحات بسته",
+        "fields": {
+          "weightCapacity": {
+            "title": "حداکثر ظرفیت وزن",
+            "options": {
+              "upTo5kg": "تا ۵ کیلوگرم",
+              "upTo10kg": "تا ۱۰ کیلوگرم",
+              "upTo20kg": "تا ۲۰ کیلوگرم",
+              "upTo50kg": "تا ۵۰ کیلوگرم",
+              "upTo100kg": "تا ۱۰۰ کیلوگرم"
+            }
+          },
+          "specialHandling": {
+            "title": "خدمات ویژه حمل و نقل",
+            "description": "خدمات اضافی که می‌توانید ارائه دهید",
+            "secureHandling": {
+              "name": "حمل و نقل ایمن و محتاطانه",
+              "description": "مراقبت و امنیت بیشتر برای اقلام با ارزش یا حساس"
+            },
+            "expressDelivery": {
+              "name": "تحویل سریع",
+              "description": "تحویل سریع بلافاصله پس از رسیدن به مقصد"
+            }
+          },
+          "quickPreference": {
+            "title": "انتخاب سریع ترجیحات",
+            "description": "انتخاب ترجیحات حمل بسته",
+            "openToAll": {
+              "label": "پذیرش تمام اقلام",
+              "description": "پذیرش تمام موارد مجاز در محدوده وزن",
+              "details": {
+                "flexibility": "حداکثر انعطاف‌پذیری",
+                "opportunities": "فرصت‌های بیشتر برای تحویل",
+                "earningPotential": "پتانسیل درآمدی بالاتر"
+              }
+            },
+            "basicItems": {
+              "label": "فقط اقلام پایه‌ای",
+              "description": "فقط موارد کم‌ریسک",
+              "details": "موارد ایمن و ساده برای حمل و نقل آسان"
+            }
+          },
+          "travelerResponsibilities": {
+            "title": "مسئولیت‌های مسافر",
+            "description": "به عنوان یک مسافر، شما باید مسئولیت‌های خود را در مورد اقلام محدود و ممنوع درک کرده و بپذیرید.",
+            "verifyContents": "من محتوای بسته‌ها را قبل از پذیرش بررسی خواهم کرد",
+            "noRestrictedItems": "من هیچ اقلام محدود یا ممنوعی را حمل نخواهم کرد",
+            "reportSuspicious": "من هر بسته یا محتوای مشکوکی را گزارش خواهم داد",
+            "legalUnderstanding": "من مسئولیت‌های قانونی خود را به عنوان یک مسافر درک می‌کنم",
+            "acknowledge": "لطفاً تمام مسئولیت‌ها را تأیید کنید تا ادامه دهید",
+            "viewGuide": "مشاهده راهنمای کامل اقلام محدود"
+          }
+        }
+      },
+      "step3": {
+        "title": "ترجیحات ارتباطی",
+        "fields": {}
+      },
+      "step4": {
+        "title": "محاسبه قیمت",
+        "fields": {}
+      },
+      "step5": {
+        "title": "بررسی پیشنهاد سفر شما",
+        "fields": {}
+      }
+    }
   }
 }

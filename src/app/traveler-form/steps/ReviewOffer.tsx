@@ -1,6 +1,9 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 const ReviewOffer = ({ formData }) => {
+  const t = useTranslations('travellerForm.steps.step5'); // language translation
+
   const getHandlingOptionsString = (preferences?: any) => {
     if (!preferences) return 'Not specified';
     const options = [
@@ -19,7 +22,8 @@ const ReviewOffer = ({ formData }) => {
       <div className="px-6 py-12">
         <h3 className="text-3xl font-bold mb-12 flex items-center text-white">
           <span className="mr-4 text-4xl filter drop-shadow-lg">✨</span>
-          Review Your Travel Offer
+          {/* Review Your Travel Offer */}
+          {t('title')}
         </h3>
 
         <div className="space-y-8">

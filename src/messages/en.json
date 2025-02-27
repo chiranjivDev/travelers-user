@@ -211,5 +211,138 @@
         "na": "N/A"
       }
     }
+  },
+
+  "travellerForm": {
+    "progressHeaders": {
+      "travelRoute": "What is your travel route?",
+      "transportDetails": "Transport Details",
+      "communication": "Communication",
+      "pricing": "Pricing",
+      "reviewOffer": "Review your offer"
+    },
+    "buttons": {
+      "continueToTransport": "Continue to Transport Details",
+      "continueToCommunication": "Continue to Communication",
+      "continueToPricing": "Continue to Pricing",
+      "continueToReview": "Continue to Review",
+      "submitOffer": "Submit Offer",
+      "continue": "Continue"
+    },
+    "steps": {
+      "step1": {
+        "title": "Trip Details",
+        "fields": {
+          "departure": "Departure Location Details",
+          "arrival": "Arrival Location Details",
+          "street": "Street",
+          "city": "City",
+          "state": "State",
+          "country": "Country",
+          "postalCode": "Postal Code",
+          "travelSchedule": {
+            "title": "Travel Schedule",
+            "departure": "Departure",
+            "arrival": "Arrival"
+          },
+          "packageReception": {
+            "title": "Package Reception Details",
+            "receptionMethod": {
+              "title": "Reception Method",
+              "departurePoint": {
+                "name": "At Departure Point",
+                "description": "Meet at the airport/station on travel day"
+              },
+              "advanceHome": {
+                "name": "Advance Home Delivery",
+                "description": "Receive at your address before travel date"
+              },
+              "meetingPoint": {
+                "name": "Convenient Meeting Point",
+                "description": "Arrange a mutual meeting location"
+              }
+            },
+            "advanceNoticeRequired": "Advance Notice Required",
+            "oneDayNotice": "1 day notice",
+            "twoDaysNotice": "2 days notice",
+            "threeDaysNotice": "3 days notice",
+            "flexibleNotice": "Flexible (coordinate with sender)",
+            "availableReceptionTimes": "Available Reception Times",
+            "weekdays": "Weekdays",
+            "weekends": "Weekends",
+            "morning": "Morning (6 AM - 12 PM)",
+            "afternoon": "Afternoon (12 PM - 6 PM)",
+            "evening": "Evening (6 PM - 10 PM)"
+          }
+        }
+      },
+      "step2": {
+        "title": "Package Preferences",
+        "fields": {
+          "weightCapacity": {
+            "title": "Maximum Weight Capacity",
+            "options": {
+              "upTo5kg": "Up to 5 kg",
+              "upTo10kg": "Up to 10 kg",
+              "upTo20kg": "Up to 20 kg",
+              "upTo50kg": "Up to 50 kg",
+              "upTo100kg": "Up to 100 kg"
+            }
+          },
+          "specialHandling": {
+            "title": "Special Handling Services",
+            "description": "Additional services you can provide",
+            "secureHandling": {
+              "name": "Secure & Careful Handling",
+              "description": "Extra care and security for valuable or delicate items"
+            },
+            "expressDelivery": {
+              "name": "Express Delivery",
+              "description": "Quick delivery upon arrival at destination"
+            }
+          },
+          "quickPreference": {
+            "title": "Quick Preference Selection",
+            "description": "Choose your package handling preferences",
+            "openToAll": {
+              "label": "Open to All Items",
+              "description": "Accept all allowed items within weight limit",
+              "details": {
+                "flexibility": "Maximum flexibility",
+                "opportunities": "More delivery opportunities",
+                "earningPotential": "Higher earning potential"
+              }
+            },
+            "basicItems": {
+              "label": "Basic Items Only",
+              "description": "Low-risk items only",
+              "details": "Safe and simple items for easy transport"
+            }
+          },
+          "travelerResponsibilities": {
+            "title": "Traveler Responsibilities",
+            "description": "As a traveler, you must understand and acknowledge your responsibilities regarding restricted items.",
+            "verifyContents": "I will verify the contents of packages before accepting them",
+            "noRestrictedItems": "I will not transport any restricted or prohibited items",
+            "reportSuspicious": "I will report any suspicious packages or contents",
+            "legalUnderstanding": "I understand my legal responsibilities as a traveler",
+            "acknowledge": "Please acknowledge all responsibilities to continue",
+            "viewGuide": "View complete restricted items guide"
+          }
+        }
+      },
+      "step3": {
+        "title": "Communication Preferences",
+        "fields": {}
+      },
+      "step4": {
+        "title": "Price Calculator",
+        "fields": {}
+      },
+      "step5": {
+        "title": "Review Your Travel Offer",
+        "fields": {}
+      }
+    }
   }
 }

@@ -21,20 +21,40 @@ export const steps = [
   },
 ];
 
-// Get Button Text from Step
-export const getButtonText = (currentStep: number) => {
+// // Get Button Text from Step
+// export const getButtonText = (currentStep: number, t: any) => {
+//   switch (currentStep) {
+//     case 1:
+//       return 'Continue to Transport Details';
+//     case 2:
+//       return 'Continue to Communication';
+//     case 3:
+//       return 'Continue to Pricing';
+//     case 4:
+//       return 'Continue to Review';
+//     case 5:
+//       return 'Submit Offer';
+//     default:
+//       return 'Continue';
+//   }
+// };
+
+export const getButtonText = (
+  currentStep: number,
+  t: (key: string) => string
+) => {
   switch (currentStep) {
     case 1:
-      return 'Continue to Transport Details';
+      return t('buttons.continueToTransport');
     case 2:
-      return 'Continue to Communication';
+      return t('buttons.continueToCommunication');
     case 3:
-      return 'Continue to Pricing';
+      return t('buttons.continueToPricing');
     case 4:
-      return 'Continue to Review';
+      return t('buttons.continueToReview');
     case 5:
-      return 'Submit Offer';
+      return t('buttons.submitOffer');
     default:
-      return 'Continue';
+      return t('buttons.continue');
   }
 };

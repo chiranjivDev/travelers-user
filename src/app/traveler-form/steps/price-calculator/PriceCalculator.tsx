@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { FiInfo } from 'react-icons/fi';
 import { Tooltip } from '@/components/ui/Tooltip';
+import { useTranslations } from 'next-intl';
 
 const PriceCalculator = ({ register, errors, setValue, watch }) => {
+  const t = useTranslations('travellerForm.steps.step4'); // language translation
+
   // Simplified pricing constants
   const RATES = {
     DISTANCE_FACTOR: 1, // €1 per 1000km
@@ -97,7 +100,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             💫
           </span>
           <h3 className="text-xl font-bold bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-            Price Calculator
+            {/* Price Calculator */}
+            {t('title')}
           </h3>
           <Tooltip content="Calculate your delivery price">
             <div className="p-1 rounded-full hover:bg-white/5 transition-colors duration-150">
