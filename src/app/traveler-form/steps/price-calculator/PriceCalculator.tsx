@@ -121,7 +121,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,85,247,0.05),transparent_70%)] pointer-events-none" />
             <div className="flex items-center space-x-2 mb-4">
               <h4 className="text-lg font-semibold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-                Base Rate
+                {/* Base Rate */}
+                {t('baseRate.label')}
               </h4>
               <Tooltip content="Your base delivery rate per kg">
                 <div className="p-1 rounded-full hover:bg-white/5 transition-colors duration-150">
@@ -165,7 +166,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(59,130,246,0.05),transparent_70%)] pointer-events-none" />
             <div className="flex items-center space-x-2 mb-4">
               <h4 className="text-lg font-semibold bg-gradient-to-r from-blue-300 to-indigo-300 bg-clip-text text-transparent">
-                Package Details
+                {/* Package Details */}
+                {t('packageDetails.label')}
               </h4>
               <Tooltip content="Specify package type and weight">
                 <div className="p-1 rounded-full hover:bg-white/5 transition-colors duration-150">
@@ -177,7 +179,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Package Type
+                  {/* Package Type */}
+                  {t('packageDetails.packageType.label')}
                 </label>
                 <div className="relative">
                   <select
@@ -222,7 +225,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Weight (kg)
+                  {/* Weight (kg) */}
+                  {t('packageDetails.weight.label')}
                 </label>
                 <div className="relative">
                   <input
@@ -257,7 +261,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
             <div className="flex items-center space-x-2 mb-4">
               <h4 className="text-lg font-semibold bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent">
-                Distance & Urgency
+                {/* Distance & Urgency */}
+                {t('distanceUrgency.label')}
               </h4>
               <Tooltip content="Specify travel distance and delivery urgency">
                 <div className="p-1 rounded-full hover:bg-white/5 transition-colors duration-150">
@@ -269,7 +274,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Distance (km)
+                  {/* Distance (km) */}
+                  {t('distanceUrgency.distance.label')}
                 </label>
                 <div className="relative">
                   <input
@@ -306,7 +312,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
                   {...register('pricing.urgentDelivery')}
                 />
                 <label className="text-sm text-gray-200 cursor-pointer">
-                  Urgent Delivery (+20%)
+                  {/* Urgent Delivery (+20%) */}
+                  {t('distanceUrgency.urgentDelivery')}
                 </label>
               </div>
             </div>
@@ -322,7 +329,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(52,211,153,0.05),transparent_70%)] pointer-events-none" />
             <div className="flex items-center justify-between">
               <h4 className="text-lg font-semibold bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">
-                Total Price
+                {/* Total Price */}
+                {t('totalPrice')}
               </h4>
               <span className="text-2xl font-bold text-emerald-400">
                 € {totalCost}

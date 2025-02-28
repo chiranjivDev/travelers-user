@@ -34,6 +34,7 @@ import {
   SEARCH_SENDER_PACKAGE,
 } from '../sender/dashboard/redux/packagesAction';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useTranslations } from 'next-intl';
 
 interface Filters {
   size: string[];
@@ -76,6 +77,7 @@ export default function BrowsePackagesPage() {
   const { packages: MOCK_PACKAGES } = useSelector((state) => state.packages);
   console.log('packages from browse packages', MOCK_PACKAGES);
   const dispatch = useDispatch();
+  const t = useTranslations('BrowsePackages');
 
   // useEffect(() => {
   //   dispatch({ type: PACKAGES });
@@ -416,11 +418,13 @@ export default function BrowsePackagesPage() {
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-center mb-4">
-            Find Packages That Need Delivery
+            {/* Find Packages That Need Delivery */}
+            {t('title')}
           </h1>
           <p className="text-xl text-center text-gray-200 max-w-2xl mx-auto">
-            Connect with senders and earn money by delivering packages along
-            your travel route
+            {/* Connect with senders and earn money by delivering packages along
+            your travel route */}
+            {t('description')}
           </p>
         </div>
       </div>
@@ -782,8 +786,10 @@ export default function BrowsePackagesPage() {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-400">
-            Found {filteredAndSortedPackages.length} packages matching your
-            criteria
+            {/* Found {filteredAndSortedPackages.length} packages matching your
+            criteria */}
+            {t('found')} {filteredAndSortedPackages.length}{' '}
+            {t('packagesMatchingCriteria')}
           </p>
         </div>
 
@@ -818,9 +824,13 @@ export default function BrowsePackagesPage() {
         {filteredAndSortedPackages.length === 0 && (
           <div className="text-center py-12">
             <FiPackage className="w-12 h-12 mx-auto text-gray-600 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No packages found</h3>
+            <h3 className="text-xl font-semibold mb-2">
+              {/* No packages found */}
+              {t('noPackagesFound')}
+            </h3>
             <p className="text-gray-400">
-              Try adjusting your filters or search terms
+              {/* Try adjusting your filters or search terms */}
+              {t('noPackagesFoundDescription')}
             </p>
           </div>
         )}

@@ -5,19 +5,19 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { SENDER_PACKAGES } from '../redux/packagesAction';
 import { TRIPS } from '@/app/traveler/redux/tripsAction';
-import { CREATE_ORDER, FETCH_ORDERS } from '../redux/orderAction';
+import { FETCH_ORDERS } from '../redux/orderAction';
 import GenericModal from './GenericModal';
 import { CreateNewOrder } from './CreateNewOrder';
+import { useTranslations } from 'next-intl';
 
 const CreateOrder = () => {
   const { senderPackages } = useSelector((state) => state.packages);
-  const { trips } = useSelector((state) => state.trips);
   const { orders, fetchOrdersLoading, createOrderSuccess } = useSelector(
     (state) => state.order
   );
+  const t = useTranslations('SenderDashboard.orders');
 
   const [selectedSenderPackage, setSelectedSenderPackage] = useState(null);
-  const [selectedTrip, setSelectedTrip] = useState('');
 
   console.log('selected sender package: ', selectedSenderPackage);
   console.log('sender packages', senderPackages);
@@ -51,25 +51,6 @@ const CreateOrder = () => {
       dispatch({ type: FETCH_ORDERS });
     }
   }, [createOrderSuccess]);
-
-  // handle create order
-  const handleCreateOrder = () => {
-    if (!selectedTrip || !selectedSenderPackage) {
-      alert('Please select both a sender package and a trip.');
-      return;
-    }
-
-    const payload = {
-      senderId: user?.userId,
-      traveler_package_id: selectedTrip,
-      sender_package_id: selectedSenderPackage?.packageId,
-      pickup_datetime: '2025-01-12T10:00:00Z',
-      delivery_datetime: '2025-01-13T15:00:00Z',
-      is_insured: true,
-      order_instruction: 'Handle with care',
-    };
-    dispatch({ type: CREATE_ORDER, payload });
-  };
 
   return (
     <div
@@ -113,8 +94,6 @@ const CreateOrder = () => {
             </label>
             <select
               id="sender-package"
-              // value={selectedSenderPackage}
-              // onChange={(e) => setSelectedSenderPackage(e.target.value)}
               value={selectedSenderPackage?.packageID || ''}
               onChange={(e) => {
                 const selectedPackage = senderPackages.find(
@@ -133,36 +112,12 @@ const CreateOrder = () => {
             </select>
           </div>
 
-          {/* Select a trip/traveler package */}
-          {/* <div className="flex-1">
-            <label
-              htmlFor="trip-package"
-              className="block text-sm font-medium text-gray-300 mb-2">
-              Select a Trip
-            </label>
-            <select
-              id="trip-package"
-              value={selectedTrip}
-              onChange={(e) => setSelectedTrip(e.target.value)}
-              className="w-full p-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Select a Trip</option>
-              {trips?.map((trip) => (
-                <option key={trip.id} value={trip.id}>
-                  {trip.name}
-                </option>
-              ))}
-            </select>
-          </div> */}
-
           {/* Place Order Button */}
           <div>
             <button
-              // onClick={handleCreateOrder}
               onClick={handleOpenModal}
               className="py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
             >
-              {/* Place Order */}
               Find Traveler
             </button>
           </div>
@@ -177,32 +132,32 @@ const CreateOrder = () => {
       ) : orders?.length > 0 ? (
         <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
           <div className="p-6 border-b border-gray-700">
-            <h2 className="text-xl font-semibold text-white">Created Orders</h2>
+            <h2 className="text-xl font-semibold text-white">{t('title')}</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-900/50">
                 <tr>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Order ID
+                    {t('orderId')}
                   </th>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Pickup Address
+                    {t('pickupAddress')}
                   </th>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Delivery Address
+                    {t('deliveryAddress')}
                   </th>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Pickup Date
+                    {t('pickupDate')}
                   </th>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Delivery Date
+                    {t('deliveryDate')}
                   </th>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Status
+                    {t('status')}
                   </th>
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
-                    Payment
+                    {t('payment')}
                   </th>
                 </tr>
               </thead>
@@ -219,12 +174,12 @@ const CreateOrder = () => {
                     </td>
                     <td className="py-4 px-6">
                       <div className="text-sm text-gray-300">
-                        {order.pickup_address}
+                        {order?.origin?.city}
                       </div>
                     </td>
                     <td className="py-4 px-6">
                       <div className="text-sm text-gray-300">
-                        {order.delivery_address}
+                        {order?.destination?.city}
                       </div>
                     </td>
                     <td className="py-4 px-6">
@@ -261,7 +216,7 @@ const CreateOrder = () => {
         </div>
       ) : (
         <div className="flex justify-center items-center h-64">
-          <p className="text-gray-300">No orders yet.</p>
+          <p className="text-gray-300">{t('noOrders')}</p>
         </div>
       )}
     </div>

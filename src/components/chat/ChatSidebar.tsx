@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { FETCH_CHAT_MESSAGES } from '@/app/chat/redux/chatsAction';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslations } from 'next-intl';
 
 // Previous Implementation
 function ConversationItem({
@@ -110,6 +111,8 @@ function ConversationItem({
 }
 
 export default function ChatSidebar() {
+  const t = useTranslations('Chat');
+
   const { conversations, activeConversation, setActiveConversation } =
     useChat();
   const [searchQuery, setSearchQuery] = useState('');
@@ -134,12 +137,12 @@ export default function ChatSidebar() {
       <div className="p-4 border-b border-gray-700">
         <h2 className="text-xl font-semibold text-white flex items-center">
           <FiMessageCircle className="w-5 h-5 mr-2" />
-          Messages
+          {t('title')}
         </h2>
       </div>
 
       {/* Search and Filter */}
-      <div className="p-4 border-b border-gray-700 space-y-4">
+      {/* <div className="p-4 border-b border-gray-700 space-y-4">
         <div className="relative">
           <input
             type="text"
@@ -182,7 +185,7 @@ export default function ChatSidebar() {
             Active
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Conversations List */}
       <div className="flex-1 overflow-y-auto">

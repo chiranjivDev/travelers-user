@@ -9,6 +9,7 @@ import { FiSearch, FiSliders, FiCalendar } from 'react-icons/fi';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH_TRAVELER_PACKAGE, TRIPS } from '../traveler/redux/tripsAction';
+import { useTranslations } from 'next-intl';
 // import { MOCK_TRIPS } from '@/data/mockTrips';
 
 type SortOption = 'rating' | 'price' | 'date';
@@ -18,6 +19,7 @@ export default function BrowseTrips() {
   // use selector: browse trips
   const { trips: MOCK_TRIPS } = useSelector((state) => state.trips);
   console.log('browse trips ===>', MOCK_TRIPS);
+  const t = useTranslations('BrowseTips');
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -131,17 +133,20 @@ export default function BrowseTrips() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white">Browse Trips</h1>
+            <h1 className="text-3xl font-bold text-white">
+              {/* Browse Trips */}
+              {t('title')}
+            </h1>
             <p className="text-gray-400 mt-2">
-              {MOCK_TRIPS.length} trips available
+              {MOCK_TRIPS.length} {t('tripsAvailable')}
             </p>
           </div>
-          <Link
+          {/* <Link
             href="/post-trip"
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
             Post a Trip
-          </Link>
+          </Link> */}
         </div>
 
         {/* Search and Filters */}
@@ -223,7 +228,8 @@ export default function BrowseTrips() {
         {MOCK_TRIPS.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 text-lg">
-              No trips found matching your criteria
+              {/* No trips found matching your criteria */}
+              {t('noTripsFound')}
             </div>
             <button
               onClick={() => {
@@ -233,7 +239,8 @@ export default function BrowseTrips() {
               }}
               className="mt-4 text-blue-400 hover:text-blue-300"
             >
-              Clear all filters
+              {/* Clear all filters */}
+              {t('clearAllFilters')}
             </button>
           </div>
         )}

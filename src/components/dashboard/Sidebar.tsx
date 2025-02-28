@@ -17,6 +17,7 @@ import {
   FiHelpCircle,
 } from 'react-icons/fi';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslations } from 'next-intl';
 
 interface SidebarItem {
   id: string;
@@ -26,113 +27,114 @@ interface SidebarItem {
   role: 'sender' | 'traveler' | 'all';
 }
 
-const sidebarItems: SidebarItem[] = [
-  // Sender Items
-
-  {
-    id: 'packages',
-    label: 'My Packages',
-    icon: FiPackage,
-    path: '/sender/dashboard/packages',
-    role: 'sender',
-  },
-  {
-    id: 'find-travelers',
-    label: 'Find Travelers',
-    icon: FiSearch,
-    path: '/sender/dashboard/travelers',
-    role: 'sender',
-  },
-  {
-    id: 'sender-transactions',
-    label: 'Payment History',
-    icon: FiDollarSign,
-    path: '/sender/dashboard/transactions',
-    role: 'sender',
-  },
-
-  // Traveler Items
-  {
-    id: 'trips',
-    label: 'My Trips',
-    icon: FiMapPin,
-    path: '/traveler/dashboard/trips',
-    role: 'traveler',
-  },
-  // {
-  //   id: 'earnings',
-  //   label: 'Earnings',
-  //   icon: FiDollarSign,
-  //   path: '/traveler/dashboard/earnings',
-  //   role: 'traveler',
-  // },
-  // {
-  //   id: 'reviews',
-  //   label: 'Reviews & Ratings',
-  //   icon: FiStar,
-  //   path: '/traveler/dashboard/reviews',
-  //   role: 'traveler',
-  // },
-  // {
-  //   id: 'availability',
-  //   label: 'Availability',
-  //   icon: FiCalendar,
-  //   path: '/traveler/dashboard/availability',
-  //   role: 'traveler',
-  // },
-
-  // Common Items
-  // {
-  //   id: 'messages',
-  //   label: 'Messages',
-  //   icon: FiMessageSquare,
-  //   path: '/dashboard/messages',
-  //   role: 'all',
-  // },
-  // {
-  //   id: 'notifications',
-  //   label: 'Notifications',
-  //   icon: FiBell,
-  //   path: '/dashboard/notifications',
-  //   role: 'all',
-  // },
-  // {
-  //   id: 'profile',
-  //   label: 'Profile Settings',
-  //   icon: FiUser,
-  //   path: '/dashboard/profile',
-  //   role: 'all',
-  // },
-  // {
-  //   id: 'help',
-  //   label: 'Help & Support',
-  //   icon: FiHelpCircle,
-  //   path: '/dashboard/help',
-  //   role: 'all',
-  // },
-
-  // Orders
-  {
-    id: 'orders',
-    label: 'My Orders',
-    icon: FiPackage,
-    path: '/sender/dashboard/orders',
-    role: 'sender',
-  },
-
-  // Orders
-  {
-    id: 'orders',
-    label: 'My Orders',
-    icon: FiPackage,
-    path: '/traveler/dashboard/orders',
-    role: 'traveler',
-  },
-];
-
 export default function Sidebar() {
   const pathname = usePathname();
   const { user } = useAuth();
+  const t = useTranslations('Sidebar');
+
+  const sidebarItems: SidebarItem[] = [
+    // Sender Items
+
+    {
+      id: 'packages',
+      label: t('myPackages'),
+      icon: FiPackage,
+      path: '/sender/dashboard/packages',
+      role: 'sender',
+    },
+    {
+      id: 'find-travelers',
+      label: t('findTravelers'),
+      icon: FiSearch,
+      path: '/sender/dashboard/travelers',
+      role: 'sender',
+    },
+    {
+      id: 'sender-transactions',
+      label: t('paymentHistory'),
+      icon: FiDollarSign,
+      path: '/sender/dashboard/transactions',
+      role: 'sender',
+    },
+
+    // Traveler Items
+    {
+      id: 'trips',
+      label: t('trips'),
+      icon: FiMapPin,
+      path: '/traveler/dashboard/trips',
+      role: 'traveler',
+    },
+    // {
+    //   id: 'earnings',
+    //   label: 'Earnings',
+    //   icon: FiDollarSign,
+    //   path: '/traveler/dashboard/earnings',
+    //   role: 'traveler',
+    // },
+    // {
+    //   id: 'reviews',
+    //   label: 'Reviews & Ratings',
+    //   icon: FiStar,
+    //   path: '/traveler/dashboard/reviews',
+    //   role: 'traveler',
+    // },
+    // {
+    //   id: 'availability',
+    //   label: 'Availability',
+    //   icon: FiCalendar,
+    //   path: '/traveler/dashboard/availability',
+    //   role: 'traveler',
+    // },
+
+    // Common Items
+    // {
+    //   id: 'messages',
+    //   label: 'Messages',
+    //   icon: FiMessageSquare,
+    //   path: '/dashboard/messages',
+    //   role: 'all',
+    // },
+    // {
+    //   id: 'notifications',
+    //   label: 'Notifications',
+    //   icon: FiBell,
+    //   path: '/dashboard/notifications',
+    //   role: 'all',
+    // },
+    // {
+    //   id: 'profile',
+    //   label: 'Profile Settings',
+    //   icon: FiUser,
+    //   path: '/dashboard/profile',
+    //   role: 'all',
+    // },
+    // {
+    //   id: 'help',
+    //   label: 'Help & Support',
+    //   icon: FiHelpCircle,
+    //   path: '/dashboard/help',
+    //   role: 'all',
+    // },
+
+    // Orders
+    {
+      id: 'orders',
+      label: t('orders'),
+      icon: FiPackage,
+      path: '/sender/dashboard/orders',
+      role: 'sender',
+    },
+
+    // Orders
+    {
+      id: 'orders',
+      label: t('orders'),
+      icon: FiPackage,
+      path: '/traveler/dashboard/orders',
+      role: 'traveler',
+    },
+  ];
 
   const filteredItems = sidebarItems.filter(
     (item) => item.role === 'all' || item.role === user?.permissions

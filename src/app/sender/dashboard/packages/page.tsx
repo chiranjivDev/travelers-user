@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SENDER_PACKAGES } from '../redux/packagesAction';
 import { useAuth } from '@/contexts/AuthContext';
 import { FiPackage } from 'react-icons/fi';
+import { useTranslations } from 'next-intl';
 
 export default function BrowseMyPackagesPage() {
   const { senderPackages } = useSelector((state) => state.packages);
   const [selectedPackage, setSelectedPackage] = useState(null);
   console.log('sender packages from chat window', senderPackages);
+  const t = useTranslations('BrowsePackages');
 
   const { user } = useAuth(); // Fetch user
 
@@ -32,7 +34,9 @@ export default function BrowseMyPackagesPage() {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-center mb-4">My Packages</h1>
+          <h1 className="text-4xl font-bold text-center mb-4">
+            {t('myPackages')}
+          </h1>
         </div>
       </div>
 
@@ -40,7 +44,7 @@ export default function BrowseMyPackagesPage() {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-gray-400">
-            Found {senderPackages.length} packages matching your criteria
+            {t('found')} {senderPackages.length} {t('packagesMatchingCriteria')}
           </p>
         </div>
 
@@ -60,7 +64,9 @@ export default function BrowseMyPackagesPage() {
         {senderPackages.length === 0 && (
           <div className="text-center py-12">
             <FiPackage className="w-12 h-12 mx-auto text-gray-600 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No packages found</h3>
+            <h3 className="text-xl font-semibold mb-2">
+              {t('noPackagesFound')}
+            </h3>
           </div>
         )}
 

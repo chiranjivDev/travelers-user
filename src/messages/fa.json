@@ -1,4 +1,27 @@
 {
+  "Navbar": {
+    "browsePackages": "مرور بسته‌ها",
+    "browseTrips": "مرور سفرها",
+    "howItWorks": "نحوه کار",
+    "blog": "وبلاگ",
+    "safety": "ایمنی",
+    "support": "پشتیبانی",
+    "logIn": "ورود",
+    "signUp": "ثبت‌نام",
+    "sendPackage": "ارسال بسته",
+    "becomeTraveler": "مسافر شوید",
+    "chat": "گفتگو",
+    "user": {
+      "activeAs": "فعال به عنوان",
+      "paymentSetup": "تنظیمات پرداخت",
+      "connectStripe": "اتصال حساب استرایپ",
+      "profileSettings": "تنظیمات پروفایل",
+      "messages": "پیام‌ها",
+      "notifications": "اعلان‌ها",
+      "dashboard": "داشبورد",
+      "logout": "خروج"
+    }
+  },
   "HomePage": {
     "title": "ارتباط، سفر و ارسال",
     "description": "به جامعه مسافران و فرستندگان ما بپیوندید. در هزینه‌های حمل و نقل صرفه‌جویی کنید و به دیگران کمک کنید تا از سفرهای خود درآمد کسب کنند.",
@@ -227,7 +250,8 @@
       "continueToPricing": "ادامه به قیمت‌گذاری",
       "continueToReview": "ادامه به بررسی",
       "submitOffer": "ارسال پیشنهاد",
-      "continue": "ادامه"
+      "continue": "ادامه",
+      "back": "بازگشت"
     },
     "steps": {
       "step1": {
@@ -333,16 +357,217 @@
       },
       "step3": {
         "title": "ترجیحات ارتباطی",
-        "fields": {}
+        "contactMethods": {
+          "label": "روش‌های تماس",
+          "email": "ایمیل",
+          "phone": "تلفن",
+          "chat": "گفتگو"
+        },
+        "contactDetails": {
+          "label": "جزئیات تماس",
+          "travelPackageName": {
+            "label": "نام بسته سفر",
+            "placeholder": "نام بسته سفر خود را وارد کنید"
+          },
+          "emailAddress": {
+            "label": "آدرس ایمیل",
+            "placeholder": "ایمیل خود را وارد کنید"
+          },
+          "phoneNumber": {
+            "label": "شماره تلفن",
+            "placeholder": "شماره تلفن خود را وارد کنید"
+          }
+        },
+        "availability": {
+          "label": "دسترس‌پذیری",
+          "morning": "صبح",
+          "afternoon": "بعدازظهر",
+          "evening": "شب"
+        }
       },
       "step4": {
         "title": "محاسبه قیمت",
-        "fields": {}
+        "baseRate": {
+          "label": "نرخ پایه"
+        },
+        "packageDetails": {
+          "label": "جزئیات بسته",
+          "packageType": {
+            "label": "نوع بسته"
+          },
+          "weight": {
+            "label": "وزن (کیلوگرم)"
+          }
+        },
+        "distanceUrgency": {
+          "label": "مسافت و فوریت",
+          "distance": {
+            "label": "مسافت (کیلومتر)"
+          },
+          "urgentDelivery": "تحویل فوری (+20%)"
+        },
+
+        "totalPrice": "قیمت کل"
       },
       "step5": {
         "title": "بررسی پیشنهاد سفر شما",
-        "fields": {}
+        "tripDetails": {
+          "title": "جزئیات سفر",
+          "from": "مبدا",
+          "to": "مقصد",
+          "travelDate": "تاریخ سفر"
+        },
+        "transportDetails": "جزئیات حمل و نقل",
+        "maximumWeight": "حداکثر وزن",
+        "packageHandling": "نحوه حمل بسته",
+        "collectionOptions": "گزینه‌های جمع‌آوری",
+        "offerSecureHandling": "ارائه حمل و نقل ایمن",
+        "offerExpressDelivery": "ارائه تحویل سریع",
+        "acceptBasicItemsOnly": "فقط پذیرش اقلام اساسی",
+        "acceptAllItems": "پذیرش همه اقلام",
+        "pricing": "قیمت‌گذاری",
+        "baseRate": "نرخ پایه",
+        "standardDeliveryFee": "هزینه استاندارد تحویل",
+        "perKgRate": "نرخ هر کیلوگرم",
+        "perKgRateDescription": "هزینه اضافی به ازای هر کیلوگرم",
+        "urgentDelivery": "تحویل فوری",
+        "urgentDeliveryDescription": "خدمات تحویل سریع"
       }
     }
+  },
+
+  "Blog": {
+    "title": "وبلاگ DeliveryConnect",
+    "description": "نکات، راهنماها و به‌روزرسانی‌ها برای کمک به شما در استفاده بهتر از تحویل همتا به همتا",
+    "stayUpdated": "به‌روز بمانید",
+    "newsletterDescription": "برای دریافت جدیدترین نکات تحویل، داستان‌های مسافران و به‌روزرسانی‌های پلتفرم در خبرنامه ما عضو شوید.",
+    "enterYourEmail": "ایمیل خود را وارد کنید",
+    "subscribe": "اشتراک"
+  },
+  "HowItWorks": {
+    "howItWorks": "نحوه کار",
+    "howItWorksDescription": "با مسافران ارتباط برقرار کنید، بسته‌های خود را ارسال کنید و در هزینه صرفه‌جویی کنید. به همین سادگی!",
+    "platformStatistics": "آمار پلتفرم",
+    "platformStatisticsDescription": "ببینید چگونه پلتفرم ما تفاوت ایجاد می‌کند",
+    "faq": "سوالات متداول",
+    "faqDescription": "پاسخ‌های متداول درباره پلتفرم ما را پیدا کنید",
+    "steps": {
+      "connect": "اتصال",
+      "connectDescription": "با مسافرانی که به مقصد شما می‌روند ارتباط برقرار کنید",
+      "package": "بسته",
+      "packageDescription": "بسته خود را آماده کنید و جزئیات دریافت را تنظیم کنید",
+      "track": "پیگیری",
+      "trackDescription": "بسته خود را در طول مسیر پیگیری کنید",
+      "save": "صرفه‌جویی",
+      "saveDescription": "در هزینه صرفه‌جویی کنید و به مسافران برای کسب پاداش کمک کنید"
+    },
+    "categories": {
+      "general": "عمومی",
+      "securitySafety": "امنیت و ایمنی",
+      "shippingDelivery": "حمل و تحویل",
+      "paymentsRewards": "پرداختها و پاداشها",
+      "supportCommunication": "پشتیبانی و ارتباطات",
+      "processTimeline": "فرآیند و جدول زمانی"
+    },
+    "successfulDeliveries": "تحویلهای موفق",
+    "activeTravelers": "مسافران فعال",
+    "averageSavings": "میانگین صرفهجویی"
+  },
+  "BrowsePackages": {
+    "title": "پیدا کردن بستههایی که نیاز به ارسال دارند",
+    "description": "با فرستندگان ارتباط برقرار کنید و با تحویل بستهها در مسیر سفرتان درآمد کسب کنید",
+    "noPackagesFound": "بسته‌ای یافت نشد",
+    "noPackagesFoundDescription": "فیلترها یا کلمات جستجوی خود را تغییر دهید",
+    "found": "یافت شد",
+    "packagesMatchingCriteria": "بسته‌های مطابق با معیارهای شما",
+    "myPackages": "بسته‌های من"
+  },
+  "BrowseTips": {
+    "title": "مرور سفرها",
+    "noTripsFound": "سفری مطابق با معیارهای شما یافت نشد",
+    "tripsAvailable": "سفرهای موجود",
+    "clearAllFilters": "حذف همه فیلترها"
+  },
+
+  "TravelerDashboard": {
+    "title": "داشبورد مسافر",
+    "description": "مدیریت سفرها و تحویل‌های شما",
+
+    "orders": {
+      "noOrdersAssigned": "هنوز هیچ سفارشی اختصاص داده نشده است. لطفاً بعداً بررسی کنید.",
+      "cancel": "لغو",
+      "confirm": "تایید",
+      "associatedOrders": "سفارش‌های مرتبط",
+      "orderId": "شناسه سفارش",
+      "pickupAddress": "آدرس دریافت",
+      "deliveryAddress": "آدرس تحویل",
+      "status": "وضعیت",
+      "payment": "پرداخت",
+      "actions": "اقدامات",
+      "markAsDelivered": "تحویل داده شد",
+      "enterOtp": "کد تایید را وارد کنید"
+    }
+  },
+
+  "SenderDashboard": {
+    "title": "داشبورد فرستنده",
+    "description": "بسته‌های خود را پیگیری و مدیریت کنید",
+    "orders": {
+      "title": "سفارش‌های ایجاد شده",
+      "orderId": "شناسه سفارش",
+      "pickupAddress": "آدرس دریافت",
+      "deliveryAddress": "آدرس تحویل",
+      "status": "وضعیت",
+      "payment": "پرداخت",
+      "pickupDate": "تاریخ دریافت",
+      "deliveryDate": "تاریخ تحویل",
+      "noOrders": "هنوز سفارشی وجود ندارد."
+    }
+  },
+
+  "Footer": {
+    "company": {
+      "title": "شرکت",
+      "aboutUs": "درباره ما",
+      "howItWorks": "چگونه کار می‌کند",
+      "safety": "ایمنی",
+      "careers": "فرصت‌های شغلی",
+      "press": "مطبوعات"
+    },
+    "services": {
+      "title": "خدمات",
+      "sendPackage": "ارسال بسته",
+      "browseTrips": "مرور سفرها",
+      "becomeTraveler": "تبدیل شدن به مسافر",
+      "businessSolutions": "راه‌حل‌های تجاری"
+    },
+    "support": {
+      "title": "پشتیبانی",
+      "helpCenter": "مرکز کمک",
+      "contactUs": "تماس با ما",
+      "faqs": "سوالات متداول",
+      "termsOfService": "شرایط استفاده از خدمات",
+      "privacyPolicy": "سیاست حفظ حریم خصوصی"
+    },
+    "connect": {
+      "title": "ارتباط",
+      "twitter": "توییتر",
+      "facebook": "فیسبوک",
+      "instagram": "اینستاگرام",
+      "linkedin": "لینکدین"
+    },
+    "allRightsReserved": "تمام حقوق محفوظ است."
+  },
+  "Sidebar": {
+    "trips": "سفرهای من",
+    "orders": "سفارش‌های من",
+    "myPackages": "بسته‌های من",
+    "findTravelers": "پیدا کردن مسافران",
+    "paymentHistory": "تاریخچه پرداخت‌ها"
+  },
+
+  "Chat": {
+    "title": "پیام‌ها",
+    "selectConversation": "یک گفتگو را انتخاب کنید تا چت را شروع کنید"
   }
 }

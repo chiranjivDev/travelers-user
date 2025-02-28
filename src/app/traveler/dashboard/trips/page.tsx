@@ -6,10 +6,12 @@ import TripCard from '@/components/trips/TripCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '@/contexts/AuthContext';
 import { TRAVELER_PACKAGES } from '../../redux/tripsAction';
+import { useTranslations } from 'next-intl';
 
 export default function TravelerTrips() {
   const { travelerPackages } = useSelector((state) => state.trips);
   console.log('traveler packages', travelerPackages); // traveler packages
+  const t = useTranslations('BrowseTips');
 
   const dispatch = useDispatch();
   const { user } = useAuth();
@@ -30,9 +32,12 @@ export default function TravelerTrips() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white">My Trips</h1>
+            <h1 className="text-3xl font-bold text-white">
+              {/* My Trips */}
+              {t('title')}
+            </h1>
             <p className="text-gray-400 mt-2">
-              {travelerPackages.length} trips available
+              {travelerPackages.length} {t('tripsAvailable')}
             </p>
           </div>
         </div>
@@ -47,9 +52,7 @@ export default function TravelerTrips() {
         {/* Empty State */}
         {travelerPackages.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-gray-400 text-lg">
-              No trips found matching your criteria
-            </div>
+            <div className="text-gray-400 text-lg">{t('noTripsFound')}</div>
           </div>
         )}
       </div>

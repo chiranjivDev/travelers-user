@@ -341,7 +341,8 @@ const TravelerForm = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Back
+                  {/* Back */}
+                  {t('buttons.back')}
                 </motion.button>
               )}
               <motion.button

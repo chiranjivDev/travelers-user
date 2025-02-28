@@ -1,4 +1,28 @@
 {
+  "Navbar": {
+    "browsePackages": "Browse Packages",
+    "browseTrips": "Browse Trips",
+    "howItWorks": "How It Works",
+    "blog": "Blog",
+    "safety": "Safety",
+    "support": "Support",
+    "logIn": "Log In",
+    "signUp": "Sign Up",
+    "sendPackage": "Send Package",
+    "becomeTraveler": "Become a Traveler",
+    "chat": "Chat",
+    "user": {
+      "activeAs": "Active as",
+      "paymentSetup": "Payment Setup",
+      "connectStripe": "Connect Stripe Account",
+      "profileSettings": "Profile Settings",
+      "messages": "Messages",
+      "notifications": "Notifications",
+      "dashboard": "Dashboard",
+      "logout": "Log Out"
+    }
+  },
+
   "HomePage": {
     "title": "Connect, Travel & Deliver",
     "description": "Join our community of travelers and senders. Save money on shipping while helping others earn from their travels.",
@@ -227,7 +251,8 @@
       "continueToPricing": "Continue to Pricing",
       "continueToReview": "Continue to Review",
       "submitOffer": "Submit Offer",
-      "continue": "Continue"
+      "continue": "Continue",
+      "back": "Back"
     },
     "steps": {
       "step1": {
@@ -333,16 +358,217 @@
       },
       "step3": {
         "title": "Communication Preferences",
-        "fields": {}
+        "contactMethods": {
+          "label": "Contact Methods",
+          "email": "Email",
+          "phone": "Phone",
+          "chat": "Chat"
+        },
+        "contactDetails": {
+          "label": "Contact Details",
+          "travelPackageName": {
+            "label": "Travel Package Name",
+            "placeholder": "Enter your travel package name"
+          },
+          "emailAddress": {
+            "label": "Email Address",
+            "placeholder": "Enter your email"
+          },
+          "phoneNumber": {
+            "label": "Phone Number",
+            "placeholder": "Enter your phone number"
+          }
+        },
+        "availability": {
+          "label": "Availability",
+          "morning": "Morning",
+          "afternoon": "Afternoon",
+          "evening": "Evening"
+        }
       },
       "step4": {
         "title": "Price Calculator",
-        "fields": {}
+        "baseRate": {
+          "label": "Base Rate"
+        },
+        "packageDetails": {
+          "label": "Package Details",
+          "packageType": {
+            "label": "Package Type"
+          },
+          "weight": {
+            "label": "Weight (kg)"
+          }
+        },
+        "distanceUrgency": {
+          "label": "Distance & Urgency",
+          "distance": {
+            "label": "Distance (km)"
+          },
+          "urgentDelivery": "Urgent Delivery (+20%)"
+        },
+        "totalPrice": "Total Price"
       },
       "step5": {
         "title": "Review Your Travel Offer",
-        "fields": {}
+        "tripDetails": {
+          "title": "Trip Details",
+          "from": "From",
+          "to": "To",
+          "travelDate": "Travel Date"
+        },
+        "transportDetails": "Transport Details",
+        "maximumWeight": "Maximum Weight",
+        "packageHandling": "Package Handling",
+        "collectionOptions": "Collection Options",
+        "offerSecureHandling": "Offer Secure Handling",
+        "offerExpressDelivery": "Offer Express Delivery",
+        "acceptBasicItemsOnly": "Accept Basic Items Only",
+        "acceptAllItems": "Accept All Items",
+        "pricing": "Pricing",
+        "baseRate": "Base Rate",
+        "standardDeliveryFee": "Standard delivery fee",
+        "perKgRate": "Per Kg Rate",
+        "perKgRateDescription": "Additional cost per kilogram",
+        "urgentDelivery": "Urgent Delivery",
+        "urgentDeliveryDescription": "Express delivery service"
       }
     }
+  },
+
+  "Blog": {
+    "title": "DeliveryConnect Blog",
+    "description": "Tips, guides, and updates to help you make the most of peer-to-peer delivery",
+    "stayUpdated": "Stay Updated",
+    "newsletterDescription": "Subscribe to our newsletter for the latest delivery tips, traveler stories, and platform updates.",
+    "enterYourEmail": "Enter your email",
+    "subscribe": "Subscribe"
+  },
+  "HowItWorks": {
+    "howItWorks": "How It Works",
+    "howItWorksDescription": "Connect with travelers, send your packages, and save money. It's that simple!",
+    "platformStatistics": "Platform Statistics",
+    "platformStatisticsDescription": "See how our platform is making a difference",
+    "faq": "Frequently Asked Questions",
+    "faqDescription": "Find answers to the most common questions about our platform",
+    "steps": {
+      "connect": "Connect",
+      "connectDescription": "Connect with travelers heading to your destination",
+      "package": "Package",
+      "packageDescription": "Prepare your package and arrange pickup details",
+      "track": "Track",
+      "trackDescription": "Track your package throughout its journey",
+      "save": "Save",
+      "saveDescription": "Save money while helping travelers earn rewards"
+    },
+    "categories": {
+      "general": "General",
+      "securitySafety": "Security & Safety",
+      "shippingDelivery": "Shipping & Delivery",
+      "paymentsRewards": "Payments & Rewards",
+      "supportCommunication": "Support & Communication",
+      "processTimeline": "Process & Timeline"
+    },
+    "successfulDeliveries": "Successful Deliveries",
+    "activeTravelers": "Active Travelers",
+    "averageSavings": "Average Savings"
+  },
+
+  "BrowsePackages": {
+    "title": "Find Packages That Need Delivery",
+    "description": "Connect with senders and earn money by delivering packages along your travel route",
+    "noPackagesFound": "No packages found",
+    "noPackagesFoundDescription": "Try adjusting your filters or search terms",
+    "found": "Found",
+    "packagesMatchingCriteria": "Packages matching your criteria",
+    "myPackages": "My Packages"
+  },
+  "BrowseTips": {
+    "title": "Browse Trips",
+    "noTripsFound": "No trips found matching your criteria",
+    "tripsAvailable": "Trips available",
+    "clearAllFilters": "Clear all filters"
+  },
+
+  "TravelerDashboard": {
+    "title": "Traveler Dashboard",
+    "description": "Manage your trips and deliveries",
+    "orders": {
+      "noOrdersAssigned": "No orders have been assigned yet. Please check back later.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "associatedOrders": "Associated Orders",
+      "orderId": "Order ID",
+      "pickupAddress": "Pickup Address",
+      "deliveryAddress": "Delivery Address",
+      "status": "Status",
+      "payment": "Payment",
+      "actions": "Actions",
+      "markAsDelivered": "Mark as Delivered",
+      "enterOtp": "Enter OTP"
+    }
+  },
+
+  "SenderDashboard": {
+    "title": "Sender Dashboard",
+    "description": "Track and manage your packages",
+    "orders": {
+      "title": "Created Orders",
+      "orderId": "Order ID",
+      "pickupAddress": "Pickup Address",
+      "deliveryAddress": "Delivery Address",
+      "pickupDate": "Pickup Date",
+      "deliveryDate": "Delivery Date",
+      "status": "Status",
+      "payment": "Payment",
+      "noOrders": "No orders yet."
+    }
+  },
+
+  "Footer": {
+    "company": {
+      "title": "Company",
+      "aboutUs": "About Us",
+      "howItWorks": "How It Works",
+      "safety": "Safety",
+      "careers": "Careers",
+      "press": "Press"
+    },
+    "services": {
+      "title": "Services",
+      "sendPackage": "Send Package",
+      "browseTrips": "Browse Trips",
+      "becomeTraveler": "Become a Traveler",
+      "businessSolutions": "Business Solutions"
+    },
+    "support": {
+      "title": "Support",
+      "helpCenter": "Help Center",
+      "contactUs": "Contact Us",
+      "faqs": "FAQs",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "connect": {
+      "title": "Connect",
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    },
+    "allRightsReserved": "All rights reserved."
+  },
+
+  "Sidebar": {
+    "trips": "My Trips",
+    "orders": "My Orders",
+    "myPackages": "My Packages",
+    "findTravelers": "Find Travelers",
+    "paymentHistory": "Payment History"
+  },
+
+  "Chat": {
+    "title": "Messages",
+    "selectConversation": "Select a conversation to start chatting"
   }
 }

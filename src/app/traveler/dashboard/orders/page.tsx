@@ -1,37 +1,16 @@
 'use client';
 
 import { FETCH_ORDERS } from '@/app/sender/dashboard/redux/orderAction';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Mock data: delete later
-const ordersData = [
-  {
-    order_id: 'ORD123456',
-    pickup_address: '123 Sender St, City A',
-    delivery_address: '456 Traveler Rd, City B',
-    pickup_datetime: '2025-02-20T10:00:00Z',
-    delivery_datetime: '2025-02-20T14:00:00Z',
-    order_status: 'Delivered',
-    payment_status: 'Paid',
-  },
-  {
-    order_id: 'ORD123457',
-    pickup_address: '789 Sender Blvd, City C',
-    delivery_address: '101 Traveler Ave, City D',
-    pickup_datetime: '2025-02-22T12:00:00Z',
-    delivery_datetime: '2025-02-22T16:00:00Z',
-    order_status: 'In Progress',
-    payment_status: 'Pending',
-  },
-];
-
 const TravelerOrdersPage = () => {
   const { orders, fetchOrdersLoading } = useSelector((state) => state.order);
-  // const [orders, setOrders] = useState(ordersData);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [otp, setOtp] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const t = useTranslations('TravelerDashboard.orders');
 
   // dispatch
   const dispatch = useDispatch();
@@ -116,9 +95,7 @@ const TravelerOrdersPage = () => {
   if (orders.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <p className="text-gray-300">
-          No orders have been assigned yet. Please check back later.
-        </p>
+        <p className="text-gray-300">{t('noOrdersAssigned')}</p>
       </div>
     );
   }
@@ -128,30 +105,30 @@ const TravelerOrdersPage = () => {
       <div className="bg-gray-800 rounded-xl border border-gray-700 w-full overflow-hidden">
         <div className="p-6 border-b border-gray-700">
           <h2 className="text-xl font-semibold text-white">
-            Associated Orders
+            {t('associatedOrders')}
           </h2>
         </div>
         <table className="w-full">
           <thead className="bg-gray-900/50">
             <tr>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-400 uppercase">
-                Order ID
+                {t('orderId')}
               </th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-400 uppercase">
-                Pickup Address
+                {t('pickupAddress')}
               </th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-400 uppercase">
-                Delivery Address
+                {t('deliveryAddress')}
               </th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-400 uppercase">
-                Status
+                {t('status')}
               </th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-400 uppercase">
-                Payment
+                {t('payment')}
               </th>
               {showActionsColumn && (
                 <th className="text-left text-xs font-medium text-gray-400 uppercase py-3 px-6">
-                  Actions
+                  {t('actions')}
                 </th>
               )}
             </tr>
@@ -184,7 +161,7 @@ const TravelerOrdersPage = () => {
                         onClick={() => handleMarkDelivered(order)}
                         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                       >
-                        Mark as Delivered
+                        {t('markAsDelivered')}
                       </button>
                     )}
                   </td>
@@ -199,7 +176,9 @@ const TravelerOrdersPage = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-lg font-semibold text-white mb-4">Enter OTP</h2>
+            <h2 className="text-lg font-semibold text-white mb-4">
+              {t('enterOtp')}
+            </h2>
             <input
               type="text"
               value={otp}
@@ -212,13 +191,13 @@ const TravelerOrdersPage = () => {
                 onClick={() => setIsModalOpen(false)}
                 className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 onClick={handleOtpSubmit}
                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
               >
-                Confirm
+                {t('confirm')}
               </button>
             </div>
           </div>

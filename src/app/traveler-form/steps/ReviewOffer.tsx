@@ -7,11 +7,11 @@ const ReviewOffer = ({ formData }) => {
   const getHandlingOptionsString = (preferences?: any) => {
     if (!preferences) return 'Not specified';
     const options = [
-      preferences.secureHandling && 'Offer Secure Handling',
-      preferences.expressDelivery && 'Offer Express Delivery',
+      preferences.secureHandling && t('offerSecureHandling'),
+      preferences.expressDelivery && t('offerExpressDelivery'),
       preferences?.preferences === 'basicItemsOnly'
-        ? 'Accept Basic Items Only'
-        : 'Accept All Items',
+        ? t('acceptBasicItemsOnly')
+        : t('acceptAllItems'),
     ].filter(Boolean);
 
     return options.length > 0 ? options.join(', ') : 'None selected';
@@ -27,7 +27,7 @@ const ReviewOffer = ({ formData }) => {
         </h3>
 
         <div className="space-y-8">
-          <Section emoji="🗺️" title="Trip Details">
+          <Section emoji="🗺️" title={t('tripDetails.title')}>
             <div
               className="bg-[#1e2643]/90 backdrop-blur-sm rounded-lg p-4 shadow-lg ring-1 ring-white/10
               transition-all duration-300
@@ -35,22 +35,22 @@ const ReviewOffer = ({ formData }) => {
               hover:translate-y-[-2px]"
             >
               <ReviewItem
-                label="From"
+                label={t('tripDetails.from')}
                 value={`${formData.departure.city}, ${formData.departure.country}`}
               />
               <ReviewItem
-                label="To"
+                label={t('tripDetails.to')}
                 value={`${formData.arrival.city}, ${formData.arrival.country}`}
               />
 
               <ReviewItem
-                label="Travel Date"
+                label={t('tripDetails.travelDate')}
                 value={`${formData.departure.date}, ${formData.arrival.date}`}
               />
             </div>
           </Section>
 
-          <Section emoji="🚚" title="Transport Details">
+          <Section emoji="🚚" title={t('transportDetails')}>
             <div
               className="bg-[#1e2643]/90 backdrop-blur-sm rounded-lg p-4 shadow-lg ring-1 ring-white/10
               transition-all duration-300
@@ -58,13 +58,13 @@ const ReviewOffer = ({ formData }) => {
               hover:translate-y-[-2px]"
             >
               <ReviewItem
-                label="Maximum Weight"
+                label={t('maximumWeight')}
                 value={formData.packagePreferences.maxWeight}
               />
             </div>
           </Section>
 
-          <Section emoji="📦" title="Package Handling">
+          <Section emoji="📦" title={t('packageHandling')}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div
                 className="bg-[#1e2756]/90 backdrop-blur-sm rounded-lg p-6 shadow-lg ring-1 ring-blue-500/20
@@ -80,7 +80,8 @@ const ReviewOffer = ({ formData }) => {
                     <span className="text-2xl">🔄</span>
                   </div>
                   <h5 className="text-lg font-semibold text-white">
-                    Collection Options
+                    {/* Collection Options */}
+                    {t('collectionOptions')}
                   </h5>
                 </div>
                 <div className="space-y-3">
@@ -105,13 +106,13 @@ const ReviewOffer = ({ formData }) => {
             </div>
           </Section>
 
-          <Section emoji="💰" title="Pricing">
+          <Section emoji="💰" title={t('pricing')}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Base Rate',
+                  title: t('baseRate'),
                   value: formData.pricing.baseRate,
-                  description: 'Standard delivery fee',
+                  description: t('standardDeliveryFee'),
                   bgColor: 'bg-[#1e3a3a]',
                   ringColor: 'ring-emerald-500/20',
                   hoverRing: 'hover:ring-emerald-400/50',
@@ -121,9 +122,9 @@ const ReviewOffer = ({ formData }) => {
                   icon: '💵',
                 },
                 {
-                  title: 'Per Kg Rate',
+                  title: t('perKgRate'),
                   value: formData.pricing.ratePerKg,
-                  description: 'Additional cost per kilogram',
+                  description: t('perKgRateDescription'),
                   bgColor: 'bg-[#1e2756]',
                   ringColor: 'ring-blue-500/20',
                   hoverRing: 'hover:ring-blue-400/50',
@@ -133,9 +134,9 @@ const ReviewOffer = ({ formData }) => {
                   icon: '⚖️',
                 },
                 {
-                  title: 'Urgent Delivery',
+                  title: t('urgentDelivery'),
                   value: (formData.pricing.baseRate * 0.2).toFixed(2),
-                  description: 'Express delivery service',
+                  description: t('urgentDeliveryDescription'),
                   bgColor: 'bg-[#2a1f56]',
                   ringColor: 'ring-purple-500/20',
                   hoverRing: 'hover:ring-purple-400/50',
