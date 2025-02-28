@@ -388,7 +388,7 @@ export default function Navigation() {
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
                       <span className="text-lg font-medium text-white">
-                        {user.name.charAt(0)}
+                        {user?.email?.charAt(0)}
                       </span>
                     </div>
                     <div>
@@ -436,8 +436,12 @@ export default function Navigation() {
                     ))}
 
                   <button
-                    onClick={() => {
-                      // Handle logout
+                    // onClick={() => {
+                    //   // Handle logout
+                    //   setIsMobileMenuOpen(false);
+                    // }}
+                    onClick={async () => {
+                      await logout();
                       setIsMobileMenuOpen(false);
                     }}
                     className="flex items-center space-x-3 px-3 py-2 text-base text-red-400 hover:text-red-300 hover:bg-gray-800 rounded-md w-full mt-2"
