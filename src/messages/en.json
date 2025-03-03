@@ -442,7 +442,15 @@
     "stayUpdated": "Stay Updated",
     "newsletterDescription": "Subscribe to our newsletter for the latest delivery tips, traveler stories, and platform updates.",
     "enterYourEmail": "Enter your email",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "posts": {
+      "allPosts": "All Posts",
+      "travelerTips": "Traveler Tips",
+      "senderTips": "Sender Tips",
+      "safety": "Safety",
+      "platformUpdates": "Platform Updates",
+      "successStories": "Success Stories"
+    }
   },
   "HowItWorks": {
     "howItWorks": "How It Works",
@@ -471,7 +479,73 @@
     },
     "successfulDeliveries": "Successful Deliveries",
     "activeTravelers": "Active Travelers",
-    "averageSavings": "Average Savings"
+    "averageSavings": "Average Savings",
+    "faqs": {
+      "general": {
+        "q1": "How does the platform work for travelers and senders?",
+        "a1": "Our platform connects travelers with extra luggage space to senders who need an affordable, fast, and efficient way to send their items. Senders post item requests, and travelers can accept these requests if they have the capacity to carry them. Both parties benefit — travelers earn rewards, and senders save on delivery fees.",
+        "q2": "Is the platform a licensed and certified service?",
+        "a2": "Yes, we operate as a licensed and certified platform, ensuring compliance with legal and regulatory standards. Our certifications include a Trade License and Certificate of Formation, providing transparency, reliability, and user trust.",
+        "q3": "What are the key benefits of using this platform?",
+        "a3": "Our platform offers several advantages: affordable shipping compared to traditional methods, extra income for travelers utilizing unused luggage space, eco-friendly shared shipping system, and flexibility in routes, timings, and delivery preferences.",
+        "q4": "Can I send items both internationally and intercity?",
+        "a4": "Yes, you can send items both intercity and internationally. Our platform connects travelers moving between cities or countries, offering senders a variety of delivery routes for faster and more flexible shipping options.",
+        "q5": "How do I create an account on the platform?",
+        "a5": "Creating an account is simple: download the app or visit the website, sign up using your email or social login, and complete the account setup, which includes verification steps."
+      },
+      "security": {
+        "q1": "How is the safety and security of items ensured during transit?",
+        "a1": "We prioritize item security through user verification, ratings & reviews system, and optional insurance for package protection. Both parties rate each other after delivery, encouraging responsible behavior.",
+        "q2": "How does the platform verify the identity of users?",
+        "a2": "To build trust and safety, we require user verification during the account setup process. This includes verifying personal information such as name, email, and, in some cases, government-issued identification.",
+        "q3": "What happens if an item is lost, stolen, or damaged?",
+        "a3": "If an item is lost, stolen, or damaged during delivery, users should file a claim through the platform. Depending on the circumstances, optional insurance (if purchased) may cover these incidents. Claims are reviewed and resolved based on the platform's claim policies.",
+        "q4": "How do you handle disputes between users?",
+        "a4": "We have a dedicated dispute resolution team that handles conflicts between users. The team reviews evidence from both parties and works to find fair solutions based on our platform policies.",
+        "q5": "What security measures are in place for payments?",
+        "a5": "We use industry-standard encryption and secure payment processing systems. All financial transactions are protected, and we never store sensitive payment information."
+      },
+      "shipping": {
+        "q1": "What types of items can be sent through the platform?",
+        "a1": "The platform allows shipment of personal belongings, documents, electronics, gadgets, clothing, and accessories. However, restricted or prohibited items (such as hazardous materials, illegal goods, or flammable items) are not allowed.",
+        "q2": "Are there any size or weight limits for items?",
+        "a2": "Yes, item size and weight limits depend on the available space provided by the traveler. Travelers specify how much space they have, and senders can choose a traveler that matches their package size and weight needs.",
+        "q3": "Can I track my package during delivery?",
+        "a3": "Yes, senders can track the status of their items in real-time. Our system provides updates on the traveler's progress, offering peace of mind and transparency throughout the entire shipping process.",
+        "q4": "How do I arrange pickup and delivery?",
+        "a4": "You can coordinate directly with the traveler through our platform's messaging system to arrange convenient pickup and delivery locations and times.",
+        "q5": "What should I do if my delivery is delayed?",
+        "a5": "Contact your traveler through the platform's messaging system. If you can't reach them, our support team is available 24/7 to help resolve any delivery issues."
+      },
+      "payment": {
+        "q1": "How do payments work on the platform?",
+        "a1": "Payments are processed securely through our internal payment system. Senders pay directly via the platform, and all payments are encrypted to ensure user privacy and data protection.",
+        "q2": "What payment methods are accepted?",
+        "a2": "We accept various payment methods including credit/debit cards, digital wallets, and bank transfers. All payments are processed securely through our platform.",
+        "q3": "How does the rewards system work?",
+        "a3": "Travelers earn rewards for successful deliveries. These rewards can be converted to platform credits or cash. The more deliveries completed, the higher the rewards.",
+        "q4": "Can I earn bonuses through referrals?",
+        "a4": "Yes, users can participate in our referral program. When you invite friends or family who complete their first transaction, both you and the referred user receive bonus rewards.",
+        "q5": "What happens to my payment if delivery fails?",
+        "a5": "If a delivery cannot be completed, we have a refund policy in place. The amount refunded depends on the circumstances and timing of the cancellation."
+      },
+      "support": {
+        "q1": "How can I contact customer support?",
+        "a1": "Our customer support team is available 24/7 through multiple channels including live chat, email, and phone. You can also find answers to common questions in our help center.",
+        "q2": "What if I need to cancel my booking?",
+        "a2": "You can cancel your booking through the platform. The refund amount will depend on how close to the delivery date you cancel and our cancellation policy.",
+        "q3": "How can I report inappropriate behavior?",
+        "a3": "Use the report function in the app or contact our support team immediately. We take all reports seriously and investigate thoroughly."
+      },
+      "process": {
+        "q1": "How long does the delivery process usually take?",
+        "a1": "Delivery times vary depending on the route and traveler's schedule. You can see estimated delivery times when browsing available travelers.",
+        "q2": "What happens after I book a traveler?",
+        "a2": "After booking, you'll receive confirmation and can begin coordinating with the traveler through our messaging system.",
+        "q3": "Can I schedule deliveries in advance?",
+        "a3": "Yes, you can book travelers weeks or months in advance, depending on their posted travel schedules."
+      }
+    }
   },
 
   "BrowsePackages": {
@@ -481,7 +555,33 @@
     "noPackagesFoundDescription": "Try adjusting your filters or search terms",
     "found": "Found",
     "packagesMatchingCriteria": "Packages matching your criteria",
-    "myPackages": "My Packages"
+    "myPackages": "My Packages",
+    "card": {
+      "reviews": "Reviews",
+      "from": "From",
+      "to": "To",
+      "deliveryDate": "Delivery Date",
+      "packageDetails": "Package Details",
+      "packageDescription": "Package Description",
+      "insured": "Insured",
+      "priority": "Priority",
+      "specialInstructions": "Special Instructions",
+      "chatWithSender": "Chat with Sender",
+      "viewDetails": "View Details",
+      "totalPrice": "Total Price",
+      "close": "Close",
+      "price": "Price",
+      "features": "Features",
+      "packageSize": "Package Size",
+      "weight": "Weight",
+      "category": "Category",
+      "senderInformation": "Sender Information",
+      "routeInformation": "Route Information",
+      "descriptionAndInstructions": "Description & Instructions",
+      "insuranceCoverage": "Insurance Coverage",
+      "priorityDelivery": "Priority Delivery",
+      "description": "Description"
+    }
   },
   "BrowseTips": {
     "title": "Browse Trips",
@@ -570,5 +670,156 @@
   "Chat": {
     "title": "Messages",
     "selectConversation": "Select a conversation to start chatting"
+  },
+
+  "AboutUs": {
+    "title": "Reimagining Global",
+    "description": "Connecting travelers and senders to create a more efficient, sustainable future of delivery through peer-to-peer connections.",
+    "delivery": "Delivery",
+    "stats": {
+      "users": {
+        "label": "50K+ Users",
+        "sublabel": "Active Community"
+      },
+      "countries": {
+        "label": "100+ Countries",
+        "sublabel": "Global Network"
+      },
+      "deliveries": {
+        "label": "1M+ Deliveries",
+        "sublabel": "Successfully Completed"
+      },
+      "rating": {
+        "label": "95% Satisfaction",
+        "sublabel": "User Rating"
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Delivery?",
+      "description": "Join thousands of travelers and senders already revolutionizing the way items move around the world.",
+      "travel": "Start Traveling",
+      "send": "Send a Package"
+    },
+    "successStories": {
+      "title": "Success Stories",
+      "subtitle": "Real experiences from our community members",
+      "stories": [
+        {
+          "quote": "I've been able to offset my travel costs while helping others. It's a win-win!",
+          "author": "Sarah K.",
+          "role": "Frequent Traveler"
+        },
+        {
+          "quote": "Found an affordable way to send packages internationally. The community is amazing!",
+          "author": "David M.",
+          "role": "Business Owner"
+        }
+      ]
+    },
+    "howItWorks": {
+      "title": "How Peer-to-Peer Delivery Works",
+      "subtitle": "A revolutionary approach to shipping that connects people and creates opportunities",
+      "connect": "Connect",
+      "connectDescription": "Travelers post their trips and available space, while senders list their delivery needs.",
+      "match": "Match",
+      "matchDescription": "Our smart algorithm matches senders with travelers heading to the same destination.",
+      "deliver": "Deliver",
+      "deliverDescription": "Secure handoff and delivery confirmation through our trusted platform."
+    },
+    "benefits": {
+      "title": "Why Choose Peer-to-Peer Delivery?",
+      "subtitle": "Discover the advantages of our community-driven delivery network",
+      "costEffective": "Cost-Effective",
+      "costEffectiveDescription": "Save up to 60% compared to traditional shipping methods",
+      "ecoFriendly": "Eco-Friendly",
+      "ecoFriendlyDescription": "Reduce carbon footprint by utilizing existing travel routes",
+      "secureSafe": "Secure & Safe",
+      "secureSafeDescription": "Full insurance coverage and verified user profiles",
+      "globalReach": "Global Reach",
+      "globalReachDescription": "Access to international routes and destinations",
+      "communityDriven": "Community Driven",
+      "communityDrivenDescription": "Build connections while helping others",
+      "flexibleDelivery": "Flexible Delivery",
+      "flexibleDeliveryDescription": "Customizable pickup and delivery options"
+    }
+  },
+
+  "Faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about our platform",
+    "categories": {
+      "general": "General",
+      "security": "Security & Safety",
+      "shipping": "Shipping & Delivery",
+      "payment": "Payments & Rewards",
+      "support": "Support & Communication",
+      "process": "Process & Timeline"
+    },
+    "faqs": {
+      "general": {
+        "q1": "How does the platform work for travelers and senders?",
+        "a1": "Our platform connects travelers with extra luggage space to senders who need an affordable, fast, and efficient way to send their items. Senders post item requests, and travelers can accept these requests if they have the capacity to carry them. Both parties benefit — travelers earn rewards, and senders save on delivery fees.",
+        "q2": "Is the platform a licensed and certified service?",
+        "a2": "Yes, we operate as a licensed and certified platform, ensuring compliance with legal and regulatory standards. Our certifications include a Trade License and Certificate of Formation, providing transparency, reliability, and user trust.",
+        "q3": "What are the key benefits of using this platform?",
+        "a3": "Our platform offers several advantages: affordable shipping compared to traditional methods, extra income for travelers utilizing unused luggage space, eco-friendly shared shipping system, and flexibility in routes, timings, and delivery preferences.",
+        "q4": "Can I send items both internationally and intercity?",
+        "a4": "Yes, you can send items both intercity and internationally. Our platform connects travelers moving between cities or countries, offering senders a variety of delivery routes for faster and more flexible shipping options.",
+        "q5": "How do I create an account on the platform?",
+        "a5": "Creating an account is simple: download the app or visit the website, sign up using your email or social login, and complete the account setup, which includes verification steps."
+      },
+      "security": {
+        "q1": "How is the safety and security of items ensured during transit?",
+        "a1": "We prioritize item security through user verification, ratings & reviews system, and optional insurance for package protection. Both parties rate each other after delivery, encouraging responsible behavior.",
+        "q2": "How does the platform verify the identity of users?",
+        "a2": "To build trust and safety, we require user verification during the account setup process. This includes verifying personal information such as name, email, and, in some cases, government-issued identification.",
+        "q3": "What happens if an item is lost, stolen, or damaged?",
+        "a3": "If an item is lost, stolen, or damaged during delivery, users should file a claim through the platform. Depending on the circumstances, optional insurance (if purchased) may cover these incidents. Claims are reviewed and resolved based on the platform's claim policies.",
+        "q4": "How do you handle disputes between users?",
+        "a4": "We have a dedicated dispute resolution team that handles conflicts between users. The team reviews evidence from both parties and works to find fair solutions based on our platform policies.",
+        "q5": "What security measures are in place for payments?",
+        "a5": "We use industry-standard encryption and secure payment processing systems. All financial transactions are protected, and we never store sensitive payment information."
+      },
+      "shipping": {
+        "q1": "What types of items can be sent through the platform?",
+        "a1": "The platform allows shipment of personal belongings, documents, electronics, gadgets, clothing, and accessories. However, restricted or prohibited items (such as hazardous materials, illegal goods, or flammable items) are not allowed.",
+        "q2": "Are there any size or weight limits for items?",
+        "a2": "Yes, item size and weight limits depend on the available space provided by the traveler. Travelers specify how much space they have, and senders can choose a traveler that matches their package size and weight needs.",
+        "q3": "Can I track my package during delivery?",
+        "a3": "Yes, senders can track the status of their items in real-time. Our system provides updates on the traveler's progress, offering peace of mind and transparency throughout the entire shipping process.",
+        "q4": "How do I arrange pickup and delivery?",
+        "a4": "You can coordinate directly with the traveler through our platform's messaging system to arrange convenient pickup and delivery locations and times.",
+        "q5": "What should I do if my delivery is delayed?",
+        "a5": "Contact your traveler through the platform's messaging system. If you can't reach them, our support team is available 24/7 to help resolve any delivery issues."
+      },
+      "payment": {
+        "q1": "How do payments work on the platform?",
+        "a1": "Payments are processed securely through our internal payment system. Senders pay directly via the platform, and all payments are encrypted to ensure user privacy and data protection.",
+        "q2": "What payment methods are accepted?",
+        "a2": "We accept various payment methods including credit/debit cards, digital wallets, and bank transfers. All payments are processed securely through our platform.",
+        "q3": "How does the rewards system work?",
+        "a3": "Travelers earn rewards for successful deliveries. These rewards can be converted to platform credits or cash. The more deliveries completed, the higher the rewards.",
+        "q4": "Can I earn bonuses through referrals?",
+        "a4": "Yes, users can participate in our referral program. When you invite friends or family who complete their first transaction, both you and the referred user receive bonus rewards.",
+        "q5": "What happens to my payment if delivery fails?",
+        "a5": "If a delivery cannot be completed, we have a refund policy in place. The amount refunded depends on the circumstances and timing of the cancellation."
+      },
+      "support": {
+        "q1": "How can I contact customer support?",
+        "a1": "Our customer support team is available 24/7 through multiple channels including live chat, email, and phone. You can also find answers to common questions in our help center.",
+        "q2": "What if I need to cancel my booking?",
+        "a2": "You can cancel your booking through the platform. The refund amount will depend on how close to the delivery date you cancel and our cancellation policy.",
+        "q3": "How can I report inappropriate behavior?",
+        "a3": "Use the report function in the app or contact our support team immediately. We take all reports seriously and investigate thoroughly."
+      },
+      "process": {
+        "q1": "How long does the delivery process usually take?",
+        "a1": "Delivery times vary depending on the route and traveler's schedule. You can see estimated delivery times when browsing available travelers.",
+        "q2": "What happens after I book a traveler?",
+        "a2": "After booking, you'll receive confirmation and can begin coordinating with the traveler through our messaging system.",
+        "q3": "Can I schedule deliveries in advance?",
+        "a3": "Yes, you can book travelers weeks or months in advance, depending on their posted travel schedules."
+      }
+    }
   }
 }

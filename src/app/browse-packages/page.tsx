@@ -808,6 +808,7 @@ export default function BrowsePackagesPage() {
                 package={pkg}
                 onViewDetails={() => setSelectedPackage(pkg)}
                 onChatClick={handleChatClick}
+                t={t}
               />
             ) : (
               <PackageListItem
@@ -843,6 +844,8 @@ export default function BrowsePackagesPage() {
               onClose={() => setSelectedPackage(null)}
               package={selectedPackage}
               distance={packageDistances.get(selectedPackage.id)}
+              onChatClick={handleChatClick}
+              t={t}
             />
           )}
         </AnimatePresence>

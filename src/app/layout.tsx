@@ -4,7 +4,7 @@ import './globals.css';
 import RootLayoutContent from '@/components/RootLayoutContent';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
-
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {

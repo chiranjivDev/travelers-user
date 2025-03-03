@@ -19,6 +19,7 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
+import { useRef } from 'react';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -345,8 +346,8 @@ export default function Navigation() {
                 </>
               )}
 
-              {/* Change language */}
-              <div className="relative inline-block">
+              {/* Change language old design */}
+              {/* <div className="relative inline-block">
                 <select
                   className="appearance-none bg-black text-white py-2 px-4 pr-8 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer hover:bg-gray-900"
                   value={locale}
@@ -354,9 +355,10 @@ export default function Navigation() {
                 >
                   <option value="en">🇺🇸 English</option>
                   <option value="fa">🇮🇷 فارسی</option>
-                  {/* Add more languages here: German */}
                 </select>
-              </div>
+              </div> */}
+
+              <LanguageSelector locale={locale} changeLocale={changeLocale} />
             </div>
 
             {/* Mobile Menu Button */}
@@ -471,6 +473,9 @@ export default function Navigation() {
                   </Link>
                 </div>
               )}
+
+              {/* LANGUAGE  */}
+              <LanguageSelector locale={locale} changeLocale={changeLocale} />
             </div>
           </motion.div>
         )}
@@ -480,3 +485,61 @@ export default function Navigation() {
     </>
   );
 }
+
+// Language selector
+const LanguageSelector = ({ locale, changeLocale }) => {
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  const languages = [
+    { code: 'en', name: 'English', flagClass: 'fi fi-us' },
+    { code: 'fa', name: 'فارسی', flagClass: 'fi fi-ir' },
+  ];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsLanguageMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative inline-block" ref={menuRef}>
+      {/* Button to Toggle Dropdown */}
+      <button
+        className="appearance-none bg-black text-white py-2 px-4 pr-8 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer hover:bg-gray-900 flex items-center justify-between w-full"
+        onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+      >
+        <span className="flex items-center space-x-2">
+          <span
+            className={`${languages.find((lang) => lang.code === locale)?.flagClass} w-5 h-4 rounded-sm`}
+          ></span>
+          <span>{languages.find((lang) => lang.code === locale)?.name}</span>
+        </span>
+      </button>
+
+      {/* Dropdown Menu for All Screens */}
+      {isLanguageMenuOpen && (
+        <div className="absolute left-0 mt-2 w-full bg-black border border-gray-700 rounded-lg shadow-lg z-50 overflow-auto">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              className="flex items-center space-x-2 w-full px-4 py-2 text-white hover:bg-gray-800"
+              onClick={() => {
+                changeLocale(lang.code);
+                setIsLanguageMenuOpen(false);
+              }}
+            >
+              <span className={`${lang.flagClass} w-5 h-4 rounded-sm`}></span>
+              <span>{lang.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};

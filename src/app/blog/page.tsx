@@ -41,19 +41,20 @@ const blogPosts = [
   },
 ];
 
-const categories = [
-  'All Posts',
-  'Traveler Tips',
-  'Sender Tips',
-  'Safety',
-  'Platform Updates',
-  'Success Stories',
-];
-
 export default function BlogPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All Posts');
-  const [searchQuery, setSearchQuery] = useState('');
   const t = useTranslations('Blog');
+  const [selectedCategory, setSelectedCategory] = useState(t('posts.allPosts'));
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Sample categories data
+  const categories = [
+    t('posts.allPosts'),
+    t('posts.travelerTips'),
+    t('posts.senderTips'),
+    t('posts.safety'),
+    t('posts.platformUpdates'),
+    t('posts.successStories'),
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b]">
