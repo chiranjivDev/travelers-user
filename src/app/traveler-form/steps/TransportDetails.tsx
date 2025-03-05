@@ -161,7 +161,7 @@ const TransportDetails = ({ register, errors, control, watch, setValue }) => {
                 </div>
               </InfoIcon>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {SERVICES.map((service) => (
                 <Controller
                   key={service.id}
@@ -207,7 +207,7 @@ const TransportDetails = ({ register, errors, control, watch, setValue }) => {
               </InfoIcon>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Open to All Option */}
               <motion.div
                 className={`relative overflow-hidden rounded-xl cursor-pointer transition-all duration-200 ${

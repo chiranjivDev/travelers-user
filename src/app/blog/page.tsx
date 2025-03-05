@@ -212,7 +212,7 @@ export default function BlogPage() {
                   {t('newsletterDescription')}
                 </p>
                 <div className="max-w-md mx-auto">
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <input
                       type="email"
                       placeholder={t('enterYourEmail')}

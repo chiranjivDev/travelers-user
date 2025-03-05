@@ -252,7 +252,7 @@ const TravelerForm = () => {
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Progress Steps */}
         <div className="mb-8">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-start sm:items-center">
             {/* {steps.map((stepItem, index) => (
               <div
                 key={index}

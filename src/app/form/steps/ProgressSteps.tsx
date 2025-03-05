@@ -146,13 +146,13 @@ const ProgressHeaders = ({ currentStep }) => {
       {steps.map((s) => (
         <div
           key={s.id}
-          className={`flex flex-col items-center w-1/5 ${s.id === currentStep ? 'opacity-100' : 'opacity-60'} `}
+          className={`flex flex-col items-center max-sm:w-10 ${s.id === currentStep ? 'opacity-100' : 'opacity-60'} `}
         >
           {/* Icon */}
           <div
-            className={`w-12 h-12 rounded-full flex items-center justify-center mb-2
+            className={`w-9 h-8 sm:w-12 sm:h-12 rounded-full flex items-center transition-all justify-center mb-2
                   ${s.id <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}
-                  ${s.id === currentStep ? 'ring-2 ring-blue-400 ring-offset-2' : ''}`}
+                  ${s.id === currentStep ? 'ring-2 ring-blue-400 max-sm:scale-125 ring-offset-2' : ''}`}
           >
             {s.icon}
           </div>
@@ -160,11 +160,11 @@ const ProgressHeaders = ({ currentStep }) => {
           {/* Step title and subtitle */}
           <div className="text-center">
             <p
-              className={`text-sm font-medium mb-1 ${s.id === currentStep ? 'text-blue-600' : 'text-gray-600'}`}
+              className={`text-xs break-words max-w-12 sm:max-w-28 font-light sm:font-medium mb-1 ${s.id === currentStep ? 'text-blue-600' : 'text-gray-600'}`}
             >
               {s.title}
             </p>
-            <p className="text-xs text-gray-500 max-w-[120px] mx-auto">
+            <p className="text-xs max-sm:hidden text-gray-500 max-w-[120px] mx-auto">
               {s.subtitle}
             </p>
           </div>

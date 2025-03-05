@@ -29,6 +29,7 @@ import { TRAVELER_PACKAGES } from '@/app/traveler/redux/tripsAction';
 import TravelerPackageDropdown from './TravelerPackageDropdown';
 import { CREATE_ORDER } from '@/app/sender/dashboard/redux/orderAction';
 import { clearOrdersState } from '@/app/sender/dashboard/redux/orderSlice';
+import { useTranslations } from 'next-intl';
 
 // Message Bubble Component
 function MessageBubble({
@@ -82,11 +83,25 @@ function MessageBubble({
       alert('Both Traveler and Sender packages are required');
       return;
     }
+
+    // Extract amount from message
+    const totalMatch = message?.message?.match(/Total:\s*€(\d+(\.\d+)?)/);
+    const amount = totalMatch ? parseFloat(totalMatch[1]) : null;
+
+    if (amount === null) {
+      alert('Failed to extract total amount from message.');
+      return;
+    }
+
     const payload = {
       senderId: senderId,
       traveler_package_id: message?.travelerPkgId,
       sender_package_id: message?.senderPkgId,
+      offerId: message.id,
+      amount: amount,
     };
+
+    console.log('payload,9', payload);
     dispatch({ type: CREATE_ORDER, payload });
     closeModal();
   };
@@ -268,6 +283,7 @@ function MessageBubble({
 
 // Main Chat Window Component
 export default function ChatWindow() {
+  const t = useTranslations('Chat');
   const { chatMessages: messages, file_url } = useSelector(
     (state) => state.chats
   );
@@ -419,7 +435,7 @@ export default function ChatWindow() {
       <div className="flex-1 flex items-center justify-center bg-gray-900">
         <div className="text-center text-gray-400">
           <FiMessageCircle className="w-12 h-12 mx-auto mb-4" />
-          <p>Select a conversation to start chatting</p>
+          <p>{t('selectConversation')}</p>
         </div>
       </div>
     );

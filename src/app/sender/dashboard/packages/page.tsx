@@ -55,6 +55,7 @@ export default function BrowseMyPackagesPage() {
                 key={pkg.id}
                 package={pkg}
                 onViewDetails={() => setSelectedPackage(pkg)}
+                t={t}
               />
             );
           })}

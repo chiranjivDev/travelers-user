@@ -33,7 +33,7 @@ export const ProgressHeader = ({ step }) => {
       {steps.map((stepItem, index) => (
         <div
           key={index}
-          className={`flex items-center ${
+          className={`flex max-sm:w-12 items-center ${
             index !== steps.length - 1 ? 'flex-1' : ''
           }`}
         >
@@ -53,13 +53,13 @@ export const ProgressHeader = ({ step }) => {
             >
               {stepItem.icon}
             </div>
-            <p className="text-sm text-gray-300 mt-2 max-w-[150px] mx-auto">
+            <p className="text-sm max-sm:break-words max-sm:max-w-[68px] text-gray-300 mt-2 max-w-[150px] mx-auto">
               {stepItem.title}
             </p>
           </div>
           {index !== steps.length - 1 && (
             <div className="flex-1 h-1 mx-4">
-              <div className="h-full bg-gray-700 rounded">
+              <div className="h-full max-sm:hidden bg-gray-700 rounded">
                 <div
                   className={`h-full ${
                     step > index + 1 ? 'bg-green-500' : 'bg-gray-700'

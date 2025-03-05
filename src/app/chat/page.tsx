@@ -54,7 +54,7 @@ export default function ChatPage() {
       console.log('order', order);
       // Navigate to payment screen with query parameters
       router.push(
-        `/payment?amount=${order?.sender_package?.price}&orderId=${order?.order_id}`
+        `/payment?amount=${order?.amount}&orderId=${order?.order_id}`
       );
       dispatch(clearOrdersState());
     }

@@ -223,6 +223,19 @@ export default function Navigation() {
                         </p>
                       </div>
 
+                      {/* Verify your Identity */}
+                      <div className="px-4 py-3 border-b border-gray-700">
+                        <p className="text-sm font-medium text-white">
+                          Verify Your Identity
+                        </p>
+                        <button
+                          className="mt-2 text-sm text-blue-500 hover:underline"
+                          onClick={() => router.push('/kyc-verification')}
+                        >
+                          Start KYC
+                        </button>
+                      </div>
+
                       {/* Stripe Account Section */}
                       {user.permissions === 'traveler' && (
                         <div className="px-4 py-3 border-b border-gray-700">
