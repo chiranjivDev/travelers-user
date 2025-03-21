@@ -1,27 +1,51 @@
 'use client';
 
 import { FETCH_ORDERS } from '@/app/sender/dashboard/redux/orderAction';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Check, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { FaCheck, FaEllipsisV, FaFlag } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 
+const OrderStatusBg = {
+  PENDING: 'text-yellow-500',
+  ACCEPTED: 'text-green-300',
+  REJECTED: 'text-red-500',
+  IN_TRANSIT: 'text-blue-300',
+  DELIVERED: 'text-green-500',
+  CANCELLED: 'text-red-500',
+};
+
 const TravelerOrdersPage = () => {
+  const { traveler } = useSelector((state) => state.trips);
   const { orders, fetchOrdersLoading } = useSelector((state) => state.order);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [otp, setOtp] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const t = useTranslations('TravelerDashboard.orders');
 
+  console.log('traveler isStripeOnboarded', traveler.isStripeOnboarded);
+  console.log('traveler stripe connect id', traveler.stripeAccountId);
+
   // dispatch
   const dispatch = useDispatch();
-  // fetch orders
   useEffect(() => {
     dispatch({ type: FETCH_ORDERS });
   }, []);
 
-  // Handle Mark as delivered
   const handleMarkDelivered = async (order) => {
     console.log('mark as delivered', order);
+    // Check if the traveler is onboarded and has a Stripe account ID
+    if (!traveler?.isStripeOnboarded || !traveler?.stripeAccountId) {
+      alert(
+        'You must complete Stripe onboarding before marking an order as delivered.',
+      );
+      return;
+    }
+
     setSelectedOrder(order);
     setIsModalOpen(true);
 
@@ -32,7 +56,7 @@ const TravelerOrdersPage = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: order?.sender?.email }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -47,7 +71,6 @@ const TravelerOrdersPage = () => {
     }
   };
 
-  // Handle OTP submit
   const handleOtpSubmit = async () => {
     if (!otp.trim()) {
       alert('Please enter the OTP');
@@ -65,7 +88,7 @@ const TravelerOrdersPage = () => {
             order_id: selectedOrder?.order_id,
             otp: otp,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -74,7 +97,6 @@ const TravelerOrdersPage = () => {
         setIsModalOpen(false);
         alert('OTP verified successfully. Order marked as Delivered.');
         setOtp('');
-        // dispatch({ type: FETCH_ORDERS });
       } else {
         alert(`Error: ${data.message}`);
       }
@@ -84,18 +106,20 @@ const TravelerOrdersPage = () => {
     }
   };
 
-  // Show action button for only in-progress orders
   const inProgressOrders = orders.filter(
     (order) =>
-      order.order_status === 'In Progress' || order.order_status === 'PENDING'
+      order.order_status === 'In Progress' || order.order_status === 'PENDING',
   );
   const showActionsColumn = inProgressOrders.length > 0;
-
-  // No orders available
+  const router = useRouter();
+  const handleRaiseIssue = (order_id: string) => {
+    router.push(`/issue/create?order_id=${order_id}`);
+  };
   if (orders.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
         <p className="text-gray-300">{t('noOrdersAssigned')}</p>
+        <Link href={'/issue/create?order_id=randomid'}>Report</Link>
       </div>
     );
   }
@@ -126,11 +150,9 @@ const TravelerOrdersPage = () => {
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-400 uppercase">
                 {t('payment')}
               </th>
-              {showActionsColumn && (
-                <th className="text-left text-xs font-medium text-gray-400 uppercase py-3 px-6">
-                  {t('actions')}
-                </th>
-              )}
+              <th className="text-left text-xs font-medium text-gray-400 uppercase py-3 px-6">
+                {t('actions')}
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
@@ -148,24 +170,52 @@ const TravelerOrdersPage = () => {
                 <td className="py-4 px-6 text-sm text-gray-300">
                   {order.destination?.city}
                 </td>
-                <td className="py-4 px-6 text-sm font-medium text-yellow-500">
+                <td
+                  className={`py-4 px-6 text-sm font-medium ${
+                    OrderStatusBg[order.order_status]
+                  }`}
+                >
                   {order.order_status}
                 </td>
                 <td className="py-4 px-6 text-sm text-gray-300">
                   {order.payment_status}
                 </td>
-                {showActionsColumn && (
-                  <td className="py-4 px-6">
-                    {order.order_status === 'PENDING' && (
-                      <button
-                        onClick={() => handleMarkDelivered(order)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                      >
-                        {t('markAsDelivered')}
-                      </button>
-                    )}
-                  </td>
-                )}
+                <td className="py-4 px-6 place-items-center">
+                  <Menu>
+                    <MenuButton className="  py-1.5 px-3 focus:outline-none">
+                      <FaEllipsisV />
+                    </MenuButton>
+
+                    <MenuItems
+                      transition
+                      anchor="bottom start"
+                      className="w-48 origin-top-right rounded-xl border border-white/5 bg-slate-500/80 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+                    >
+                      <MenuItem>
+                        <button
+                          onClick={() => handleRaiseIssue(order.order_id)}
+                          className="group flex w-full items-center gap-2 rounded-[5px] py-1.5 px-3 data-[focus]:bg-slate-500/80 duration-300"
+                        >
+                          <FaFlag className="" />
+                          Raise Issue
+                        </button>
+                      </MenuItem>
+
+                      <div className="my-1 h-px bg-white/5" />
+                      {order.order_status === 'PENDING' && (
+                        <MenuItem>
+                          <button
+                            onClick={() => handleMarkDelivered(order)}
+                            className="group flex w-full items-center gap-2 rounded-[5px] py-1.5 px-3 data-[focus]:bg-blue-500 duration-300"
+                          >
+                            <FaCheck />
+                            {t('markAsDelivered')}
+                          </button>
+                        </MenuItem>
+                      )}
+                    </MenuItems>
+                  </Menu>
+                </td>
               </tr>
             ))}
           </tbody>

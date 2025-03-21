@@ -22,7 +22,6 @@ export const CheckoutPage = ({ amount, orderId }) => {
   useEffect(() => {
     if (!amount || !orderId || clientSecret || hasFetched.current) return;
     hasFetched.current = true;
-    // TODO: Make API call to create a payment intent and set client secret
     const fetchClientSecret = async () => {
       try {
         const response = await fetch(
@@ -37,7 +36,7 @@ export const CheckoutPage = ({ amount, orderId }) => {
               currency: 'usd',
               orderId: orderId,
             }),
-          }
+          },
         );
 
         if (!response.ok) {
@@ -55,7 +54,6 @@ export const CheckoutPage = ({ amount, orderId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit');
     setLoading(true);
 
     if (!stripe || !elements) return;
@@ -67,36 +65,22 @@ export const CheckoutPage = ({ amount, orderId }) => {
       return;
     }
 
-    // for automatic capture
-    // const { error } = await stripe.confirmPayment({
-    //   elements,
-    //   clientSecret,
-    //   confirmParams: {
-    //     // return_url: `http://localhost:3000/payment-success?amount=${amount}`,
-    //     return_url: `${process.env.NEXT_PUBLIC_CLIENT_URL}payment-success?amount=${amount}`,
-    //   },
-    // });
-
-    // ✅ Use confirmCardPayment instead of confirmPayment (since we're doing manual capture)
     const { paymentIntent, error } = await stripe.confirmCardPayment(
       clientSecret,
       {
         payment_method: {
           card: elements.getElement(CardElement)!,
         },
-      }
+      },
     );
-
-    console.log('payment intent from ui', paymentIntent);
 
     if (error) {
       setError(error.message);
       setLoading(false);
       return;
     } else {
-      // Redirect to the payment authorized page with paymentIntentId
       router.push(
-        `/payment-authorized?amount=${amount}&paymentIntentId=${paymentIntent.id}`
+        `/payment-authorized?amount=${amount}&paymentIntentId=${paymentIntent.id}`,
       );
     }
     setLoading(false);

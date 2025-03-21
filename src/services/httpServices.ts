@@ -4,9 +4,8 @@ import store from '../store/store';
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {},
-
 });
-console.log("base url",process.env.BASE_URL );
+console.log('base url', process.env.BASE_URL);
 
 // Add request interceptor to include auth token
 axiosInstance.interceptors.request.use(
@@ -41,7 +40,7 @@ axiosInstance.interceptors.request.use(
     // }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // for admin (will refactor later)
@@ -58,5 +57,5 @@ axiosInstance.interceptors.request.use(
 //   },
 //   (error) => {
 //     return Promise.reject(error);
-//   }
+//   },
 // );

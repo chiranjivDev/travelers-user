@@ -2,8 +2,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 export const ReviewPackage = ({ formData }: any) => {
-  const t = useTranslations('SenderForm.steps.step5'); // Language translation
-
+  const t = useTranslations('SenderForm.steps.step5');
   return (
     <>
       <h2 className="text-2xl font-bold mb-6 text-gray-800">
@@ -49,22 +48,28 @@ export const ReviewPackage = ({ formData }: any) => {
             {/* Dimensions */}
             {t('dimensions')}
           </h3>
-          <div className="flex items-center space-x-4 text-gray-800">
-            <span className="font-medium">
-              {/* Length: */}
-              {t('length')}
-            </span>
-            <span>{formData.dimension?.length || 'N/A'}</span>
-            <span className="font-medium">
-              {/* Width: */}
-              {t('width')}
-            </span>
-            <span>{formData.dimension?.width || 'N/A'}</span>
-            <span className="font-medium">
-              {/* Height: */}
-              {t('height')}
-            </span>
-            <span>{formData.dimension?.height || 'N/A'}</span>
+          <div className="flex flex-col sm:flex-row items-center sm:gap-3 text-gray-800">
+            <div className="flex items-center max-sm:w-full justify-between gap-2">
+              <span className="font-medium">
+                {/* Length: */}
+                {t('length')}
+              </span>
+              <span>{formData.dimension?.length || 'N/A'}</span>
+            </div>
+            <div className="flex items-center max-sm:w-full justify-between gap-2">
+              <span className="font-medium">
+                {/* Width: */}
+                {t('width')}
+              </span>
+              <span>{formData.dimension?.width || 'N/A'}</span>
+            </div>
+            <div className="flex items-center max-sm:w-full justify-between gap-2">
+              <span className="font-medium">
+                {/* Height: */}
+                {t('height')}
+              </span>
+              <span>{formData.dimension?.height || 'N/A'}</span>
+            </div>
           </div>
         </div>
 

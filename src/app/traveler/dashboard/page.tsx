@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import Calendar from '@/components/dashboard/Calendar';
@@ -19,6 +19,9 @@ import {
 import { motion } from 'framer-motion';
 import ChatButton from '@/components/chat/ChatButton';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/contexts/AuthContext';
+import { TRAVELER_DETAIL } from '../redux/tripsAction';
+import { useDispatch } from 'react-redux';
 
 // Mock data for demonstration
 const mockTrips = [
@@ -59,8 +62,6 @@ const mockStats = {
   totalEarnings: 2800,
   averageRating: 4.9,
 };
-
-// Mock calendar events
 const mockEvents = [
   {
     id: '1',
@@ -77,8 +78,6 @@ const mockEvents = [
     status: 'pending',
   },
 ];
-
-// Mock chart data
 const earningsData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
   datasets: [
@@ -108,6 +107,16 @@ const deliveriesPerRouteData = {
 export default function TravelerDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const t = useTranslations('TravelerDashboard');
+
+  // Fetch profile details
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user?.userId) {
+      dispatch({ type: TRAVELER_DETAIL, payload: user.userId });
+    }
+  }, [dispatch, user?.userId]);
 
   return (
     <DashboardLayout title={t('title')} description={t('description')}>
@@ -299,10 +308,7 @@ export default function TravelerDashboard() {
 
       {/* Calendar Section */}
       <div className="mt-8">
-        <Calendar
-          events={mockEvents}
-          onEventClick={(event) => console.log('Event clicked:', event)}
-        />
+        <Calendar events={mockEvents} onEventClick={(event) => {}} />
       </div>
     </DashboardLayout>
   );

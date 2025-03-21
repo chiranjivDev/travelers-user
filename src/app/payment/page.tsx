@@ -9,14 +9,9 @@ import { useSearchParams } from 'next/navigation';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const PaymentPage = () => {
-  // const amount = 49.99;
-
   const searchParams = useSearchParams();
-  const amount = parseFloat(searchParams.get('amount')) || 0; // Get amount from query params
-  const orderId = searchParams.get('orderId'); // Get orderId from query params
-
-  console.log('orderId', orderId);
-  console.log('amount', amount);
+  const amount = parseFloat(searchParams.get('amount')) || 0;
+  const orderId = searchParams.get('orderId');
 
   if (!amount || !orderId) {
     return <p className="text-center text-red-500">Invalid payment details.</p>;

@@ -13,16 +13,13 @@ import { useTranslations } from 'next-intl';
 export default function BrowseMyPackagesPage() {
   const { senderPackages } = useSelector((state) => state.packages);
   const [selectedPackage, setSelectedPackage] = useState(null);
-  console.log('sender packages from chat window', senderPackages);
   const t = useTranslations('BrowsePackages');
 
-  const { user } = useAuth(); // Fetch user
+  const { user } = useAuth();
 
-  const dispatch = useDispatch(); // dispatch
+  const dispatch = useDispatch();
 
-  // fetch sender packages
   useEffect(() => {
-    console.log('inside fetch sender packages effect');
     dispatch({
       type: SENDER_PACKAGES,
       payload: { senderId: user?.userId },
@@ -78,6 +75,7 @@ export default function BrowseMyPackagesPage() {
               isOpen={!!selectedPackage}
               onClose={() => setSelectedPackage(null)}
               package={selectedPackage}
+              t={t}
             />
           )}
         </AnimatePresence>

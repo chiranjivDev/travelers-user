@@ -6,8 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiSearch, FiCalendar, FiTag, FiArrowRight } from 'react-icons/fi';
 import { useTranslations } from 'next-intl';
-
-// Sample blog data (replace with actual data from your CMS)
 const blogPosts = [
   {
     id: 1,
@@ -46,7 +44,6 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState(t('posts.allPosts'));
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Sample categories data
   const categories = [
     t('posts.allPosts'),
     t('posts.travelerTips'),
@@ -212,7 +209,7 @@ export default function BlogPage() {
                   {t('newsletterDescription')}
                 </p>
                 <div className="max-w-md mx-auto">
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex gap-4 flex-col sm:flex-row">
                     <input
                       type="email"
                       placeholder={t('enterYourEmail')}

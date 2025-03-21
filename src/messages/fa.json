@@ -31,9 +31,18 @@
       "login": "ورود"
     },
     "trustIndicators": {
-      "activeUsers": { "count": "۱۰K+", "label": "کاربران فعال" },
-      "deliveries": { "count": "۱۵K+", "label": "تحویل‌ها" },
-      "countries": { "count": "۵۰+", "label": "کشورها" }
+      "activeUsers": {
+        "count": "۱۰K+",
+        "label": "کاربران فعال"
+      },
+      "deliveries": {
+        "count": "۱۵K+",
+        "label": "تحویل‌ها"
+      },
+      "countries": {
+        "count": "۵۰+",
+        "label": "کشورها"
+      }
     },
     "howItWorks": {
       "title": "چگونه کار می‌کند",
@@ -101,7 +110,6 @@
       ]
     }
   },
-
   "LoginPage": {
     "title": "وارد حساب خود شوید",
     "subtitle": "یا",
@@ -235,7 +243,6 @@
       }
     }
   },
-
   "travellerForm": {
     "progressHeaders": {
       "travelRoute": "مسیر سفر شما چیست؟",
@@ -406,7 +413,6 @@
           },
           "urgentDelivery": "تحویل فوری (+20%)"
         },
-
         "totalPrice": "قیمت کل"
       },
       "step5": {
@@ -435,7 +441,6 @@
       }
     }
   },
-
   "Blog": {
     "title": "وبلاگ DeliveryConnect",
     "description": "نکات، راهنماها و به‌روزرسانی‌ها برای کمک به شما در استفاده بهتر از تحویل همتا به همتا",
@@ -480,7 +485,6 @@
     "successfulDeliveries": "تحویلهای موفق",
     "activeTravelers": "مسافران فعال",
     "averageSavings": "میانگین صرفهجویی",
-
     "faqs": {
       "general": {
         "q1": "پلتفرم برای مسافران و ارسال‌کنندگان چگونه کار می‌کند؟",
@@ -589,11 +593,9 @@
     "tripsAvailable": "سفرهای موجود",
     "clearAllFilters": "حذف همه فیلترها"
   },
-
   "TravelerDashboard": {
     "title": "داشبورد مسافر",
     "description": "مدیریت سفرها و تحویل‌های شما",
-
     "orders": {
       "noOrdersAssigned": "هنوز هیچ سفارشی اختصاص داده نشده است. لطفاً بعداً بررسی کنید.",
       "cancel": "لغو",
@@ -609,7 +611,6 @@
       "enterOtp": "کد تایید را وارد کنید"
     }
   },
-
   "SenderDashboard": {
     "title": "داشبورد فرستنده",
     "description": "بسته‌های خود را پیگیری و مدیریت کنید",
@@ -625,7 +626,6 @@
       "noOrders": "هنوز سفارشی وجود ندارد."
     }
   },
-
   "Footer": {
     "company": {
       "title": "شرکت",
@@ -666,12 +666,10 @@
     "findTravelers": "پیدا کردن مسافران",
     "paymentHistory": "تاریخچه پرداخت‌ها"
   },
-
   "Chat": {
     "title": "پیام‌ها",
     "selectConversation": "یک گفتگو را انتخاب کنید تا چت را شروع کنید"
   },
-
   "AboutUs": {
     "title": "بازآفرینی جهانی",
     "description": "اتصال مسافران و فرستندگان برای ایجاد آینده‌ای کارآمدتر و پایدارتر در تحویل از طریق ارتباطات همتا به همتا.",
@@ -743,7 +741,6 @@
       "flexibleDeliveryDescription": "گزینه‌های سفارشی برای دریافت و تحویل"
     }
   },
-
   "Faq": {
     "title": "سوالات متداول",
     "subtitle": "پاسخ‌های سوالات رایج درباره پلتفرم ما را پیدا کنید",
@@ -755,7 +752,6 @@
       "support": "پشتیبانی و ارتباطات",
       "process": "فرآیند و زمان‌بندی"
     },
-
     "faqs": {
       "general": {
         "q1": "پلتفرم برای مسافران و ارسال‌کنندگان چگونه کار می‌کند؟",
@@ -822,5 +818,33 @@
         "a3": "بله، شما می‌توانید مسافران را هفته‌ها یا ماه‌ها قبل از تاریخ برنامه‌ریزی شده رزرو کنید، بسته به برنامه سفر آنها."
       }
     }
+  },
+  "Feedback": {
+    "title": "بازخورد خود را با ما به اشتراک بگذارید",
+    "subtitle": "ما به نظر شما ارزش می‌دهیم و دوست داریم آن را بشنویم",
+    "rateYourExperience": "تجربه خود را چگونه ارزیابی می‌کنید؟",
+    "tellUsYourExperience": "بیشتر درباره تجربه خود به ما بگویید",
+    "experiencePlaceholder": "درباره تجربه خود بنویسید...",
+    "submitButton": "ارسال",
+    "mayBeLater": "شاید بعداً"
+  },
+  "EditFeedback": {
+    "title": "بازبینی خود را به‌روزرسانی کنید",
+    "subtitle": "به راحتی تغییرات موردنظر را در بازخورد خود اعمال کنید.",
+    "rateYourExperience": "تجربه خود را چگونه ارزیابی می‌کنید؟",
+    "tellUsYourExperience": "بیشتر درباره تجربه خود به ما بگویید",
+    "experiencePlaceholder": "درباره تجربه خود بنویسید...",
+    "submitButton": "ارسال"
+  },
+  "TravelerProfile": {
+    "reviews": "بررسی کنید",
+    "reviewButton": "ثبت نظر",
+    "messageButton": "پیام",
+    "tripsCompleted": "سفرهای تکمیل‌شده",
+    "responseTime": "زمان پاسخگویی",
+    "successRate": "نرخ موفقیت",
+    "completedTrips": "سفرهای انجام‌شده",
+    "memberSince": "عضو از",
+    "activeTrips": "سفرهای فعال"
   }
 }

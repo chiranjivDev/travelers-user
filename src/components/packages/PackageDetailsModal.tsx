@@ -94,18 +94,15 @@ export default function PackageDetailsModal({
                       <div className="flex items-center space-x-3">
                         <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
                           {pkg.sender.name.charAt(0)}
-                          {/* {pkg.name.charAt(0)} */}
                         </div>
                         <div>
                           <h5 className="text-white font-medium">
                             {pkg.sender.name}
-                            {/* {pkg.name} */}
                           </h5>
                           <div className="flex items-center space-x-2 text-sm text-gray-300">
                             <div className="flex items-center">
                               <FiStar className="text-yellow-400 mr-1" />
-                              {/* Commented out the actual code */}
-                              {/* <span>{pkg.sender.rating.toFixed(1)}</span> */}
+
                               <span>
                                 {pkg.sender?.rating
                                   ? pkg.sender.rating.toFixed(1)
@@ -218,11 +215,9 @@ export default function PackageDetailsModal({
                   </div>
                 </div>
 
-                {/* Features */}
                 {(pkg.insurance || pkg.priority || pkg.tracking) && (
                   <div className="mb-6">
                     <h4 className="text-white font-medium mb-3">
-                      {/* Features */}
                       {t('card.features')}
                     </h4>
                     <div className="bg-gray-700 rounded-lg p-4">
@@ -230,7 +225,6 @@ export default function PackageDetailsModal({
                         {pkg.insurance && (
                           <div className="bg-gray-600 rounded-lg px-3 py-2 text-sm text-white flex items-center">
                             <FiShield className="mr-2 text-blue-400" />
-                            {/* Insurance Coverage */}
                             {t('card.insuranceCoverage')}
                           </div>
                         )}
@@ -252,16 +246,13 @@ export default function PackageDetailsModal({
                   </div>
                 )}
 
-                {/* Price */}
                 <div className="mb-6">
                   <h4 className="text-white font-medium mb-3">
-                    {/* Price */}
                     {t('card.price')}
                   </h4>
                   <div className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div className="text-gray-400">
-                        {/* Total Price */}
                         {t('card.totalPrice')}
                       </div>
                       <div className="text-2xl font-bold text-white">
@@ -275,7 +266,6 @@ export default function PackageDetailsModal({
                 <div className="flex space-x-4">
                   {onChatClick && (
                     <button
-                      // onClick={() => onChatClick?.(pkg)}
                       onClick={() =>
                         onChatClick(pkg?.sender?.id, pkg?.packageID)
                       }

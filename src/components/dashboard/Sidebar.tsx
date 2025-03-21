@@ -15,6 +15,7 @@ import {
   FiSettings,
   FiBell,
   FiHelpCircle,
+  FiInfo,
 } from 'react-icons/fi';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
@@ -33,8 +34,6 @@ export default function Sidebar() {
   const t = useTranslations('Sidebar');
 
   const sidebarItems: SidebarItem[] = [
-    // Sender Items
-
     {
       id: 'packages',
       label: t('myPackages'),
@@ -42,27 +41,34 @@ export default function Sidebar() {
       path: '/sender/dashboard/packages',
       role: 'sender',
     },
-    {
-      id: 'find-travelers',
-      label: t('findTravelers'),
-      icon: FiSearch,
-      path: '/sender/dashboard/travelers',
-      role: 'sender',
-    },
-    {
-      id: 'sender-transactions',
-      label: t('paymentHistory'),
-      icon: FiDollarSign,
-      path: '/sender/dashboard/transactions',
-      role: 'sender',
-    },
 
-    // Traveler Items
+    // {
+    //   id: 'find-travelers',
+    //   label: t('findTravelers'),
+    //   icon: FiSearch,
+    //   path: '/sender/dashboard/travelers',
+    //   role: 'sender',
+    // },
+    // {
+    //   id: 'sender-transactions',
+    //   label: t('paymentHistory'),
+    //   icon: FiDollarSign,
+    //   path: '/sender/dashboard/transactions',
+    //   role: 'sender',
+    // },
+
     {
       id: 'trips',
       label: t('trips'),
       icon: FiMapPin,
       path: '/traveler/dashboard/trips',
+      role: 'traveler',
+    },
+    {
+      id: 'profile',
+      label: 'profile',
+      icon: FiMapPin,
+      path: '/traveler/dashboard/profile',
       role: 'traveler',
     },
     // {
@@ -126,7 +132,6 @@ export default function Sidebar() {
       role: 'sender',
     },
 
-    // Orders
     {
       id: 'orders',
       label: t('orders'),
@@ -134,10 +139,18 @@ export default function Sidebar() {
       path: '/traveler/dashboard/orders',
       role: 'traveler',
     },
+
+    {
+      id: 'issues',
+      label: 'Issues',
+      icon: FiInfo,
+      path: '/sender/dashboard/issues',
+      role: 'all',
+    },
   ];
 
   const filteredItems = sidebarItems.filter(
-    (item) => item.role === 'all' || item.role === user?.permissions
+    (item) => item.role === 'all' || item.role === user?.permissions,
   );
 
   return (

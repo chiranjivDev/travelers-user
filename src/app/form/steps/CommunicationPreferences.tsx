@@ -2,8 +2,7 @@ import { useTranslations } from 'next-intl';
 import { Controller } from 'react-hook-form';
 
 export const CommunicationPreferences = ({ control, errors }) => {
-  const t = useTranslations('SenderForm.steps.step4'); // Language translation
-
+  const t = useTranslations('SenderForm.steps.step4');
   return (
     <div>
       <h2 className="text-xl font-bold mb-4 text-gray-700">

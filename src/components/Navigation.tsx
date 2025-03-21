@@ -12,10 +12,7 @@ import {
   FiMapPin,
   FiSettings,
   FiUser,
-  FiMessageSquare,
-  FiBell,
   FiLogOut,
-  FiUserPlus,
 } from 'react-icons/fi';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
@@ -30,11 +27,8 @@ export default function Navigation() {
   const pathname = usePathname();
   const { user, logout, switchRole } = useAuth();
 
-  // language settings
   const t = useTranslations('Navbar');
-  // initialize router
   const router = useRouter();
-  // locale
   useEffect(() => {
     const localeCookie = document.cookie
       .split('; ')
@@ -51,7 +45,6 @@ export default function Navigation() {
     }
   }, [router]);
 
-  // handle scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -68,10 +61,6 @@ export default function Navigation() {
     { name: t('howItWorks'), path: '/how-it-works' },
     { name: t('blog'), path: '/blog' },
     { name: t('chat'), path: '/chat' },
-
-    // { name: t('safety'), path: '/safety' },
-    // { name: t('support'), path: '/support' }
-    // { name: 'Chat', path: '/simple-chat' },
   ];
 
   const userNavItems = [
@@ -93,29 +82,8 @@ export default function Navigation() {
       icon: FiSettings,
       role: 'admin',
     },
-
-    // No screens for the below links
-    // {
-    //   name: 'Profile Settings',
-    //   path: '/settings',
-    //   icon: FiUser,
-    //   role: 'all',
-    // },
-    // {
-    //   name: 'Messages',
-    //   path: '/messages',
-    //   icon: FiMessageSquare,
-    //   role: 'all',
-    // },
-    // {
-    //   name: 'Notifications',
-    //   path: '/notifications',
-    //   icon: FiBell,
-    //   role: 'all',
-    // },
   ];
 
-  // change locale
   const changeLocale = (newLocale: string) => {
     if (newLocale !== locale) {
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`;
@@ -163,7 +131,7 @@ export default function Navigation() {
                     return user?.permissions === 'traveler';
                   }
                   if (item.name === t('chat')) {
-                    return user; // Only show "Chat" if the user is logged in
+                    return user;
                   }
                   return true;
                 })
@@ -253,45 +221,12 @@ export default function Navigation() {
                         </div>
                       )}
 
-                      {/* Role Switching Section */}
-                      {/* {user?.roles?.length > 1 && (
-                        <div className="px-4 py-2 border-b border-gray-700">
-                          <p className="text-xs text-gray-400 mb-2">
-                            Switch Role
-                          </p>
-                          {user?.roles?.map((role) => (
-                            <button
-                              key={role}
-                              onClick={() => {
-                                switchRole(role);
-                                setIsUserMenuOpen(false);
-                              }}
-                              className={`flex items-center space-x-2 px-3 py-1.5 rounded-md w-full text-sm ${
-                                user.activeRole === role
-                                  ? 'bg-blue-600 text-white'
-                                  : 'text-gray-300 hover:bg-gray-700'
-                              }`}
-                            >
-                              {role === 'sender' && (
-                                <FiPackage className="w-4 h-4" />
-                              )}
-                              {role === 'traveler' && (
-                                <FiMapPin className="w-4 h-4" />
-                              )}
-                              {role === 'admin' && (
-                                <FiSettings className="w-4 h-4" />
-                              )}
-                              <span className="capitalize">{role}</span>
-                            </button>
-                          ))}
-                        </div>
-                      )} */}
-
                       {/* Navigation Items */}
                       {userNavItems
                         .filter(
                           (item) =>
-                            item.role === 'all' || item.role === user.activeRole
+                            item.role === 'all' ||
+                            item.role === user.activeRole,
                         )
                         .map((item) => (
                           <Link
@@ -359,18 +294,6 @@ export default function Navigation() {
                 </>
               )}
 
-              {/* Change language old design */}
-              {/* <div className="relative inline-block">
-                <select
-                  className="appearance-none bg-black text-white py-2 px-4 pr-8 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer hover:bg-gray-900"
-                  value={locale}
-                  onChange={(e) => changeLocale(e.target.value)}
-                >
-                  <option value="en">🇺🇸 English</option>
-                  <option value="fa">🇮🇷 فارسی</option>
-                </select>
-              </div> */}
-
               <LanguageSelector locale={locale} changeLocale={changeLocale} />
             </div>
 
@@ -411,6 +334,32 @@ export default function Navigation() {
                       <p className="text-sm text-gray-400">{user.email}</p>
                     </div>
                   </div>
+                  <div className="px-2 pt-3 border-t mt-3 border-gray-700">
+                    <p className="text-sm font-medium text-white">
+                      Verify Your Identity
+                    </p>
+                    <button
+                      className="mt-2 text-sm text-blue-500 hover:underline"
+                      onClick={() => router.push('/kyc-verification')}
+                    >
+                      Start KYC
+                    </button>
+                  </div>
+                  {user.permissions === 'traveler' && (
+                    <div className="px-2 py-3">
+                      <p className="text-sm font-medium text-white">
+                        {/* Payment Setup */}
+                        {t('user.paymentSetup')}
+                      </p>
+                      <button
+                        className="mt-2 text-sm text-blue-500 hover:underline"
+                        onClick={() => router.push('/connect-stripe')}
+                      >
+                        {/* Connect Stripe Account */}
+                        {t('user.connectStripe')}
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -436,7 +385,7 @@ export default function Navigation() {
                   {userNavItems
                     .filter(
                       (item) =>
-                        item.role === 'all' || item.role === user.activeRole
+                        item.role === 'all' || item.role === user.activeRole,
                     )
                     .map((item) => (
                       <Link
@@ -449,12 +398,25 @@ export default function Navigation() {
                         <span>{item.name}</span>
                       </Link>
                     ))}
-
+                  <div className="mt-2 pt-2">
+                    <button
+                      onClick={() => {
+                        const dashboardPath =
+                          user.permissions === 'sender'
+                            ? '/sender/dashboard'
+                            : '/traveler/dashboard';
+                        router.push(dashboardPath);
+                      }}
+                      className="flex items-center space-x-3 px-2 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-gray-700 w-full"
+                    >
+                      <FiUser className="w-5 h-5" />
+                      <span>
+                        {/* Dashboard */}
+                        {t('user.dashboard')}
+                      </span>
+                    </button>
+                  </div>
                   <button
-                    // onClick={() => {
-                    //   // Handle logout
-                    //   setIsMobileMenuOpen(false);
-                    // }}
                     onClick={async () => {
                       await logout();
                       setIsMobileMenuOpen(false);
@@ -498,8 +460,6 @@ export default function Navigation() {
     </>
   );
 }
-
-// Language selector
 const LanguageSelector = ({ locale, changeLocale }) => {
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -509,7 +469,6 @@ const LanguageSelector = ({ locale, changeLocale }) => {
     { code: 'fa', name: 'فارسی', flagClass: 'fi fi-ir' },
   ];
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {

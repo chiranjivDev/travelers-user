@@ -27,8 +27,6 @@ import { useNotification } from '@/contexts/NotificationContext';
 import { Menu, Transition } from '@headlessui/react';
 import Avatar from '@/components/common/Avatar';
 import { Package } from '@/data/mockPackages';
-
-// Create a client-only wrapper component
 const ClientOnly = ({ children }: { children: React.ReactNode }) => {
   const [mounted, setMounted] = useState(false);
 
@@ -71,7 +69,7 @@ export default function PackageCard({
         showNotification(
           'Package removed from saved items',
           'info',
-          <FiBookmark />
+          <FiBookmark />,
         );
       } else {
         savePackage(pkg.id);
@@ -79,7 +77,7 @@ export default function PackageCard({
       }
       setIsSaved(!isSaved);
     },
-    [isSaved, pkg.id, savePackage, unsavePackage, showNotification]
+    [isSaved, pkg.id, savePackage, unsavePackage, showNotification],
   );
 
   const handleLike = useCallback(
@@ -91,10 +89,10 @@ export default function PackageCard({
           ? 'Package removed from favorites'
           : 'Package added to favorites',
         'info',
-        <FiHeart />
+        <FiHeart />,
       );
     },
-    [isLiked, showNotification]
+    [isLiked, showNotification],
   );
 
   const handleShare = useCallback(
@@ -117,7 +115,7 @@ export default function PackageCard({
             showNotification(
               'Package shared successfully',
               'success',
-              <FiShare2 />
+              <FiShare2 />,
             );
           })
           .catch(console.error);
@@ -130,7 +128,7 @@ export default function PackageCard({
           .catch(console.error);
       }
     },
-    [pkg.id, pkg.origin, pkg.destination, showNotification]
+    [pkg.id, pkg.origin, pkg.destination, showNotification],
   );
 
   const handleChat = useCallback(
@@ -138,7 +136,7 @@ export default function PackageCard({
       e.stopPropagation();
       onChatClick?.(pkg);
     },
-    [pkg, onChatClick]
+    [pkg, onChatClick],
   );
 
   return (
@@ -359,7 +357,6 @@ export default function PackageCard({
         <div className="flex space-x-3 mt-6">
           {onChatClick && (
             <button
-              // onClick={handleChat}
               onClick={() => onChatClick(pkg?.sender?.id, pkg?.packageID)}
               className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
             >

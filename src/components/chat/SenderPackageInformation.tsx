@@ -30,7 +30,7 @@ export function PackageInformation({ onClose, packageId }) {
       }
       onClose();
     },
-    [onClose]
+    [onClose],
   );
 
   useEffect(() => {
@@ -42,7 +42,6 @@ export function PackageInformation({ onClose, packageId }) {
     return null;
   }
 
-  // destructure the fields
   const {
     packageID,
     name,

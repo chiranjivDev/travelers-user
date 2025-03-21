@@ -1,6 +1,5 @@
 'use client';
 
-// imports
 import { useEffect } from 'react';
 import TripCard from '@/components/trips/TripCard';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +9,6 @@ import { useTranslations } from 'next-intl';
 
 export default function TravelerTrips() {
   const { travelerPackages } = useSelector((state) => state.trips);
-  console.log('traveler packages', travelerPackages); // traveler packages
   const t = useTranslations('BrowseTips');
 
   const dispatch = useDispatch();
@@ -18,7 +16,6 @@ export default function TravelerTrips() {
 
   useEffect(() => {
     if (user?.permissions === 'traveler') {
-      console.log('inside fetch traveler packages effect');
       dispatch({
         type: TRAVELER_PACKAGES,
         payload: { travelerId: user.userId },
@@ -29,13 +26,9 @@ export default function TravelerTrips() {
   return (
     <div className="min-h-screen bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white">
-              {/* My Trips */}
-              {t('title')}
-            </h1>
+            <h1 className="text-3xl font-bold text-white">{t('title')}</h1>
             <p className="text-gray-400 mt-2">
               {travelerPackages.length} {t('tripsAvailable')}
             </p>

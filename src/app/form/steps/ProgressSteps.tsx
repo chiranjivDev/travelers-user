@@ -2,9 +2,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 const ProgressHeaders = ({ currentStep }) => {
-  const t = useTranslations('SenderForm.progressHeaders'); // language translation
-
-  //   Progress steps for sender form
+  const t = useTranslations('SenderForm.progressHeaders');
   const steps = [
     {
       id: 1,
@@ -117,7 +115,6 @@ const ProgressHeaders = ({ currentStep }) => {
       ),
     },
 
-    // New step for selecting most suitable traveler package and place an order
     {
       id: 6,
       title: t('travelerPackage'),
@@ -150,7 +147,7 @@ const ProgressHeaders = ({ currentStep }) => {
         >
           {/* Icon */}
           <div
-            className={`w-9 h-8 sm:w-12 sm:h-12 rounded-full flex items-center transition-all justify-center mb-2
+            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center transition-all justify-center mb-2
                   ${s.id <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}
                   ${s.id === currentStep ? 'ring-2 ring-blue-400 max-sm:scale-125 ring-offset-2' : ''}`}
           >
@@ -160,7 +157,7 @@ const ProgressHeaders = ({ currentStep }) => {
           {/* Step title and subtitle */}
           <div className="text-center">
             <p
-              className={`text-xs break-words max-w-12 sm:max-w-28 font-light sm:font-medium mb-1 ${s.id === currentStep ? 'text-blue-600' : 'text-gray-600'}`}
+              className={`text-xs break-words max-w-12 sm:max-w-28 sm:text-sm font-light sm:font-medium mb-1 ${s.id === currentStep ? 'text-blue-600' : 'text-gray-600'}`}
             >
               {s.title}
             </p>

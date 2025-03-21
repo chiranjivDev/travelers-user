@@ -14,7 +14,11 @@ import {
   FiUser,
   FiFileText,
 } from 'react-icons/fi';
-import { MdFlight } from 'react-icons/md';
+import {
+  MdFlight,
+  MdShoppingCart,
+  MdShoppingCartCheckout,
+} from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSocket } from '@/lib/socket';
 import { useAuth } from '@/contexts/AuthContext';
@@ -30,8 +34,6 @@ import TravelerPackageDropdown from './TravelerPackageDropdown';
 import { CREATE_ORDER } from '@/app/sender/dashboard/redux/orderAction';
 import { clearOrdersState } from '@/app/sender/dashboard/redux/orderSlice';
 import { useTranslations } from 'next-intl';
-
-// Message Bubble Component
 function MessageBubble({
   message,
   isOwn,
@@ -48,11 +50,8 @@ function MessageBubble({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isPDF = message.fileUrl?.endsWith('.pdf');
   const fileUrl = `${process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '')}${message.fileUrl}`;
-  console.log('message bubble', message);
-  // dispatch
   const dispatch = useDispatch();
 
-  // Trigger update status event
   const handleUpdateOfferStatus = (status: string) => {
     const socket = getSocket();
     const payload = {
@@ -60,22 +59,17 @@ function MessageBubble({
       roomId: roomId,
       offerStatus: status,
     };
-    console.log('Emitting update_offer_status event with:', payload);
     socket.emit('update_offer_status', payload);
   };
 
-  // Function to handle Place Order action
   const handlePlaceOrderClick = async () => {
-    console.log('Handle place order');
     setIsModalOpen(true);
   };
 
-  // Close the modal
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // Handle Place Order
   const confirmPlaceOrder = (e) => {
     e.preventDefault();
 
@@ -84,7 +78,6 @@ function MessageBubble({
       return;
     }
 
-    // Extract amount from message
     const totalMatch = message?.message?.match(/Total:\s*€(\d+(\.\d+)?)/);
     const amount = totalMatch ? parseFloat(totalMatch[1]) : null;
 
@@ -101,7 +94,6 @@ function MessageBubble({
       amount: amount,
     };
 
-    console.log('payload,9', payload);
     dispatch({ type: CREATE_ORDER, payload });
     closeModal();
   };
@@ -117,7 +109,6 @@ function MessageBubble({
         {message.fileUrl && (
           <div className="max-w-xs rounded-lg bg-gray-800 p-2">
             {isPDF ? (
-              // PDF Preview as a link
               <a
                 href={fileUrl}
                 target="_blank"
@@ -128,7 +119,6 @@ function MessageBubble({
                 <span>View PDF</span>
               </a>
             ) : (
-              // Display Image Preview
               <img
                 src={fileUrl}
                 alt="Message content"
@@ -280,62 +270,59 @@ function MessageBubble({
     </motion.div>
   );
 }
-
-// Main Chat Window Component
 export default function ChatWindow() {
   const t = useTranslations('Chat');
   const { chatMessages: messages, file_url } = useSelector(
-    (state) => state.chats
+    (state) => state.chats,
   );
   const fullFileUrl = `${process.env.NEXT_PUBLIC_API_URL}${file_url}`;
-  console.log('CHAT MESSAGES', messages);
-  console.log('FILE URL from ui', fullFileUrl);
 
   const { activeConversation } = useChat();
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // new
   const [showPackageDetails, setShowPackageDetails] = useState(false);
   const [showTripPackageDetails, setShowTripPackageDetails] = useState(false);
   const [showNegotiation, setShowNegotiation] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lastMessage, setLastMessage] = useState({});
 
-  // Fetch user
   const { user } = useAuth();
-  console.log('user', user);
 
   const otherUser = activeConversation
     ? activeConversation.participants.find(
-        (participant) => participant.id !== user?.userId
+        (participant) => participant.id !== user?.userId,
       )
     : null;
 
-  console.log('otherUser', otherUser);
-
-  // testing with packages dropdowns =================>
-  const { senderPackages } = useSelector((state) => state.packages); // sender packages for dropdown
-  const { travelerPackages } = useSelector((state) => state.trips); // traveler packages for dropdown
+  const { senderPackages } = useSelector((state) => state.packages);
+  const { travelerPackages } = useSelector((state) => state.trips);
   const [selectedSenderPackage, setSelectedSenderPackage] = useState('');
   const [selectedTravelerPackage, setSelectedTravelerPackage] = useState('');
 
   console.log('sender packages from chat window', senderPackages);
   console.log(
     'selected sender packages from chat window',
-    selectedSenderPackage
+    selectedSenderPackage,
   );
   console.log('traveler packages from chat window', travelerPackages);
   console.log(
     'selected traveler packages from chat window',
-    selectedTravelerPackage
+    selectedTravelerPackage,
   );
+
+  // save last message in state
+  useEffect(() => {
+    const lastMsg = messages?.length && messages[messages.length - 1];
+    setLastMessage(lastMsg);
+  }, [messages]);
 
   // populate the selected sender packages
   useEffect(() => {
     const packageId = messages?.length
       ? messages[messages.length - 1].senderPkgId || ''
       : '';
-    console.log('default package id:', packageId);
     if (packageId) {
       setSelectedSenderPackage(packageId);
     } else {
@@ -343,12 +330,10 @@ export default function ChatWindow() {
     }
   }, [messages]);
 
-  // populate the selected traveler packages
   useEffect(() => {
     const packageId = messages?.length
       ? messages[messages.length - 1].travelerPkgId || ''
       : '';
-    console.log('default trip package id:', packageId);
     if (packageId) {
       setSelectedTravelerPackage(packageId);
     } else {
@@ -358,58 +343,41 @@ export default function ChatWindow() {
 
   const dispatch = useDispatch();
 
-  // fetch sender packages
   useEffect(() => {
-    console.log('inside fetch sender packages effect');
     dispatch({
       type: SENDER_PACKAGES,
       payload: { senderId: user?.userId },
     });
   }, []);
 
-  // fetch messages related to selected packages
-  console.log('active conversation', activeConversation);
   useEffect(() => {
-    if (
-      !selectedSenderPackage ||
-      // !selectedTravelerPackage ||
-      !activeConversation?.id
-    )
-      return;
-    console.log('inside fetch context messages effect');
+    if (!selectedSenderPackage || !activeConversation?.id) return;
     dispatch({
       type: FETCH_CHAT_MESSAGES,
       payload: {
         roomId: activeConversation.id,
         senderPackageId: selectedSenderPackage,
-        // travelerPackageId: selectedTravelerPackage,
       },
     });
   }, [selectedSenderPackage, activeConversation]);
 
-  // fetch trip or traveler packages
   useEffect(() => {
     if (user?.permissions === 'traveler') {
-      console.log('inside fetch traveler packages effect');
       dispatch({
         type: TRAVELER_PACKAGES,
         payload: { travelerId: user.userId },
       });
     }
-  }, []); // Added dependencies
-
-  // testing...... ====================================>
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // scroll to bottom of conversation
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  // handle key press
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -417,16 +385,15 @@ export default function ChatWindow() {
     }
   };
 
-  // Handle Image upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      dispatch({ type: UPLOAD_FILE, payload: file }); // Dispatch action with file
+      dispatch({ type: UPLOAD_FILE, payload: file });
       const reader = new FileReader();
       reader.onload = () => {
-        setImagePreview(reader.result as string); // Set the image preview
+        setImagePreview(reader.result as string);
       };
-      reader.readAsDataURL(file); // Convert the file to base64 for preview
+      reader.readAsDataURL(file);
     }
   };
 
@@ -441,14 +408,9 @@ export default function ChatWindow() {
     );
   }
 
-  // Handle Send Message
   const handleSendMessage = () => {
-    console.log('handle send message');
-
     if (newMessage.trim() || imagePreview) {
       const socket = getSocket();
-      console.log('socket from send message', socket);
-      console.log('user id from send message', otherUser.id);
 
       if (socket && otherUser.id) {
         socket.emit(
@@ -459,29 +421,47 @@ export default function ChatWindow() {
             fileUrl: imagePreview ? file_url : '',
             senderPkgId: selectedSenderPackage,
             travelerPkgId: selectedTravelerPackage,
-          })
-        );
-        console.log(
-          'Sent private message to:',
-          otherUser.id,
-          'Message:',
-          newMessage,
-          'senderPkgId:',
-          selectedSenderPackage,
-          'travelerPkgId:',
-          selectedTravelerPackage
+          }),
         );
       }
       setNewMessage('');
       setImagePreview(null);
 
-      // Clear redux state
       dispatch(clearFileUrl());
     }
   };
 
+  // handle place order  from chat header ======> new point
+  const handlePlaceOrderClick = () => {
+    console.log('Handle place order from chat header');
+    setIsModalOpen(true);
+  };
+
+  // Close the place order confirmaion modal
+  const closeModal = () => {
+    console.log('handle close modal');
+    setIsModalOpen(false);
+  };
+
+  // Confirm Place Order from chat header
+  const confirmPlaceOrder = (e) => {
+    e.preventDefault();
+    console.log('Confirm place order');
+    console.log('last message received', lastMessage);
+
+    const payload = {
+      senderId: user?.permissions === 'sender' ? user?.userId : undefined,
+      traveler_package_id: lastMessage?.travelerPkgId,
+      sender_package_id: lastMessage?.senderPkgId,
+      offerId: lastMessage.id,
+    };
+    console.log('place order payload from CH', payload);
+    dispatch({ type: CREATE_ORDER, payload });
+    closeModal();
+  };
+
   return (
-    <div className="flex-1 flex flex-col bg-gray-900">
+    <div className="flex-1 max-sm:absolute max-sm:top-20 max-sm:left-0 flex flex-col bg-gray-900">
       {/* Chat Header */}
       <div className="p-4 border-b border-gray-700 flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -498,7 +478,7 @@ export default function ChatWindow() {
             />
           </div>
           <div>
-            <h3 className="font-medium text-white">{otherUser.name}</h3>
+            <h3 className="font-medium text-white">{otherUser.name} </h3>
             <p className="text-sm text-gray-400">
               {otherUser.status === 'online'
                 ? 'Online'
@@ -512,6 +492,19 @@ export default function ChatWindow() {
         </div>
 
         <div className="flex items-center space-x-6">
+          {/* Place order button */}
+          {user?.permissions === 'sender' &&
+            lastMessage?.senderPkgId &&
+            lastMessage?.travelerPkgId && (
+              <button
+                onClick={handlePlaceOrderClick}
+                className="text-gray-400 hover:text-white transition-colors"
+                title="Place order button"
+              >
+                <MdShoppingCartCheckout className="w-6 h-6" />
+              </button>
+            )}
+
           {/* Package Selection dropdowns */}
           <div className="flex items-center space-x-3">
             {/* Sender Package Dropdown */}
@@ -605,19 +598,8 @@ export default function ChatWindow() {
             senderId={user?.permissions === 'sender' ? user?.userId : undefined}
           />
         ))}
-        {/* {isTyping && (
-          <div className="flex items-center text-sm text-gray-400 mb-4">
-            <div className="flex space-x-1">
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
-            </div>
-            <span className="ml-2">{otherUser.name} is typing...</span>
-          </div>
-        )} */}
         <div ref={messagesEndRef} />
       </div>
-
       {/* Input Area */}
       <div className="p-4 border-t border-gray-700">
         <div className="flex items-center space-x-4">
@@ -650,7 +632,7 @@ export default function ChatWindow() {
                 className="max-w-xs max-h-48 object-cover rounded-lg"
               />
               <button
-                onClick={() => setImagePreview(null)} // Remove image preview if the user wants to select a new image
+                onClick={() => setImagePreview(null)}
                 className="absolute top-0 right-0 text-white bg-gray-500 p-1 rounded-full"
               >
                 &times;
@@ -671,7 +653,6 @@ export default function ChatWindow() {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            // onClick={handleSend}
             onClick={handleSendMessage}
             className="p-2 bg-blue-600 hover:bg-blue-700 rounded-full text-white"
           >
@@ -679,6 +660,61 @@ export default function ChatWindow() {
           </motion.button>
         </div>
       </div>
+
+      {/* Confirm Place order modal */}
+      {isModalOpen && (
+        <ConfirmPlaceOrderModal
+          closeModal={closeModal}
+          confirmPlaceOrder={confirmPlaceOrder}
+        />
+      )}
     </div>
   );
 }
+
+// Place order confirmation modal
+const ConfirmPlaceOrderModal = ({ confirmPlaceOrder, closeModal }) => {
+  return (
+    <motion.div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg text-center max-w-sm w-full"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -50, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 120 }}
+      >
+        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+          Place Order
+        </h2>
+        <p className="text-gray-600 mb-5">
+          Are you sure you want to place the order?
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <motion.button
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={confirmPlaceOrder}
+          >
+            Place Order
+          </motion.button>
+
+          <motion.button
+            className="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-full font-medium transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={closeModal}
+          >
+            Cancel
+          </motion.button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};

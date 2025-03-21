@@ -3,8 +3,7 @@ import { useTranslations } from 'next-intl';
 import { FiInfo } from 'react-icons/fi';
 
 const TripDetails = ({ register, errors }) => {
-  const t = useTranslations('travellerForm.steps.step1'); // language translation
-
+  const t = useTranslations('travellerForm.steps.step1');
   return (
     <div className="space-y-8">
       <div className="flex items-center space-x-3 mb-8">
@@ -48,11 +47,8 @@ const TripDetails = ({ register, errors }) => {
 };
 
 export default TripDetails;
-
-// Location Details Component
 const LocationSection = ({ type, register, errors }) => {
-  const t = useTranslations('travellerForm.steps.step1.fields'); // language translation
-
+  const t = useTranslations('travellerForm.steps.step1.fields');
   return (
     <div className="relative">
       <div
@@ -171,11 +167,8 @@ const LocationSection = ({ type, register, errors }) => {
     </div>
   );
 };
-
-// Traveler Schedule Section
 const TravelScheduleSection = ({ register, errors }) => {
-  const t = useTranslations('travellerForm.steps.step1.fields.travelSchedule'); // language translation
-
+  const t = useTranslations('travellerForm.steps.step1.fields.travelSchedule');
   return (
     <div className="p-6 rounded-xl bg-gray-900/80 backdrop-blur-lg border border-gray-700 shadow-lg transition-all duration-200 hover:bg-gray-900/90">
       <div className="flex items-center space-x-3 mb-6">
@@ -273,14 +266,10 @@ const TravelScheduleSection = ({ register, errors }) => {
     </div>
   );
 };
-
-// Package Reception Section
 const ReceptionSection = ({ register, errors }) => {
   const t = useTranslations(
-    'travellerForm.steps.step1.fields.packageReception'
-  ); // language translation
-
-  // Reception Methods
+    'travellerForm.steps.step1.fields.packageReception',
+  );
   const RECEPTION_METHODS = [
     {
       id: 'departure-point',
@@ -449,7 +438,7 @@ const ReceptionSection = ({ register, errors }) => {
                 <input
                   type="checkbox"
                   {...register(
-                    `packageReceptionDetails.availableTimes.${option.value}`
+                    `packageReceptionDetails.availableTimes.${option.value}`,
                   )}
                   className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 
                           focus:ring-blue-500/20 focus:ring-offset-0"
@@ -488,7 +477,7 @@ const ReceptionSection = ({ register, errors }) => {
                 <input
                   type="checkbox"
                   {...register(
-                    `packageReceptionDetails.availableTimes.${option.value}`
+                    `packageReceptionDetails.availableTimes.${option.value}`,
                   )}
                   className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 
                           focus:ring-blue-500/20 focus:ring-offset-0"

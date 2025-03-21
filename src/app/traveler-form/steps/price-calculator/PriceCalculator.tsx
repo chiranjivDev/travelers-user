@@ -4,11 +4,9 @@ import { Tooltip } from '@/components/ui/Tooltip';
 import { useTranslations } from 'next-intl';
 
 const PriceCalculator = ({ register, errors, setValue, watch }) => {
-  const t = useTranslations('travellerForm.steps.step4'); // language translation
-
-  // Simplified pricing constants
+  const t = useTranslations('travellerForm.steps.step4');
   const RATES = {
-    DISTANCE_FACTOR: 1, // €1 per 1000km
+    DISTANCE_FACTOR: 1,
     PACKAGE_TYPE_MULTIPLIERS: {
       documents: 1.0,
       electronics: 1.15,
@@ -16,19 +14,15 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
       gifts: 1.0,
       medical: 1.2,
     },
-    URGENT_DELIVERY_MULTIPLIER: 1.2, // 20% increase for urgent delivery
+    URGENT_DELIVERY_MULTIPLIER: 1.2,
   };
 
-  // Watch form values
   const baseRate = watch('pricing.ratePerKg', 0);
   const weight = watch('pricing.weight', 0);
   const distance = watch('pricing.distance', 0);
   const packageType = watch('pricing.packageType', '');
   const urgentDelivery = watch('pricing.urgentDelivery', false);
   const totalCost = watch('pricing.totalCost');
-
-  // Calculate total Price
-  // Total Price = Base Rate Cost + Package Cost + Distance Cost + Urgent Delivery Cost (if any)
 
   const calculateTotalCost = ({
     baseRate,
@@ -54,8 +48,8 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
       (baseCost + distanceCost) * packageMultiplier * urgentMultiplier;
 
     return {
-      baseCost: baseCost.toFixed(2), // Base cost with 2 decimal places
-      totalCost: totalCost.toFixed(2), // Total cost with 2 decimal places
+      baseCost: baseCost.toFixed(2),
+      totalCost: totalCost.toFixed(2),
     };
   };
 
@@ -70,10 +64,10 @@ const PriceCalculator = ({ register, errors, setValue, watch }) => {
     });
 
     if (result) {
-      setValue('pricing.baseRate', result.baseCost); // Set the base cost
-      setValue('pricing.totalCost', result.totalCost); // Set the total cost
+      setValue('pricing.baseRate', result.baseCost);
+      setValue('pricing.totalCost', result.totalCost);
     } else {
-      setValue('pricing.totalCost', ''); // Reset total cost if inputs are invalid
+      setValue('pricing.totalCost', '');
     }
   }, [baseRate, weight, distance, packageType, urgentDelivery, setValue]);
 

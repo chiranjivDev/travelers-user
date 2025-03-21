@@ -5,6 +5,8 @@ import RootLayoutContent from '@/components/RootLayoutContent';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import '/node_modules/flag-icons/css/flag-icons.min.css';
+import AuthProvider from '@/providers/RouteGuardProvider';
+import RouteGuardProvider from '@/providers/RouteGuardProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -20,17 +22,17 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
 
-  // Providing all messages to the client
-  // side is the easiest way to get startedF
   const messages = await getMessages();
 
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <body
-        className={`${inter.className} min-h-screen bg-[#0f172a] text-white`}
+        className={`${inter.className} min-h-screen  bg-[#0f172a] text-white`}
       >
         <NextIntlClientProvider messages={messages}>
-          <RootLayoutContent>{children}</RootLayoutContent>
+          <RootLayoutContent>
+            <RouteGuardProvider>{children}</RouteGuardProvider>
+          </RootLayoutContent>
         </NextIntlClientProvider>
       </body>
     </html>

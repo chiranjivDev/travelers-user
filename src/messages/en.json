@@ -22,7 +22,6 @@
       "logout": "Log Out"
     }
   },
-
   "HomePage": {
     "title": "Connect, Travel & Deliver",
     "description": "Join our community of travelers and senders. Save money on shipping while helping others earn from their travels.",
@@ -32,9 +31,18 @@
       "login": "Login"
     },
     "trustIndicators": {
-      "activeUsers": { "count": "10K+", "label": "Active Users" },
-      "deliveries": { "count": "15K+", "label": "Deliveries" },
-      "countries": { "count": "50+", "label": "Countries" }
+      "activeUsers": {
+        "count": "10K+",
+        "label": "Active Users"
+      },
+      "deliveries": {
+        "count": "15K+",
+        "label": "Deliveries"
+      },
+      "countries": {
+        "count": "50+",
+        "label": "Countries"
+      }
     },
     "howItWorks": {
       "title": "How It Works",
@@ -102,7 +110,6 @@
       ]
     }
   },
-
   "LoginPage": {
     "title": "Sign in to your account",
     "subtitle": "Or",
@@ -115,7 +122,6 @@
     "loginLink": "Sign in to your account",
     "signupButton": "Create Account"
   },
-
   "SenderForm": {
     "progressHeaders": {
       "packageDetails": "Package Details",
@@ -236,7 +242,6 @@
       }
     }
   },
-
   "travellerForm": {
     "progressHeaders": {
       "travelRoute": "What is your travel route?",
@@ -435,7 +440,6 @@
       }
     }
   },
-
   "Blog": {
     "title": "DeliveryConnect Blog",
     "description": "Tips, guides, and updates to help you make the most of peer-to-peer delivery",
@@ -547,7 +551,6 @@
       }
     }
   },
-
   "BrowsePackages": {
     "title": "Find Packages That Need Delivery",
     "description": "Connect with senders and earn money by delivering packages along your travel route",
@@ -589,7 +592,6 @@
     "tripsAvailable": "Trips available",
     "clearAllFilters": "Clear all filters"
   },
-
   "TravelerDashboard": {
     "title": "Traveler Dashboard",
     "description": "Manage your trips and deliveries",
@@ -608,7 +610,6 @@
       "enterOtp": "Enter OTP"
     }
   },
-
   "SenderDashboard": {
     "title": "Sender Dashboard",
     "description": "Track and manage your packages",
@@ -624,7 +625,6 @@
       "noOrders": "No orders yet."
     }
   },
-
   "Footer": {
     "company": {
       "title": "Company",
@@ -658,7 +658,6 @@
     },
     "allRightsReserved": "All rights reserved."
   },
-
   "Sidebar": {
     "trips": "My Trips",
     "orders": "My Orders",
@@ -666,12 +665,10 @@
     "findTravelers": "Find Travelers",
     "paymentHistory": "Payment History"
   },
-
   "Chat": {
     "title": "Messages",
     "selectConversation": "Select a conversation to start chatting"
   },
-
   "AboutUs": {
     "title": "Reimagining Global",
     "description": "Connecting travelers and senders to create a more efficient, sustainable future of delivery through peer-to-peer connections.",
@@ -743,7 +740,6 @@
       "flexibleDeliveryDescription": "Customizable pickup and delivery options"
     }
   },
-
   "Faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Find answers to common questions about our platform",
@@ -821,5 +817,33 @@
         "a3": "Yes, you can book travelers weeks or months in advance, depending on their posted travel schedules."
       }
     }
+  },
+  "Feedback": {
+    "title": "Leave a review for ",
+    "subtitle": "We value your opinion and would love to hear from you",
+    "rateYourExperience": "How would you rate your experience",
+    "tellUsYourExperience": "Tell us more about your experience",
+    "experiencePlaceholder": "Write about your experience..",
+    "submitButton": "Submit",
+    "mayBeLater": "May Be Later"
+  },
+  "EditFeedback": {
+    "title": "Update your review ",
+    "subtitle": "Make changes to your feedback effortlessly.",
+    "rateYourExperience": "How would you rate your experience",
+    "tellUsYourExperience": "Tell us more about your experience",
+    "experiencePlaceholder": "Write about your experience..",
+    "submitButton": "Submit"
+  },
+  "TravelerProfile": {
+    "reviews": "reviews",
+    "reviewButton": "Leave a Review",
+    "messageButton": "Message",
+    "tripsCompleted": "trips completed",
+    "responseTime": "Response Time",
+    "successRate": "Success Rate",
+    "completedTrips": "Completed Trips",
+    "memberSince": "Member Since",
+    "activeTrips": "Active Trips"
   }
 }

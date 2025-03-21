@@ -2,8 +2,7 @@
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 const ReviewOffer = ({ formData }) => {
-  const t = useTranslations('travellerForm.steps.step5'); // language translation
-
+  const t = useTranslations('travellerForm.steps.step5');
   const getHandlingOptionsString = (preferences?: any) => {
     if (!preferences) return 'Not specified';
     const options = [
@@ -187,8 +186,6 @@ const ReviewOffer = ({ formData }) => {
   );
 };
 export default ReviewOffer;
-
-// Review Item
 interface ReviewItemProps {
   label: string;
   value: string;
@@ -207,8 +204,6 @@ const ReviewItem = ({ label, value }: ReviewItemProps) => (
     </dd>
   </motion.div>
 );
-
-// Section Component
 interface SectionProps {
   emoji: string;
   title: string;

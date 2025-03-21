@@ -1,10 +1,6 @@
 import { useTranslations } from 'next-intl';
-
-// Progress Headers
 export const ProgressHeader = ({ step }) => {
-  const t = useTranslations('travellerForm.progressHeaders'); // language translation
-
-  // header steps
+  const t = useTranslations('travellerForm.progressHeaders');
   const steps = [
     {
       icon: '📍',

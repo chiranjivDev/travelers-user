@@ -8,9 +8,7 @@ import { useTranslations } from 'next-intl';
 export const PackageDetails = ({ control, errors, getValues, setValue }) => {
   const { categories } = useSelector((state) => state.packages);
 
-  const t = useTranslations('SenderForm.steps.step1'); // language translations
-
-  // fetch categories
+  const t = useTranslations('SenderForm.steps.step1');
   const dispatch = useDispatch();
   useEffect(() => {
     if (!categories.length) {
@@ -24,13 +22,11 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
     }
   }, [dispatch, categories]);
 
-  // Watch the category field
   const selectedCategory = useWatch({
     control,
     name: 'category',
   });
 
-  // Get the subcategories for the selected category
   const subcategories =
     categories?.find((category) => category.categoryId === selectedCategory)
       ?.subcategories || [];
@@ -273,7 +269,7 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
       {/* Handling */}
       <div className="mb-4 flex items-center space-x-8">
         {/* Requires Careful Handling */}
-        <div className="flex items-center">
+        <div className="flex flex-1 items-center">
           <label
             htmlFor="requiresCarefulHandling"
             className="text-gray-700 mr-2 cursor-pointer"
@@ -298,7 +294,7 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
         </div>
 
         {/* Is Fragile */}
-        <div className="flex items-center">
+        <div className="flex flex-1 items-center">
           <label
             htmlFor="isFragile"
             className="text-gray-700 mr-2 cursor-pointer"
@@ -326,7 +322,7 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
       {/* Insurance and Priority */}
       <div className="mb-4 flex items-center space-x-8">
         {/* Insurance */}
-        <div className="flex items-center">
+        <div className="flex flex-1 items-center">
           <label
             htmlFor="insurance"
             className="text-gray-700 mr-2 cursor-pointer"
@@ -351,7 +347,7 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
         </div>
 
         {/* Priority */}
-        <div className="flex items-center">
+        <div className="flex flex-1 items-center">
           <label
             htmlFor="priority"
             className="text-gray-700 mr-2 cursor-pointer"
@@ -385,13 +381,6 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
         <Controller
           name="specialInstructions"
           control={control}
-          // rules={{
-          //   required: 'Special instructions are required.',
-          //   maxLength: {
-          //     value: 500,
-          //     message: 'Special instructions cannot exceed 500 characters.',
-          //   },
-          // }}
           render={({ field }) => (
             <textarea
               {...field}
@@ -400,11 +389,6 @@ export const PackageDetails = ({ control, errors, getValues, setValue }) => {
             />
           )}
         />
-        {/* {errors.specialInstructions && (
-          <p className="text-red-500 text-sm">
-            {errors.specialInstructions.message}
-          </p>
-        )} */}
       </div>
 
       {/* Package Photos */}

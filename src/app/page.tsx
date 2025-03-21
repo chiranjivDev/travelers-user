@@ -10,7 +10,6 @@ export default function Home() {
   const { user } = useAuth();
   const t = useTranslations('HomePage');
 
-  // Use `getTranslation` to properly access the object
   const getHowItWorks = useTranslations('HomePage.howItWorks');
   const steps = getHowItWorks.raw('steps', { returnObjects: true }) || [];
 

@@ -1,52 +1,50 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { LOGIN } from '../signup/redux/authActions';
-import { useTranslations } from 'next-intl';
+import { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
 
-  // language selection
-  const t = useTranslations('LoginPage');
-
-  // state management with redux
-  // const dispatch = useDispatch();
+  const t = useTranslations("LoginPage");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login(email, password);
-      router.push('/');
-      // using redux
-      // dispatch({ type: LOGIN, payload: { email, password } });
+      router.push("/");
     } catch (err) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      redirect("/");
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-            {t('title')}
+            {t("title")}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-400">
-            {t('subtitle')}{' '}
+            {t("subtitle")}{" "}
             <Link
               href="/signup"
               className="font-medium text-blue-500 hover:text-blue-400"
             >
-              {t('signupLink')}
+              {t("signupLink")}
             </Link>
           </p>
         </div>
@@ -96,7 +94,7 @@ export default function LoginPage() {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              {t('signInButton')}
+              {t("signInButton")}
             </button>
           </div>
         </form>

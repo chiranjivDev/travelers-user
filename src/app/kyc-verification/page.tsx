@@ -13,7 +13,6 @@ export default function KYCVerification() {
 
   const { user } = useAuth();
 
-  // Create a new client with user input
   const createClient = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -33,30 +32,27 @@ export default function KYCVerification() {
           firstName,
           lastName,
         }),
-      }
+      },
     );
 
     const data = await response.json();
     if (data.id) {
       setClientId(data.id);
-      // generateToken(data.id);
       setShowForm(false);
     }
   };
 
-  // Generate token (might not be necessary)
   const generateToken = async (clientId: string) => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}complycube/generate-token/${clientId}`
+      `${process.env.NEXT_PUBLIC_API_URL}complycube/generate-token/${clientId}`,
     );
     const data = await response.json();
     setToken(data.token);
   };
 
-  // Start KYC verification
   const startKYCVerification = async () => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}complycube/create-session/${clientId}`
+      `${process.env.NEXT_PUBLIC_API_URL}complycube/create-session/${clientId}`,
     );
     const data = await response.json();
     if (data.redirectUrl) {

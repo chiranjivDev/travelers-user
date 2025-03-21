@@ -13,13 +13,12 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 const TransportDetails = ({ register, errors, control, watch, setValue }) => {
-  const t = useTranslations('travellerForm.steps.step2'); // language translation
+  const t = useTranslations('travellerForm.steps.step2');
   const travelerResponsibility = t.raw('fields.travelerResponsibilities');
   const quickPreferences = t.raw('fields.quickPreference');
   const specialHandling = t.raw('fields.specialHandling');
   const weightCapacity = t.raw('fields.weightCapacity');
 
-  // Watch responsibilities state to check if all are checked
   const responsibilities = watch('responsibilities', {
     verifyContents: false,
     noRestrictedItems: false,
@@ -33,20 +32,16 @@ const TransportDetails = ({ register, errors, control, watch, setValue }) => {
     responsibilities.reportSuspicious &&
     responsibilities.legalResponsibilities;
 
-  // Watch the preference field to apply conditional styles or logic
   const watchPreference = watch('packagePreferences.preferences');
 
-  // Handle selection of the "Open to All Items" preference
   const handleOpenToAllSelection = () => {
     setValue('packagePreferences.preferences', 'openToAll');
   };
 
-  // Handle selection of the "Basic Items Only" preference
   const handleBasicItemsSelection = () => {
     setValue('packagePreferences.preferences', 'basicItemsOnly');
   };
 
-  // data
   const SERVICES = [
     {
       id: 'secureHandling',
@@ -91,7 +86,7 @@ const TransportDetails = ({ register, errors, control, watch, setValue }) => {
   return (
     <div className="relative w-full">
       {/* Package Preferences Section */}
-      <div className="bg-gray-900/20 backdrop-blur-sm rounded-2xl p-8">
+      <div className="bg-gray-900/20 backdrop-blur-sm rounded-2xl p-4 sm:p-8">
         {/* Package Preferences Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
@@ -217,7 +212,7 @@ const TransportDetails = ({ register, errors, control, watch, setValue }) => {
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={handleOpenToAllSelection} // Set preference when clicked
+                onClick={handleOpenToAllSelection}
               >
                 <div className="p-4">
                   <div className="flex items-start space-x-3">
@@ -310,7 +305,7 @@ const TransportDetails = ({ register, errors, control, watch, setValue }) => {
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={handleBasicItemsSelection} // Set preference when clicked
+                onClick={handleBasicItemsSelection}
               >
                 <div className="p-4">
                   <div className="flex items-start space-x-3">
@@ -472,7 +467,7 @@ const InfoIcon: React.FC<InfoIconProps & { children: React.ReactNode }> = ({
   return (
     <div className="relative group">
       {children}
-      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+      <div className="absolute -bottom-full sm:bottom-full left-1/2 max-sm:w-24 transform -translate-x-3  sm:-translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-wrap sm:whitespace-nowrap">
         {content}
       </div>
     </div>

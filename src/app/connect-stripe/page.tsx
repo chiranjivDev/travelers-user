@@ -10,7 +10,6 @@ export default function ConnectStripe() {
       alert('Please enter your email.');
       return;
     }
-    console.log('email', email);
     setLoading(true);
     try {
       const response = await fetch(
@@ -19,12 +18,11 @@ export default function ConnectStripe() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
-        }
+        },
       );
       const data = await response.json();
-      console.log('create stripe connect response', data);
       if (data.url) {
-        window.location.href = data.url; // Redirect to Stripe onboarding
+        window.location.href = data.url;
       } else {
         alert('Error creating Stripe account.');
       }

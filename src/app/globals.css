@@ -48,6 +48,7 @@ html[dir='ltr'] {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -58,15 +59,26 @@ html[dir='ltr'] {
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent; /* Track ka color */
+    background: transparent;
+    /* Track ka color */
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #d7d7d7; /* Scrollbar ka color */
+    background: #d7d7d7;
+    /* Scrollbar ka color */
     border-radius: 4px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #dbedff; /* Hover pe dark color */
+    background: #dbedff;
+    /* Hover pe dark color */
   }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff7eb3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 3rem;
+  font-weight: bold;
 }

@@ -6,8 +6,7 @@ import { Tooltip } from '@/components/ui/Tooltip';
 import { useTranslations } from 'next-intl';
 
 const Communication = ({ register, errors }) => {
-  const t = useTranslations('travellerForm.steps.step3'); // language translation
-
+  const t = useTranslations('travellerForm.steps.step3');
   return (
     <div className="space-y-6 relative">
       {/* Cosmic background elements - Reduced blur and simplified gradients */}

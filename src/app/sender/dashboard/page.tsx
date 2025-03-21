@@ -14,11 +14,10 @@ import {
   FiFilter,
   FiRefreshCw,
   FiBookmark,
+  FiInfo,
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-
-// Mock data for demonstration
 const mockPackages = [
   {
     id: 1,
@@ -48,8 +47,6 @@ const mockStats = {
   totalSpent: 450,
   averageRating: 4.8,
 };
-
-// Mock chart data
 const spendingData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
   datasets: [
@@ -130,6 +127,11 @@ const dashboardSections = [
     icon: FiDollarSign,
     path: '/sender/payments',
   },
+  {
+    title: 'Issues',
+    icon: FiInfo,
+    path: '/sender/issues',
+  },
 ];
 
 export default function SenderDashboard() {
@@ -142,7 +144,6 @@ export default function SenderDashboard() {
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    // Simulate data refresh
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsRefreshing(false);
   };

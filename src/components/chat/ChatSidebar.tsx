@@ -14,8 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FETCH_CHAT_MESSAGES } from '@/app/chat/redux/chatsAction';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
-
-// Previous Implementation
 function ConversationItem({
   conversation,
   isActive,
@@ -25,18 +23,11 @@ function ConversationItem({
   isActive: boolean;
   onClick: () => void;
 }) {
-  // const { users } = useChat();
-  // console.log('users', users);
-  // const otherUser = users.find(
-  //   (user) => conversation.participants.includes(user.id) && user.id !== '1'
-  // );
-
   const { user } = useAuth();
-  console.log('user', user);
 
   const otherUser = conversation
     ? conversation.participants.find(
-        (participant) => participant.id !== user?.userId
+        (participant) => participant.id !== user?.userId,
       )
     : null;
 
@@ -80,7 +71,7 @@ function ConversationItem({
                 }`}
               >
                 {new Date(
-                  conversation.lastMessage.timestamp
+                  conversation.lastMessage.timestamp,
                 ).toLocaleTimeString([], {
                   hour: '2-digit',
                   minute: '2-digit',
@@ -118,17 +109,9 @@ export default function ChatSidebar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<'all' | 'unread' | 'active'>('all');
 
-  // const filteredConversations = conversations.filter((conversation) => {
-  //   if (filter === 'unread' && conversation.unreadCount === 0) return false;
-  //   if (filter === 'active' && !conversation.lastMessage) return false;
-  //   return true;
-  // });
-
-  // fetch rooms list: cv
   const { chatList: filteredConversations } = useSelector(
-    (state) => state.chats
+    (state) => state.chats,
   );
-  console.log('chatList from slice', filteredConversations);
   const dispatch = useDispatch();
 
   return (
@@ -141,52 +124,6 @@ export default function ChatSidebar() {
         </h2>
       </div>
 
-      {/* Search and Filter */}
-      {/* <div className="p-4 border-b border-gray-700 space-y-4">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search conversations..."
-            className="w-full bg-gray-900 text-white rounded-lg pl-10 pr-4 py-2 text-sm border border-gray-700 focus:outline-none focus:border-blue-500"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <FiSearch className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
-        </div>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-3 py-1 rounded-full text-sm ${
-              filter === 'all'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilter('unread')}
-            className={`px-3 py-1 rounded-full text-sm ${
-              filter === 'unread'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
-          >
-            Unread
-          </button>
-          <button
-            onClick={() => setFilter('active')}
-            className={`px-3 py-1 rounded-full text-sm ${
-              filter === 'active'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
-          >
-            Active
-          </button>
-        </div>
-      </div> */}
-
       {/* Conversations List */}
       <div className="flex-1 overflow-y-auto">
         <AnimatePresence>
@@ -195,7 +132,6 @@ export default function ChatSidebar() {
               key={conversation.id}
               conversation={conversation}
               isActive={activeConversation?.id === conversation.id}
-              // onClick={() => setActiveConversation(conversation)}
               onClick={() => {
                 setActiveConversation(conversation);
                 dispatch({

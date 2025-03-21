@@ -15,33 +15,32 @@ export function MakeOfferComponent({
   onClose,
   otherUser,
 }) {
-  const [price, setPrice] = useState('100'); // Hardcoded price
-  const [date, setDate] = useState('2025-03-01'); // Hardcoded date
+  const [price, setPrice] = useState('100');
+  const [date, setDate] = useState('2025-03-01');
   const [selectedServices, setSelectedServices] = useState<string[]>([
     'insurance',
-  ]); // Hardcoded selected services
-  const [note, setNote] = useState(''); // Empty note
-
+  ]);
+  const [note, setNote] = useState('');
   const services = [
     {
       id: 'insurance',
       name: 'Insurance',
       icon: <FiShield />,
-      price: 5, // Hardcoded price
+      price: 5,
       description: 'Full coverage for your package',
     },
     {
       id: 'priority',
       name: 'Priority Delivery',
       icon: <FiClock />,
-      price: 10, // Hardcoded price
+      price: 10,
       description: 'Faster delivery time',
     },
     {
       id: 'tracking',
       name: 'Live Tracking',
       icon: <FiTruck />,
-      price: 3, // Hardcoded price
+      price: 3,
       description: 'Real-time package location',
     },
   ];
@@ -58,25 +57,18 @@ export function MakeOfferComponent({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Form data
     const formData = {
       price,
       date,
       selectedServices,
-      note, // Note as the message
+      note,
       total: calculateTotal(),
     };
-    console.log('form data', formData);
-    // Trigger the send message with form data
     handleSendMessage(formData);
     onClose();
   };
 
-  // Handle Send Message
   const handleSendMessage = (formData: any) => {
-    console.log('handle send message initiated');
-
-    // Generate a custom message combining the field values
     const message = `
     Price: €${formData.price}
     Delivery Date: ${formData.date}
@@ -86,30 +78,17 @@ export function MakeOfferComponent({
   `;
 
     if (message.trim()) {
-      // Check if message is not empty or whitespace
-      console.log('Message is not empty. Proceeding to send.');
-
-      const socket = getSocket(); // Getting the socket instance
-      console.log('Socket instance:', socket); // Log the socket instance
-
+      const socket = getSocket();
       if (socket) {
-        console.log('Socket is available. Emitting private message...');
         socket.emit(
           'private_message',
           JSON.stringify({
-            receiverId: otherUser.id, // Logging the receiver's user ID
-            message, // Sending the message (price in this case)
-            // additional fields
+            receiverId: otherUser.id,
+            message,
             isOffer: true,
             senderPkgId: selectedSenderPackage,
             travelerPkgId: selectedTravelerPackage,
-          })
-        );
-        console.log(
-          'Sent private message to:',
-          otherUser.id,
-          'Message:',
-          message
+          }),
         );
       } else {
         console.error('Socket is not available.');
@@ -205,7 +184,7 @@ export function MakeOfferComponent({
                           setSelectedServices((prev) => [...prev, service.id]);
                         } else {
                           setSelectedServices((prev) =>
-                            prev.filter((id) => id !== service.id)
+                            prev.filter((id) => id !== service.id),
                           );
                         }
                       }}

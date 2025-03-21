@@ -12,19 +12,13 @@ export default function ChatPage() {
   const { createOrderSuccess, order } = useSelector((state) => state.order);
   const searchParams = useSearchParams();
   const userId = searchParams.get('user');
-  const travelerPkgIdFromQuery = searchParams.get('travelerPkgId'); // Traveler's package ID if sender initiates
-  const senderPkgIdFromQuery = searchParams.get('senderPkgId'); // Sender's package ID if traveler initiates
-
+  const travelerPkgIdFromQuery = searchParams.get('travelerPkgId');
+  const senderPkgIdFromQuery = searchParams.get('senderPkgId');
   const [showModal, setShowModal] = useState(true);
-
-  console.log('user id from chats', userId);
-  console.log('sender package id from chats', senderPkgIdFromQuery);
-  console.log('traveler package id from chats', travelerPkgIdFromQuery);
 
   useEffect(() => {
     const socket = getSocket();
     if (socket) {
-      console.log('Emitting get_my_rooms event');
       socket.emit('get_my_rooms');
     }
   }, []);
@@ -39,22 +33,18 @@ export default function ChatPage() {
           message: 'Hi',
           senderPkgId: senderPkgIdFromQuery,
           travelerPkgId: travelerPkgIdFromQuery,
-        })
+        }),
       );
-      console.log('Sent private message to:', userId);
-      setShowModal(false); // Close modal after sending the message
+      setShowModal(false);
     }
   };
 
-  // on place order navigate to home screen
   const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
     if (createOrderSuccess) {
-      console.log('order', order);
-      // Navigate to payment screen with query parameters
       router.push(
-        `/payment?amount=${order?.amount}&orderId=${order?.order_id}`
+        `/payment?amount=${order?.amount}&orderId=${order?.order_id}`,
       );
       dispatch(clearOrdersState());
     }

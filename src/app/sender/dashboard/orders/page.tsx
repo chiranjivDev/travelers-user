@@ -9,18 +9,19 @@ import { FETCH_ORDERS } from '../redux/orderAction';
 import GenericModal from './GenericModal';
 import { CreateNewOrder } from './CreateNewOrder';
 import { useTranslations } from 'next-intl';
+import { FaEllipsisV, FaFlag } from 'react-icons/fa';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { ChevronDownIcon, PencilIcon, TrashIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const CreateOrder = () => {
   const { senderPackages } = useSelector((state) => state.packages);
   const { orders, fetchOrdersLoading, createOrderSuccess } = useSelector(
-    (state) => state.order
+    (state) => state.order,
   );
   const t = useTranslations('SenderDashboard.orders');
 
   const [selectedSenderPackage, setSelectedSenderPackage] = useState(null);
-
-  console.log('selected sender package: ', selectedSenderPackage);
-  console.log('sender packages', senderPackages);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,6 +35,10 @@ const CreateOrder = () => {
 
   const dispatch = useDispatch();
   const { user } = useAuth();
+  const router = useRouter();
+  const handleRaiseIssue = (order_id: string) => {
+    router.push(`/issue/create?order_id=${order_id}`);
+  };
 
   useEffect(() => {
     if (user) {
@@ -97,7 +102,7 @@ const CreateOrder = () => {
               value={selectedSenderPackage?.packageID || ''}
               onChange={(e) => {
                 const selectedPackage = senderPackages.find(
-                  (pkg) => pkg.packageID === e.target.value
+                  (pkg) => pkg.packageID === e.target.value,
                 );
                 setSelectedSenderPackage(selectedPackage);
               }}
@@ -159,6 +164,10 @@ const CreateOrder = () => {
                   <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
                     {t('payment')}
                   </th>
+                  <th className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider py-3 px-6">
+                    {/* {t('payment')} */}
+                    Options
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -207,6 +216,29 @@ const CreateOrder = () => {
                       <div className="text-sm text-gray-300">
                         {order.payment_status}
                       </div>
+                    </td>
+                    <td className="py-4 px-6 place-items-center">
+                      <Menu>
+                        <MenuButton className="  py-1.5 px-3 focus:outline-none">
+                          <FaEllipsisV />
+                        </MenuButton>
+
+                        <MenuItems
+                          transition
+                          anchor="bottom start"
+                          className="w-40 origin-top-right rounded-xl border border-white/5 bg-slate-500/60 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+                        >
+                          <MenuItem>
+                            <button
+                              onClick={() => handleRaiseIssue(order.order_id)}
+                              className="group flex w-full items-center gap-2 rounded-[5px] py-1.5 px-3 data-[focus]:bg-slate-500/80 duration-300"
+                            >
+                              <FaFlag />
+                              Raise Issue
+                            </button>
+                          </MenuItem>
+                        </MenuItems>
+                      </Menu>
                     </td>
                   </tr>
                 ))}

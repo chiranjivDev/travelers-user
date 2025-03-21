@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const TravelerPackageInformation = ({ onClose, packageId }) => {
   const { singlePackage } = useSelector((state) => state.trips);
-  console.log('single package from modal', singlePackage);
   const dispatch = useDispatch();
 
   useEffect(() => {

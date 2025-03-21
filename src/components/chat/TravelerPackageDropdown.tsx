@@ -17,7 +17,6 @@ export default function TravelerPackageDropdown({
   selectedValue,
   onSelect,
 }: PackageDropdownProps) {
-  console.log('packages from traveler dropdown', options);
   return (
     <div className="relative">
       <label className="block text-gray-400 text-sm mb-1">{label}</label>

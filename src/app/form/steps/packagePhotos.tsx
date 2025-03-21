@@ -3,34 +3,28 @@ import React from 'react';
 import { useWatch } from 'react-hook-form';
 
 const PackagePhotos = ({ control, getValues, setValue }) => {
-  const t = useTranslations('SenderForm.steps.step1.packagePhotos'); // language translations
+  const t = useTranslations('SenderForm.steps.step1.packagePhotos');
   const photoguidelines = useTranslations(
-    'SenderForm.steps.step1.packagePhotos.photoGuidelines'
+    'SenderForm.steps.step1.packagePhotos.photoGuidelines',
   );
   const tips = photoguidelines.raw('tips', { returnObjects: true }) || [];
 
-  // Handle file upload by updating the 'packagePhotos' field
   const handleFileUpload = (e) => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
+      URL.createObjectURL(file),
     );
 
-    // Get existing photos from the form and add the new ones
     const updatedPhotos = [...getValues('packagePhotos'), ...fileArray];
 
-    // Update the 'packagePhotos' field in the form
     setValue('packagePhotos', updatedPhotos);
-
-    console.log('updatedPhotos', updatedPhotos);
   };
 
-  // Handle removing a photo from the list
   const removePhoto = (index) => {
     const updatedPhotos = getValues('packagePhotos').filter(
-      (_, i) => i !== index
+      (_, i) => i !== index,
     );
-    setValue('packagePhotos', updatedPhotos); // Update the form state
+    setValue('packagePhotos', updatedPhotos);
   };
 
   const packagePhotos = useWatch({ control, name: 'packagePhotos' });
@@ -78,7 +72,7 @@ const PackagePhotos = ({ control, getValues, setValue }) => {
                   className="sr-only"
                   accept="image/*"
                   multiple
-                  onChange={handleFileUpload} // Call the handleFileUpload function
+                  onChange={handleFileUpload}
                 />
               </label>
               <p className="pl-1">or drag and drop</p>
@@ -108,7 +102,7 @@ const PackagePhotos = ({ control, getValues, setValue }) => {
                   <button
                     type="button"
                     className="absolute top-2 right-2 p-1.5 rounded-full bg-red-100 text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => removePhoto(index)} // Remove photo on click
+                    onClick={() => removePhoto(index)}
                   >
                     <svg
                       className="w-4 h-4"
