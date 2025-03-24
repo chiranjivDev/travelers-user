@@ -156,7 +156,7 @@ export default function BrowsePackagesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-gray-900 text-white sm:p-6 p-2">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 sm:px-6 lg:px-8">

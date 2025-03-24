@@ -28,6 +28,8 @@ export default function PackageListItem({
   const isUrgent =
     new Date(pkg.date) <= new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
 
+  console.log('package price', pkg.price);
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -35,11 +37,11 @@ export default function PackageListItem({
       exit={{ opacity: 0, x: 20 }}
       whileHover={{ scale: 1.01 }}
       onClick={onViewDetails}
-      className="bg-gray-800 rounded-lg p-4 flex items-center gap-4 cursor-pointer hover:bg-gray-750 transition-colors"
+      className="bg-gray-800 rounded-[10px] p-4 flex items-center gap-2 sm:gap-4 cursor-pointer hover:bg-gray-750 transition-colors"
     >
       {/* Sender Info */}
-      <div className="flex-shrink-0 w-12">
-        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+      <div className="flex-shrink-0 w-9 sm:w-12 max-sm:self-start">
+        <div className="w-9 h-9 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center  justify-center text-white font-bold">
           {/* {pkg.sender.name.charAt(0)} */}
           {pkg.name.charAt(0)}
         </div>
@@ -47,7 +49,7 @@ export default function PackageListItem({
 
       {/* Main Info */}
       <div className="flex-grow min-w-0">
-        <div className="flex items-center gap-2">
+        <div className="flex max-sm:flex-col  items-center gap-2">
           <h3 className="font-semibold text-white truncate">
             {/* {pkg.sender.name} */}
             {pkg?.name}
@@ -61,7 +63,7 @@ export default function PackageListItem({
         </div>
 
         <div className="flex items-center gap-4 mt-1 text-sm text-gray-300">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 ">
             <FiMapPin className="flex-shrink-0" />
             <span className="truncate">{pkg.origin.city}</span>
             <span className="mx-1">→</span>
@@ -77,7 +79,7 @@ export default function PackageListItem({
       </div>
 
       {/* Package Details */}
-      <div className="flex-shrink-0 flex items-center gap-4">
+      <div className="flex-shrink-0 flex max-sm:flex-col max-sm:items-end items-center gap-4">
         <div className="text-sm text-gray-300">
           <div className="flex items-center gap-2">
             <FiPackage className="flex-shrink-0" />
@@ -93,9 +95,9 @@ export default function PackageListItem({
         </div>
 
         <div className="text-right">
-          <div className="flex items-center text-green-400">
+          <div className="flex items-center text-green-400 max-sm:text-sm">
             <FiDollarSign className="flex-shrink-0" />
-            <span className="font-semibold">${pkg.price}</span>
+            <span className="font-semibold">{pkg.price}</span>
           </div>
           {isUrgent && (
             <div className="flex items-center text-orange-400 text-sm mt-1">
