@@ -47,9 +47,14 @@ interface DestinationFlexibility {
 interface TripCardProps {
   trip: TripDetails;
   onChatClick?: (travelerId: string) => void;
+  onDetailsClick?: (tripId: string) => void;
 }
 
-const TripCard = memo(function TripCard({ trip, onChatClick }: TripCardProps) {
+const TripCard = memo(function TripCard({
+  trip,
+  onChatClick,
+  onDetailsClick,
+}: TripCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [showDestinations, setShowDestinations] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -247,12 +252,14 @@ const TripCard = memo(function TripCard({ trip, onChatClick }: TripCardProps) {
         {/* Header with traveler info and price */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-center">
-            <Avatar
-              src={trip.traveler.picture_url}
-              alt={trip.traveler.name}
-              size={48}
-              className="rounded-full"
-            />
+            <Link href={`/traveler/${trip.traveler.id}`}>
+              <Avatar
+                src={trip.traveler.picture_url}
+                alt={trip.traveler.name}
+                size={48}
+                className="rounded-full"
+              />
+            </Link>
             <div className="ml-3">
               <div className="flex items-center">
                 <h3 className="text-lg font-semibold text-white">
@@ -437,12 +444,18 @@ const TripCard = memo(function TripCard({ trip, onChatClick }: TripCardProps) {
 
         {/* Main Actions */}
         <div className="flex space-x-4 mt-4 pt-4 border-t border-gray-700">
-          <Link
+          {/* <Link
             href={`/traveler/${trip.traveler.id}`}
             className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center"
           >
             View Details
-          </Link>
+          </Link> */}
+          <button
+            onClick={() => onDetailsClick(trip)}
+            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center"
+          >
+            View Details
+          </button>
           {onChatClick && (
             <button
               onClick={() => onChatClick(trip.traveler.id, trip.id)}

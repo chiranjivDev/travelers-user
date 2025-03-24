@@ -590,7 +590,21 @@
     "title": "Browse Trips",
     "noTripsFound": "No trips found matching your criteria",
     "tripsAvailable": "Trips available",
-    "clearAllFilters": "Clear all filters"
+    "clearAllFilters": "Clear all filters",
+    "TripDetailsModal": {
+      "title": "Trip Details",
+      "travelerInfo": "Traveler Information",
+      "routeInfo": "Route Information",
+      "tripDetails": "Trip Details",
+      "from": "From",
+      "to": "To",
+      "weight": "Weight",
+      "available": "available",
+      "perPackage": "per package",
+      "price": "Price",
+      "basePrice": "Base price",
+      "close": "Close"
+    }
   },
   "TravelerDashboard": {
     "title": "Traveler Dashboard",

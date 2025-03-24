@@ -9,6 +9,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH_TRAVELER_PACKAGE, TRIPS } from '../traveler/redux/tripsAction';
 import { useTranslations } from 'next-intl';
+import { AnimatePresence } from 'framer-motion';
 
 type SortOption = 'rating' | 'price' | 'date';
 type FilterOption = 'all' | 'small' | 'medium' | 'large';
@@ -79,6 +80,13 @@ export default function BrowseTrips() {
       });
     }
   }, [dateRange.start, dateRange.end, debouncedSearch]);
+
+  // handle Details Click
+  const [selectedTravelerPackage, setSelectedTravelerPackage] = useState('');
+
+  const handleDetailsClick = (packageId: string) => {
+    setSelectedTravelerPackage(packageId);
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 py-8">
@@ -172,6 +180,7 @@ export default function BrowseTrips() {
                     key={trip.id}
                     trip={trip}
                     onChatClick={handleChatClick}
+                    onDetailsClick={handleDetailsClick}
                   />
                 ))}
               </div>
@@ -199,6 +208,180 @@ export default function BrowseTrips() {
           </>
         )}
       </div>
+
+      {/* Package Details Modal */}
+      <AnimatePresence>
+        {selectedTravelerPackage && (
+          <TravelerPackageDetailsModal
+            isOpen={!!selectedTravelerPackage}
+            onClose={() => setSelectedTravelerPackage(null)}
+            selectedPackage={selectedTravelerPackage}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
+// Traveler Package modal
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { FiX, FiMapPin } from 'react-icons/fi';
+import { format, parseISO } from 'date-fns';
+
+const TravelerPackageDetailsModal = ({ isOpen, onClose, selectedPackage }) => {
+  const t = useTranslations('BrowseTips.TripDetailsModal');
+
+  console.log('selected trip', selectedPackage);
+  return (
+    <Transition appear show={isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-25" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+                <div className="flex justify-between items-start mb-6">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium text-white"
+                  >
+                    {t('title')}
+                  </Dialog.Title>
+                  <button
+                    onClick={onClose}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <FiX className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Traveler Information */}
+                <div className="mb-6">
+                  <h4 className="text-white font-medium mb-3">
+                    {t('travelerInfo')}
+                  </h4>
+                  <div className="bg-gray-700 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                          {selectedPackage?.traveler.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h5 className="text-white font-medium">
+                            {selectedPackage?.traveler.name}
+                          </h5>
+                          <h5 className="text-white font-medium">
+                            {selectedPackage?.traveler.email}
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Route Information */}
+                <div className="mb-6">
+                  <h4 className="text-white font-medium mb-3">
+                    {t('routeInfo')}
+                  </h4>
+                  <div className="bg-gray-700 rounded-lg p-4 space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <FiMapPin className="text-gray-400" />
+                      <div>
+                        <div className="text-white">
+                          {t('from')} :{' '}
+                          {selectedPackage?.tripDetails?.departureLocation}
+                        </div>
+                        <div className="text-white">
+                          {t('to')}:{' '}
+                          {selectedPackage?.tripDetails?.arrivalLocation}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trips Details */}
+                <div className="mb-6">
+                  <h4 className="text-white font-medium mb-3">{t('title')}</h4>
+                  <div className="bg-gray-700 rounded-lg p-4 grid grid-cols-2 gap-4">
+                    <div>
+                      <div className="text-white flex items-center">
+                        <FiCalendar className="mr-2" />
+                        {format(
+                          parseISO(
+                            selectedPackage.tripDetails.departureDateTime,
+                          ),
+                          'MMM d',
+                        )}{' '}
+                        -{' '}
+                        {format(
+                          parseISO(selectedPackage.tripDetails.arrivalDateTime),
+                          'MMM d, yyyy',
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-gray-400 mb-2">{t('weight')}</div>
+                      <div className="text-white">
+                        {selectedPackage?.pricingDetails?.weight} kg{' '}
+                        {t('available')}
+                      </div>
+                      <div className="text-white">
+                        Max {selectedPackage.transportDetails.maxWeightCapacity}{' '}
+                        kg {t('perPackage')}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="text-white font-medium mb-3">{t('price')}</h4>
+                  <div className="bg-gray-700 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="text-gray-400">{t('basePrice')}</div>
+                      <div className="text-2xl font-bold text-white">
+                        ${selectedPackage?.pricingDetails?.baseRate}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex space-x-4">
+                  <button
+                    onClick={onClose}
+                    className="flex-1 bg-gray-700 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    {t('close')}
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
+  );
+};
